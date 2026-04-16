@@ -1,0 +1,68 @@
+.company_name {
+  color: #000;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0;
+}
+.back_btn {
+  color: #1c1f66;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 10px;
+  border: 1px solid #1c1f66;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.back_btn:hover {
+  background-color: #1c1f66;
+  color: #fff;
+}
+
+.leave_card {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.leave-icon {
+  width: 35px;
+  padding: 5px;
+  background-color: rgba(0, 128, 0, 0.49);
+  border-radius: 5px;
+}
+.user_task_wrapper .card {
+  border: 1px solid #ddd;
+}
+
+.leave_name {
+  border-radius: 4px;
+  background: #d6fee9;
+  padding: 4px 39px;
+  display: inline-block;
+  margin: 0;
+}
+.action_icon{
+  cursor: pointer;
+}
+
+
+.table-responsive{
+  height: calc(100vh - 21.5em);
+  overflow: auto;
+}
+.task-table .card::-webkit-scrollbar, .table-responsive::-webkit-scrollbar{
+  display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+  .leave_card {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

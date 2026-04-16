@@ -1,0 +1,26 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="multiselect_main">
+        <h2 class="task_table_title">Attendance</h2>
+        <div class="col-4" *ngIf="isowner == 1">
+          <div class="mb-4">
+            <div class="task_multiselect">
+              <ng-select
+                [items]="team1"
+                bindLabel="item_text"
+                bindValue="item_id"
+                placeholder="Select User"
+                [multiple]="false"
+                class="client_list"
+                (change)="ownerAttendanceList($event)"
+              >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <full-calendar [options]="calendarOptions()"></full-calendar>
+    </div>
+  </section>
+</main>

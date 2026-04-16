@@ -1,0 +1,16 @@
+.table-responsive {
+  height: calc(100vh - 13em);
+  overflow: auto;
+}
+
+.table-responsive::-webkit-scrollbar {
+  display: none;
+}
+
+.user_list {
+  background-color: transparent;
+}
+
+.comman_task_title {
+  font-size: 16px;
+}

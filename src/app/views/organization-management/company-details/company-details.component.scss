@@ -1,0 +1,249 @@
+.projects_tabs .nav-tabs {
+  border: none;
+}
+
+.task_table_title {
+  color: #1c1f66;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27px;
+  margin: 0;
+}
+
+.member_wrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+.member_img{
+  width: 77px;
+  height: 77px;
+  border-radius: 100%;
+  margin-bottom: 10px;
+  object-fit: contain;
+  border: 0.5px solid #dddddd;
+}
+
+.member_inner {
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+.client_member_inner {
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  text-align: center;
+  height: 100%;
+}
+
+.client_member_inner .card-footer {
+  background-color: #ff5656;
+  font-size: 11px;
+  line-height: 12px;
+  color: white;
+
+}
+.client_member_inner .card-footer span{
+   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 150px;
+  display: inline-block;
+}
+
+.member_name {
+  font-size: 14px;
+  font-weight: 400;
+  color: #111111;
+  line-height: 19px;
+}
+.member_position {
+  font-size: 12px;
+  font-weight: 400;
+  color: #666666;
+  line-height: 16px;
+}
+
+.member_role {
+  font-size: 14px;
+  font-weight: 400;
+  color: #111111;
+  line-height: 19px;
+  background-color: #e1f2ff;
+  border-radius: 5px;
+  text-align: center;
+  padding: 7px 10px;
+}
+
+.veiw_btn {
+  font-size: 14px;
+  font-weight: 400;
+  color: #1c1f66;
+  line-height: 19px;
+}
+.sevice_name {
+  font-size: 16px;
+  font-weight: 400;
+  color: #111111;
+  line-height: 21px;
+}
+.service_creater {
+  font-size: 11px;
+  font-weight: 400;
+  color: #333333;
+  line-height: 15px;
+  margin: 0;
+}
+.role_table {
+  border-collapse: separate;
+  border-spacing: 0px 10px;
+}
+
+.role_table tr th {
+  color: #111111;
+  font-size: 14px;
+  font-weight: 400;
+  vertical-align: middle;
+}
+.role_table tr td {
+  color: #111111;
+  font-size: 14px;
+  font-weight: 400;
+  vertical-align: middle;
+}
+
+.role_table tbody {
+  border: 1px solid #dddddd;
+}
+
+.role_table .role_type {
+  font-size: 18px !important;
+  line-height: 24px !important;
+  font-weight: 600 !important;
+  color: #111111 !important;
+}
+
+.role_table thead tr {
+  border-color: transparent;
+  background-color: #f6f6f6;
+}
+
+.role_table tr td {
+  border-bottom: 1px dashed #dddddd;
+}
+
+.role_table tbody .assign-role-inner td {
+  border: none;
+}
+
+.status_closed_color {
+  background-color: #cff2c3;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+.status_review_color {
+  background-color: #f9ecc1;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+.status_reject_color {
+  background-color: #f2c3f2;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+.status_pending_color {
+  background-color: #ffe2e2;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+.status_onhold_color {
+  background-color: #def6ff;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+
+
+.group_short_name {
+  background-color: #16b975;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #fff;
+  /* padding: 14px; */
+  height: 70px;
+  width: 70px;
+  display: flex;
+  line-height: 30px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.member_wrapper .card-footer img{
+  cursor: pointer;
+}
+
+.role_designation{
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  line-height: 19px;
+  margin: 0;
+}
+@media only screen and (max-width: 1535px) {
+  .client_member_inner .card-footer span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+    display: inline-block;
+  }
+  .member_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+@media only screen and (max-width: 1199px) {
+  .member_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+@media only screen and (max-width: 560px) {
+  .projects_tabs .nav-tabs .nav-link {
+    margin-right: 5px;
+  }
+  .projects_tabs .nav-tabs .nav-link,
+  .projects_tabs .nav-tabs .nav-link.active,
+  .add_task_btn {
+    padding: 6px;
+    font-size: 12px;
+  }
+  .projects_tabs .nav-tabs {
+    border: none;
+    flex-wrap: nowrap;
+  }
+  .member_wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .client_member_inner .card-footer {
+    padding: 5px 7px;
+  }
+  .client_member_inner .card-footer span {
+    width: 100px;
+  }
+}

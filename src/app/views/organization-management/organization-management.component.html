@@ -1,0 +1,377 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.3)" size="medium" color="#fff" type="timer" [fullScreen]="true"></ngx-spinner>
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <nav class="projects_tabs">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-Discussion-tab" data-bs-toggle="tab"
+                data-bs-target="#nav-Discussion" type="button" role="tab" aria-controls="nav-Discussion"
+                aria-selected="true">
+                Founder
+              </button>
+              <button class="nav-link" id="nav-Task-Discussion-tab" data-bs-toggle="tab"
+                data-bs-target="#nav-Task-Discussion" type="button" role="tab" aria-controls="nav-Task-Discussion"
+                aria-selected="false">
+                Shared
+              </button>
+            </div>
+          </nav>
+
+          <div class="d-flex justify-content-between align-items-center gap-3">
+            <a *ngIf="permissions.add !== 0" class="add_task_btn" data-bs-toggle="modal" data-bs-target="#addNoteModal">
+              Add Company</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- tabs  view -->
+
+      <div>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-Discussion" role="tabpanel"
+            aria-labelledby="nav-Discussion-tab">
+            <div class="">
+              <div class="">
+                <div class="projects_cards">
+                  <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3"
+                      *ngFor="let company of companylist.founderCompany">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between">
+                            <a [routerLink]="['/company-details', company.id]">
+                              <div class="d-flex gap-3 justify-content-between">
+                                <div class="oraganization_logo">
+                                  <img src="{{ company.logo }}" alt="" />
+                                </div>
+
+                                <div class="">
+                                  <h2 class="company_name">{{ company.name }}</h2>
+                                  <p class="company_create_date">
+                                    Created on {{ company.created_at }}
+                                  </p>
+                                </div>
+                              </div>
+                            </a>
+                            <div class="d-flex gap-3">
+                              <a *ngIf="permissions.edit !== 0" data-bs-toggle="modal"
+                                data-bs-target="#EditCompanyModal" (click)="editcompany(company.id)">
+                                <img src="../../../assets/img/dashboard/project-edit-side-icon.svg" alt="" /></a>
+                              <a data-bs-toggle="modal" *ngIf="permissions.delete !== 0"
+                                data-bs-target="#deletecompanyModal"
+                                (click)="deletecompanyopendialogue(company.id)"><img
+                                  src="../../../assets/img/dashboard/project-delete-side-icon.svg" alt="" /></a>
+                            </div>
+                          </div>
+                          <hr />
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h2 class="company_projects">{{ company.project }}</h2>
+                              <p class="company_projects_name">Projects</p>
+                            </div>
+                            <div>
+                              <h2 class="company_projects">{{ company.task }}</h2>
+                              <p class="company_projects_name">Tasks</p>
+                            </div>
+                            <div>
+                              <h2 class="company_projects">{{ company.members }}</h2>
+                              <p class="company_projects_name">Members</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="companylist.founderCompany?.length <= 0" class="no_data_content_wrapper">
+                  <p class="no_data_content"> You’re not the founder. Check the shared section</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="nav-Task-Discussion" role="tabpanel" aria-labelledby="nav-Task-Discussion-tab">
+            <div class="projects_cards">
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3"
+                  *ngFor="let company of companylist.sharedCompany">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <a [routerLink]="['/company-details', company.id]">
+                          <div class="d-flex gap-3 justify-content-between">
+                            <div class="oraganization_logo">
+                              <img src="{{ company.logo }}" alt="" />
+                            </div>
+
+                            <div class="">
+                              <h2 class="company_name">{{ company.name }}</h2>
+                              <p class="company_create_date">
+                                Created on {{ company.created_at }}
+                              </p>
+                            </div>
+                          </div>
+                        </a>
+                        <div class="d-flex gap-3">
+                          <a *ngIf="permissions.edit !== 0" data-bs-toggle="modal" data-bs-target="#EditCompanyModal"
+                            (click)="editcompany(company.id)">
+                            <img src="../../../assets/img/dashboard/project-edit-side-icon.svg" alt="" /></a>
+                          <a data-bs-toggle="modal" *ngIf="permissions.delete !== 0"
+                            data-bs-target="#deletecompanyModal" (click)="deletecompanyopendialogue(company.id)"><img
+                              src="../../../assets/img/dashboard/project-delete-side-icon.svg" alt="" /></a>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <h2 class="company_projects">{{ company.project }}</h2>
+                          <p class="company_projects_name">Projects</p>
+                        </div>
+                        <div>
+                          <h2 class="company_projects">{{ company.task }}</h2>
+                          <p class="company_projects_name">Tasks</p>
+                        </div>
+                        <div>
+                          <h2 class="company_projects">{{ company.members }}</h2>
+                          <p class="company_projects_name">Members</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="companylist.sharedCompany?.length <= 0">
+              <p class="no_data_content"> You’re yet to join any company</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Add Note Modal -->
+<div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add Company
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_company_add" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="companyForm" (ngSubmit)="addCompany(clearaddform)" #clearaddform="ngForm">
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 co-md-4 col-sm-12">
+              <div class="avatar-upload">
+                <div class="avatar-edit">
+                  <input type="file" id="imageUpload" (change)="onFileChange($event)" accept=".png, .jpg, .jpeg" />
+                  <label for="imageUpload"><img src="../../../assets/img/dashboard/image-icon.png" alt="" /></label>
+                </div>
+                <div class="avatar-preview">
+                  <img width="100%" *ngIf="imageUrladd" [src]="imageUrladd" class="image" />
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-8 col-lg-8 co-md-8 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="name" placeholder="Company Name" class="text-capitalize" />
+                        <mat-error *ngIf="companyForm.get('name')?.invalid">
+                          {{ getErrorMessage('name') }}
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input matInput formControlName="address" placeholder="Company Address" />
+                      <mat-error *ngIf="companyForm.get('address')?.invalid">
+                        {{ getErrorMessage('address') }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="phone_no" placeholder="Mobile Number" />
+                        <mat-error *ngIf="companyForm.get('phone_no')?.invalid">
+                          {{ getErrorMessage('phone_no') }}
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Company Email" formControlName="email_id" required />
+                        <mat-error *ngIf="companyForm.get('email_id')?.invalid">
+                          {{ getErrorMessage('email_id') }}
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input matInput placeholder="Details" formControlName="description" />
+                      <mat-error *ngIf="companyForm.get('description')?.invalid">
+                        {{ getErrorMessage('description') }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn" type="submit">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add Note Modal -->
+
+<!-- edit Note Modal -->
+<div class="modal fade" id="EditCompanyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Company
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_company_update" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm">
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 co-md-4 col-sm-12">
+              <div class="avatar-upload">
+                <div class="avatar-edit">
+                  <input type="file" id="imageUploads" (change)="onEditFileChange($event)" accept=".png, .jpg, .jpeg" />
+                  <label for="imageUploads"><img src="../../../assets/img/dashboard/image-icon.png" alt="" /></label>
+                </div>
+                <div class="avatar-preview">
+                  <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image" />
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-8 col-lg-8 co-md-8 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input placeholder="Company Name" formControlName="name" />
+                        <mat-error *ngIf="editForm.get('name')?.hasError('required')">Name is required</mat-error>
+                        <mat-error *ngIf="editForm.get('name')?.hasError('minlength')">Name must be at least 3
+                          characters</mat-error>
+                      </mat-form-field>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input matInput #input placeholder="Company Address" formControlName="address" />
+                      <mat-error *ngIf="editForm.get('address')?.hasError('required')">Address is required</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input placeholder="Mobile Number" formControlName="phone_no" />
+                        <mat-error *ngIf="editForm.get('phone_no')?.hasError('required')">Mobile Number is
+                          required</mat-error>
+                        <mat-error *ngIf="editForm.get('phone_no')?.hasError('pattern')">Invalid Mobile
+                          Number</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Company Email" formControlName="email_id" />
+                        <mat-error *ngIf="editForm.get('email_id')?.hasError('required')">Email is required</mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input matInput #input placeholder="Details" formControlName="description" />
+                      <mat-error *ngIf="editForm.get('description')?.hasError('required')">Description is
+                        required</mat-error>
+                      <input matInput hidden="true" placeholder="companyID" formControlName="companyID" />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn" (click)="UpdateCompany()">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End edit Note Modal -->
+
+
+
+
+<div class="modal fade" id="deletecompanyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Delete Company
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_delete_company" />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to delete this company?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="confirmDelete()">Yes</button>
+            <!-- <button class="btn cancel_btn" (click)="dismissModal()">No</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

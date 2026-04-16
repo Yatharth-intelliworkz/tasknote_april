@@ -1,0 +1,264 @@
+<!--<c-header class="mb-4 d-print-none" position="sticky">-->
+
+<ng-container>
+  <a toggle="visible" cHeaderToggler [cSidebarToggle]="sidebarId" class="ps-1">
+    <img src="../../../../assets/img/dashboard/toggle-btn.svg" alt="toggle" />
+  </a>
+  <c-header-nav class="d-lg-flex me-auto custome_header">
+    <c-nav-item class="ms-3">
+      <h2 class="header_user_name">Hi, {{ uname }}</h2>
+    </c-nav-item>
+  </c-header-nav>
+
+  <c-header-nav class="d-lg-flex align-items-center custome_header">
+    <div class="d-none d-lg-flex align-items-center">
+      <img
+        src="../../../../assets/img/dashboard/header-date-icon.png"
+        alt="calender"
+        class="mx-3"
+      />
+      <span class="header_date">{{ today | date : "EEEE, MMMM d" }}</span>
+    </div>
+
+    <div class="ms-lg-4 ms-sm-0 company_dropdown">
+      <mat-form-field>
+        <mat-select
+          placeholder="Select Company"
+          [(ngModel)]="sessioncompany"
+          name="selectedCompany"
+          (selectionChange)="onCompanySelect(sessioncompany)"
+        >
+          <mat-option
+            *ngFor="let company of companylist"
+            [value]="company.id"
+            class="header_company_list"
+          >
+            {{ company.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- <c-nav-item class="ms-4">
+        <div class="header_searchbar">
+          <input placeholder="Search..." class="js-search" type="text" />
+          <img src="../../../../assets/img/sidebar/searchbar.png" alt="" />
+        </div>
+      </c-nav-item> -->
+
+    <!-- header notification design -->
+
+    <c-nav-item class="ms-3">
+      <div class="dropdown">
+        <div
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="../../../assets/img/dashboard/notification.svg"
+            alt=""
+            class="header_icons position-relative"
+          />
+          <!-- <span
+            class="position-absolute translate-middle p-1 bg-danger border rounded-circle"
+            style="top: 12px; left: 45px"
+          ></span> -->
+          <span class="notifi-count">{{ notificationlist?.count || 0 }}</span>
+        </div>
+        <ul
+          class="dropdown-menu notify_dropdown"
+          aria-labelledby="dropdownMenuButton1"
+        >
+          <div class="d-flex align-items-center justify-content-between">
+            <h2 class="notification_title">Notification</h2>
+            <div class="notification_view_btn">
+              <a routerLink="/notifications"> View All</a>
+            </div>
+          </div>
+          <div
+            *ngFor="let notification of notificationlist?.data; let i = index"
+          >
+            <div *ngIf="i <= 10">
+              <li>
+                <p class="notification_date">{{ notification.date }}</p>
+              </li>
+
+              <li>
+                <div class="d-flex gap-2 align-items-start">
+                  <div>
+                    <a
+                      href="projects-detail/{{ notification.common_id }}"
+                      class="text-decoration-none"
+                      *ngIf="notification.is_setModule == 'project'"
+                    >
+                      <p class="notification_content">
+                        {{ notification.massage }}
+                      </p>
+                    </a>
+                    <a
+                      href="view-task/{{ notification.common_id }}"
+                      class="text-decoration-none"
+                      *ngIf="notification.is_setModule == 'task'"
+                    >
+                      <p class="notification_content">
+                        {{ notification.massage }}
+                      </p>
+                    </a>
+                    <a
+                      href="notes"
+                      class="text-decoration-none"
+                      *ngIf="notification.is_setModule == 'note'"
+                    >
+                      <p class="notification_content">
+                        {{ notification.massage }}
+                      </p>
+                    </a>
+                    <p class="notify_date">{{ notification.time }}</p>
+                  </div>
+                </div>
+              </li>
+              <hr class="my-1" style="color: #33333361" />
+            </div>
+          </div>
+        </ul>
+      </div>
+    </c-nav-item>
+
+    <c-nav-item class="ms-3 user_img">
+      <div class="dropdown">
+        <div
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            *ngIf="memberlist?.profile !== null"
+            src="{{ memberlist.profile }}"
+            alt="image"
+            width="35px"
+            height="35px"
+            class="header_icons"
+          />
+          <span
+            *ngIf="memberlist?.profile === null"
+            class="header_user_short_name"
+            >{{ shortusername }}</span
+          >
+        </div>
+        <ul
+          class="dropdown-menu user_dropdown"
+          aria-labelledby="dropdownMenuButton1"
+        >
+          <li>
+            <a
+              routerLink="/profile"
+              class="d-flex align-items-center justify-content-between"
+              >Profile
+              <img
+                src="../../../assets/img/dashboard/create_arrow_icon.png"
+                alt=""
+            /></a>
+          </li>
+
+          <li>
+            <a
+              *ngIf="
+                userpermission?.add !== 0 &&
+                userpermission?.edit !== 0 &&
+                userpermission?.delete !== 0
+              "
+              routerLink="/organization-management"
+              class="d-flex align-items-center justify-content-between"
+              >Organization Management
+              <img
+                src="../../../assets/img/dashboard/create_arrow_icon.png"
+                alt=""
+            /></a>
+          </li>
+
+          <li>
+            <a
+              routerLink="/subscription-plan"
+              class="d-flex align-items-center justify-content-between"
+              >Subscription Management
+              <img
+                src="../../../assets/img/dashboard/create_arrow_icon.png"
+                alt=""
+            /></a>
+          </li>
+
+          <li>
+            <a
+              routerLink="/subscription-history"
+              class="d-flex align-items-center justify-content-between"
+              >Subscription History
+              <img
+                src="../../../assets/img/dashboard/create_arrow_icon.png"
+                alt=""
+            /></a>
+          </li>
+
+          <li class="dropdown_list">
+            <a class="d-flex align-items-center justify-content-between"
+              >Setting
+              <img
+                src="../../../assets/img/dashboard/create_arrow_icon.png"
+                alt=""
+            /></a>
+            <ul class="sub_menu">
+              <li>
+                <a
+                  routerLink="/leave"
+                  class="d-flex align-items-center justify-content-between"
+                  >Leave
+                  <img
+                    src="../../../assets/img/dashboard/create_arrow_icon.png"
+                    alt=""
+                    class="ps-3"
+                /></a>
+              </li>
+
+              <li>
+                <a
+                  routerLink="/attendance"
+                  class="d-flex align-items-center justify-content-between"
+                  >Attendance
+                  <img
+                    src="../../../assets/img/dashboard/create_arrow_icon.png"
+                    alt=""
+                    class="ps-3"
+                /></a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- <a class="d-flex align-items-center justify-content-between">
+              <li>Email Management</li>
+              <img
+                src="../../../assets/img/dashboard/create_arrow_icon.png"
+                alt=""
+            /></a> -->
+
+          <li>
+            <a
+              data-bs-toggle="modal"
+              data-bs-target="#HelpModal"
+              data-backdrop="static"
+              class="d-flex align-items-center justify-content-between"
+            >
+              Help
+              <img
+                src="../../../assets/img/dashboard/create_arrow_icon.png"
+                alt=""
+            /></a>
+          </li>
+          <div>
+            <a (click)="logout()" class="logout_btn">Logout </a>
+          </div>
+        </ul>
+      </div>
+    </c-nav-item>
+  </c-header-nav>
+</ng-container>
+<!--</c-header>-->

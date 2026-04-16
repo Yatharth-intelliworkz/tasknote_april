@@ -1,0 +1,740 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.3)" size="medium" color="#fff" type="timer" [fullScreen]="true"></ngx-spinner>
+
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <nav class="projects_tabs">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-Discussion-tab" data-bs-toggle="tab"
+                data-bs-target="#nav-Discussion" type="button" role="tab" aria-controls="nav-Discussion"
+                aria-selected="true">
+                Note Created
+              </button>
+              <button class="nav-link" id="nav-Task-Discussion-tab" data-bs-toggle="tab"
+                data-bs-target="#nav-Task-Discussion" type="button" role="tab" aria-controls="nav-Task-Discussion"
+                aria-selected="false">
+                Shared Me
+              </button>
+            </div>
+          </nav>
+
+          <!-- <div class="fade show" *ngIf="loading" style="text-align: center; padding-top: calc(100vh / 2); height: 100vh">
+                  <i class="spinner-grow spinner-grow-sm"></i>
+                  <span class="m-1">Loading...</span>
+                </div>    -->
+
+          <div class="d-flex justify-content-between align-items-center gap-3">
+            <a class="add_task_btn" *ngIf="noteslistData?.add == 1 && userpermission?.add !== 0" data-bs-toggle="modal"
+              data-bs-target="#addNoteModal" (click)="clearnoteform()">
+              Add Note</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- tabs  view -->
+
+      <div>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-Discussion" role="tabpanel"
+            aria-labelledby="nav-Discussion-tab">
+            <div class="pinned-notes">
+              <div class="projects_cards">
+                <h2 class="task_table_title" *ngIf="PinnedNotesList && PinnedNotesList.length > 0">
+                  Pinned
+                </h2>
+                <div class="note_wrapper">
+                  <div class="mb-3" *ngFor="let notes of PinnedNotesList">
+                    <div class="card" [style.background]="notes.color">
+                      <div class="card-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex gap-3 justify-content-between">
+                            <h2 class="project_name">
+                              {{ notes.title }}
+                            </h2>
+                          </div>
+                          <div>
+                            <a href="javascript:void(0)" (click)="updatepinstauts(notes.pin, notes.id)"
+                              *ngIf="notes.pin === 0">
+                              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="push_pin"
+                                style="color: #ffa1a1"></mat-icon>
+                            </a>
+                            <a href="javascript:void(0)" (click)="updatepinstauts(notes.pin, notes.id)"
+                              *ngIf="notes.pin === 1">
+                              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="push_pin"
+                                style="color: #333"></mat-icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <p class="note_description" [innerHTML]="notes.description"></p>
+                      </div>
+                      <div class="card-footer">
+                        <div class="d-flex gap-3">
+                          <!--  <img src="../../../assets/img/dashboard/note_pin_btn.svg" alt="" /> -->
+                          <a *ngIf="notes.is_shared === '0'" data-bs-toggle="modal" (click)="storenoteId(notes.id)"
+                            data-bs-target="#shareNote">
+                            <img src="../../../assets/img/dashboard/note_share_btn.svg" alt="" width="22px"
+                              height="22px" /></a>
+                          <a *ngIf="notes.is_shared === '1'" data-bs-toggle="modal"
+                            (click)="storedsharednoteId(notes.id)" data-bs-target="#sharedNote">
+                            <img src="../../../assets/img/dashboard/note_share_btn.svg" alt="" width="22px"
+                              height="22px" /></a>
+                          <a href="javascript:void(0)" *ngIf="noteslistData?.edit == 1 && userpermission?.edit !== 0"
+                            (click)="editnotes(notes.id)" data-bs-toggle="modal" data-bs-target="#editNoteModal">
+                            <img src="../../../assets/img/dashboard/note-edit-icon.svg" alt="" width="22px"
+                              height="22px" /></a>
+                          <a data-bs-toggle="modal" data-bs-target="#deletenoteModal"
+                            (click)="deletenoteopendialogue(notes.id)"
+                            *ngIf="noteslistData?.delete == 1  && userpermission?.delete !== 0"><img
+                              src="../../../assets/img/dashboard/note-delete-icon.svg" alt="" width="22px"
+                              height="22px" /></a>
+                          <div mat-button [matMenuTriggerFor]="menu">
+                            <img src="../../../assets/img/dashboard/palette.svg" alt="" width="22px" height="22px" />
+                          </div>
+                          <mat-menu #menu="matMenu" class="p-2">
+                            <div class="note_custom_color">
+                              <span (click)="setbackground('#148e96',notes.id)"
+                                style="background-color: #148e96;"></span>
+                              <span (click)="setbackground('#12945e',notes.id)"
+                                style="background-color: #12945e;"></span>
+                              <span (click)="setbackground('#f18006',notes.id)"
+                                style="background-color: #f18006;"></span>
+                              <span (click)="setbackground('#dc3535',notes.id)"
+                                style="background-color: #dc3535;"></span>
+                              <span (click)="setbackground('#594ab6',notes.id)"
+                                style="background-color: #594ab6;"></span>
+                              <span (click)="setbackground('#2a5fb0',notes.id)"
+                                style="background-color: #2a5fb0;"></span>
+                              <span (click)="setbackground('#757575',notes.id)"
+                                style="background-color: #757575;"></span>
+                              <span (click)="setbackground('#276ef1',notes.id)"
+                                style="background-color: #276ef1;"></span>
+                              <span (click)="setbackground('#c26131',notes.id)"
+                                style="background-color: #c26131;"></span>
+                              <span (click)="setbackground('#e39813',notes.id)"
+                                style="background-color: #e39813;"></span>
+                              <span (click)="setbackground('#7ca508',notes.id)"
+                                style="background-color: #7ca508;"></span>
+                              <span (click)="setbackground('#3abb4f',notes.id)"
+                                style="background-color: #3abb4f;"></span>
+                              <span (click)="setbackground('#337ae4',notes.id)"
+                                style="background-color: #337ae4;"></span>
+                              <span (click)="setbackground('#9647ce',notes.id)"
+                                style="background-color: #9647ce;"></span>
+                              <span (click)="setbackground('#d74589',notes.id)"
+                                style="background-color: #d74589;"></span>
+                              <span (click)="setbackground('#515be5',notes.id)"
+                                style="background-color: #515be5;"></span>
+                              <span (click)="setbackground('#792b9a',notes.id)"
+                                style="background-color: #792b9a;"></span>
+                              <span (click)="setbackground('#ab2626',notes.id)"
+                                style="background-color: #ab2626;"></span>
+                              <span (click)="setbackground('#8f446d',notes.id)"
+                                style="background-color: #8f446d;"></span>
+                              <span (click)="setbackground('#127a61',notes.id)"
+                                style="background-color: #127a61;"></span>
+                              <span (click)="setbackground('#9a3b1a',notes.id)"
+                                style="background-color: #9a3b1a;"></span>
+                              <span (click)="setbackground('#96336c',notes.id)"
+                                style="background-color: #96336c;"></span>
+                              <span (click)="setbackground('#0d968d',notes.id)"
+                                style="background-color: #0d968d;"></span>
+                              <span (click)="setbackground('#a08249',notes.id)"
+                                style="background-color: #a08249;"></span>
+                              <span (click)="setbackground('#c621e2',notes.id)"
+                                style="background-color: #c621e2;"></span>
+                              <span (click)="setbackground('#dc143c',notes.id)"
+                                style="background-color: #dc143c;"></span>
+                              <span (click)="setbackground('#ef6e05',notes.id)"
+                                style="background-color: #ef6e05;"></span>
+                              <span (click)="setbackground('#06aca7',notes.id)"
+                                style="background-color: #06aca7;"></span>
+                            </div>
+                          </mat-menu>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="projects_cards">
+              <h2 class="task_table_title" *ngIf="UnpinnedNotesList && UnpinnedNotesList.length > 0">All</h2>
+              <div class="note_wrapper">
+                <div class="mb-3" *ngFor="let notes of UnpinnedNotesList">
+                  <div class="card" [style.background]="notes.color">
+                    <div class="card-header">
+                      <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex gap-3">
+                          <h2 class="project_name">
+                            {{ notes.title }}
+                          </h2>
+                        </div>
+                        <div class="d-flex gap-3">
+                          <a href="javascript:void(0)" (click)="updatepinstauts(notes.pin, notes.id)"
+                            *ngIf="notes.pin === 0">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="push_pin"
+                              style="color: #ffa1a1;"></mat-icon>
+                          </a>
+                          <a href="javascript:void(0)" (click)="updatepinstauts(notes.pin, notes.id)"
+                            *ngIf="notes.pin === 1">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="push_pin"
+                              style="color: #333;"></mat-icon>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body table-responsive">
+                      <p class="note_description" [innerHTML]="notes.description">
+                      </p>
+                    </div>
+                    <div class="card-footer">
+                      <div class="d-flex gap-3">
+                        <!--  <img src="../../../assets/img/dashboard/note_pin_btn.svg" alt="" /> -->
+                        <a *ngIf="notes.is_shared === '0'" data-bs-toggle="modal" (click)="storenoteId(notes.id)"
+                          data-bs-target="#shareNote">
+                          <img src="../../../assets/img/dashboard/note_share_btn.svg" alt="" width="22px"
+                            height="22px" /></a>
+                        <a *ngIf="notes.is_shared === '1'" data-bs-toggle="modal" (click)="storedsharednoteId(notes.id)"
+                          data-bs-target="#sharedNote">
+                          <img src="../../../assets/img/dashboard/note_share_btn.svg" alt="" width="22px"
+                            height="22px" /></a>
+                        <a href="javascript:void(0)" (click)="editnotes(notes.id)" data-bs-toggle="modal"
+                          data-bs-target="#editNoteModal"
+                          *ngIf="noteslistData?.edit == 1  && userpermission?.edit !== 0">
+                          <img src="../../../assets/img/dashboard/note-edit-icon.svg" alt="" width="22px"
+                            height="22px" /></a>
+                        <a *ngIf="noteslistData?.delete == 1  && userpermission?.delete !== 0" data-bs-toggle="modal"
+                          data-bs-target="#deletenoteModal" (click)="deletenoteopendialogue(notes.id)"><img
+                            src="../../../assets/img/dashboard/note-delete-icon.svg" alt="" width="22px"
+                            height="22px" /></a>
+                        <div mat-button [matMenuTriggerFor]="menu">
+                          <img src="../../../assets/img/dashboard/palette.svg" alt="" width="22px" height="22px" />
+                        </div>
+                        <mat-menu #menu="matMenu" class="p-2">
+
+                          <div class="note_custom_color">
+                            <span (click)="setbackground('#148e96',notes.id)" style="background-color: #148e96;"></span>
+                            <span (click)="setbackground('#12945e',notes.id)" style="background-color: #12945e;"></span>
+                            <span (click)="setbackground('#f18006',notes.id)" style="background-color: #f18006;"></span>
+                            <span (click)="setbackground('#dc3535',notes.id)" style="background-color: #dc3535;"></span>
+                            <span (click)="setbackground('#594ab6',notes.id)" style="background-color: #594ab6;"></span>
+                            <span (click)="setbackground('#2a5fb0',notes.id)" style="background-color: #2a5fb0;"></span>
+                            <span (click)="setbackground('#757575',notes.id)" style="background-color: #757575;"></span>
+                            <span (click)="setbackground('#276ef1',notes.id)" style="background-color: #276ef1;"></span>
+                            <span (click)="setbackground('#c26131',notes.id)" style="background-color: #c26131;"></span>
+                            <span (click)="setbackground('#e39813',notes.id)" style="background-color: #e39813;"></span>
+                            <span (click)="setbackground('#7ca508',notes.id)" style="background-color: #7ca508;"></span>
+                            <span (click)="setbackground('#3abb4f',notes.id)" style="background-color: #3abb4f;"></span>
+                            <span (click)="setbackground('#337ae4',notes.id)" style="background-color: #337ae4;"></span>
+                            <span (click)="setbackground('#9647ce',notes.id)" style="background-color: #9647ce;"></span>
+                            <span (click)="setbackground('#d74589',notes.id)" style="background-color: #d74589;"></span>
+                            <span (click)="setbackground('#515be5',notes.id)" style="background-color: #515be5;"></span>
+                            <span (click)="setbackground('#792b9a',notes.id)" style="background-color: #792b9a;"></span>
+                            <span (click)="setbackground('#ab2626',notes.id)" style="background-color: #ab2626;"></span>
+                            <span (click)="setbackground('#8f446d',notes.id)" style="background-color: #8f446d;"></span>
+                            <span (click)="setbackground('#127a61',notes.id)" style="background-color: #127a61;"></span>
+                            <span (click)="setbackground('#9a3b1a',notes.id)" style="background-color: #9a3b1a;"></span>
+                            <span (click)="setbackground('#96336c',notes.id)" style="background-color: #96336c;"></span>
+                            <span (click)="setbackground('#0d968d',notes.id)" style="background-color: #0d968d;"></span>
+                            <span (click)="setbackground('#a08249',notes.id)" style="background-color: #a08249;"></span>
+                            <span (click)="setbackground('#c621e2',notes.id)" style="background-color: #c621e2;"></span>
+                            <span (click)="setbackground('#dc143c',notes.id)" style="background-color: #dc143c;"></span>
+                            <span (click)="setbackground('#ef6e05',notes.id)" style="background-color: #ef6e05;"></span>
+                            <span (click)="setbackground('#06aca7',notes.id)" style="background-color: #06aca7;"></span>
+                          </div>
+
+                        </mat-menu>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task-table" *ngIf="PinnedNotesList && UnpinnedNotesList?.length === 0">
+              <div class="user_task_wrapper">
+                <div class="card">
+                  <div>
+                    <p class="no_data_content"> Notes will appear here</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+          <div class="tab-pane fade" id="nav-Task-Discussion" role="tabpanel" aria-labelledby="nav-Task-Discussion-tab">
+            <div class="projects_cards">
+              <h2 class="task_table_title" *ngIf="noteslistshared && noteslistshared.length > 0">All</h2>
+              <div class="note_wrapper">
+                <div class="mb-3" *ngFor="let notes of noteslistshared">
+                  <div class="card" [style.background]="notes.color">
+                    <div class="card-header">
+                      <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex gap-3">
+                          <h2 class="project_name">
+                            {{ notes.title }}
+                          </h2>
+                        </div>
+                        <div class="d-flex gap-3">
+                          <a href="javascript:void(0)" (click)="updatepinstauts(notes.pin, notes.id)"
+                            *ngIf="notes.pin === 0">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="push_pin"
+                              style="color: #ffa1a1;"></mat-icon>
+                          </a>
+                          <a href="javascript:void(0)" (click)="updatepinstauts(notes.pin, notes.id)"
+                            *ngIf="notes.pin === 1">
+                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="push_pin"
+                              style="color: #FFF;"></mat-icon>
+                          </a>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body table-responsive">
+                      <p class="note_description" [innerHTML]="notes.description">
+                      </p>
+                    </div>
+                    <div class="card-footer">
+                      <div class="d-flex gap-3">
+                        <!--  <img src="../../../assets/img/dashboard/note_pin_btn.svg" alt="" /> -->
+                        <!-- <a
+                          data-bs-toggle="modal"
+                          (click)="storenoteId(notes.id)"
+                          data-bs-target="#shareNote"
+                        >
+                          <img
+                            src="../../../assets/img/dashboard/note_share_btn.svg"
+                            alt=""
+                            width="22px"
+                            height="22px"
+                        /></a> -->
+                        <a *ngIf="noteslistData?.edit == 1 && notes?.edited == 1  && userpermission?.edit !== 0"
+                          href="javascript:void(0)" (click)="editnotes(notes.id)" data-bs-toggle="modal"
+                          data-bs-target="#editNoteModal">
+                          <img src="../../../assets/img/dashboard/note-edit-icon.svg" alt="" width="22px"
+                            height="22px" /></a>
+                        <a data-bs-toggle="modal" data-bs-target="#deletenoteModal"
+                          (click)="deletenoteopendialogue(notes.id)"
+                          *ngIf="noteslistData?.delete == 1 && notes?.deleted == 1  && userpermission?.delete !== 0"><img
+                            src="../../../assets/img/dashboard/note-delete-icon.svg" alt="" width="22px"
+                            height="22px" /></a>
+                        <div mat-button [matMenuTriggerFor]="menu">
+                          <img src="../../../assets/img/dashboard/palette.svg" alt="" width="22px" height="22px" />
+                        </div>
+                        <mat-menu #menu="matMenu" class="p-2">
+                          <div class="note_custom_color">
+                            <span (click)="setbackground('#148e96',notes.id)" style="background-color: #148e96;"></span>
+                            <span (click)="setbackground('#12945e',notes.id)" style="background-color: #12945e;"></span>
+                            <span (click)="setbackground('#f18006',notes.id)" style="background-color: #f18006;"></span>
+                            <span (click)="setbackground('#dc3535',notes.id)" style="background-color: #dc3535;"></span>
+                            <span (click)="setbackground('#594ab6',notes.id)" style="background-color: #594ab6;"></span>
+                            <span (click)="setbackground('#2a5fb0',notes.id)" style="background-color: #2a5fb0;"></span>
+                            <span (click)="setbackground('#757575',notes.id)" style="background-color: #757575;"></span>
+                            <span (click)="setbackground('#276ef1',notes.id)" style="background-color: #276ef1;"></span>
+                            <span (click)="setbackground('#c26131',notes.id)" style="background-color: #c26131;"></span>
+                            <span (click)="setbackground('#e39813',notes.id)" style="background-color: #e39813;"></span>
+                            <span (click)="setbackground('#7ca508',notes.id)" style="background-color: #7ca508;"></span>
+                            <span (click)="setbackground('#3abb4f',notes.id)" style="background-color: #3abb4f;"></span>
+                            <span (click)="setbackground('#337ae4',notes.id)" style="background-color: #337ae4;"></span>
+                            <span (click)="setbackground('#9647ce',notes.id)" style="background-color: #9647ce;"></span>
+                            <span (click)="setbackground('#d74589',notes.id)" style="background-color: #d74589;"></span>
+                            <span (click)="setbackground('#515be5',notes.id)" style="background-color: #515be5;"></span>
+                            <span (click)="setbackground('#792b9a',notes.id)" style="background-color: #792b9a;"></span>
+                            <span (click)="setbackground('#ab2626',notes.id)" style="background-color: #ab2626;"></span>
+                            <span (click)="setbackground('#8f446d',notes.id)" style="background-color: #8f446d;"></span>
+                            <span (click)="setbackground('#127a61',notes.id)" style="background-color: #127a61;"></span>
+                            <span (click)="setbackground('#9a3b1a',notes.id)" style="background-color: #9a3b1a;"></span>
+                            <span (click)="setbackground('#96336c',notes.id)" style="background-color: #96336c;"></span>
+                            <span (click)="setbackground('#0d968d',notes.id)" style="background-color: #0d968d;"></span>
+                            <span (click)="setbackground('#a08249',notes.id)" style="background-color: #a08249;"></span>
+                            <span (click)="setbackground('#c621e2',notes.id)" style="background-color: #c621e2;"></span>
+                            <span (click)="setbackground('#dc143c',notes.id)" style="background-color: #dc143c;"></span>
+                            <span (click)="setbackground('#ef6e05',notes.id)" style="background-color: #ef6e05;"></span>
+                            <span (click)="setbackground('#06aca7',notes.id)" style="background-color: #06aca7;"></span>
+                          </div>
+                        </mat-menu>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="task-table" *ngIf="noteslistshared?.length === 0">
+              <div class="user_task_wrapper">
+                <div class="card">
+                  <div>
+                    <p class="no_data_content">Notes shared to you will appear here
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </section>
+</main>
+
+
+<!-- Add Note Modal -->
+<div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add New Note
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_add" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="submitForm" (ngSubmit)="insertusernotes()">
+          <!-- <div class="mb-3">
+                  <input type="text" class="form-control" formControlName="title" id="addNoteTitle" placeholder="Enter title">
+                  <div *ngIf="submitForm.get('title')?.invalid && (submitForm.get('title')?.dirty || submitForm.get('title')?.touched)">
+                    <small class="text-danger">Title is required</small>
+                  </div>
+                </div> -->
+
+
+          <div class="form_field">
+            <mat-form-field>
+              <input matInput type="text" class="form-control" formControlName="title" id="addNoteTitle"
+                placeholder="Enter Title" [(ngModel)]="noteslistedit.title" />
+              <div
+                *ngIf="submitForm.get('title')?.invalid && (submitForm.get('title')?.dirty || submitForm.get('title')?.touched)">
+                <small class="text-danger">Title is required</small>
+              </div>
+            </mat-form-field>
+          </div>
+
+
+          <div class="mb-3">
+            <label for="quillEditor" class="form-label">Note Content</label>
+            <div class="editor-container">
+              <quill-editor formControlName="description" [content]="editorContent"
+                (contentChanged)="onContentChange($event)"></quill-editor>
+              <div
+                *ngIf="submitForm.get('description')?.invalid && (submitForm.get('description')?.dirty || submitForm.get('description')?.touched)">
+                <small class="text-danger">Description is required</small>
+              </div>
+            </div>
+          </div>
+          <div ngbDropdown class="d-inline-block remind_box">
+           
+            <div class="opn_rmd" (clickOutside)="reminder()">
+              
+                <mat-slide-toggle class="my-2" formControlName="is_expiry">Is Expire</mat-slide-toggle>
+                <div *ngIf="submitForm.get('is_expiry')?.value">
+                  <mat-divider></mat-divider>
+                    <div class="right_box">
+                      <div class="rgt_bor my-2">
+                          <div class="mb-3">
+                            <div class="form_field">
+                              <mat-form-field>
+                                <input matInput formControlName="expiry_date" [matDatepicker]="picker"
+                                  placeholder="Select Start Date" />
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+              <button class="submit_btn">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add Note Modal -->
+
+
+<!-- Edit Note Modal -->
+<div class="modal fade" id="editNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Note
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_edit" id="closeModal" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm" (ngSubmit)="updateusernotes()">
+          <div class="mb-3">
+            <!-- <label for="addNoteTitle" class="form-label">Title</label>
+                  <input type="text" class="form-control" formControlName="title" id="addNoteTitle" placeholder="Enter title" [(ngModel)]="noteslistedit.title">
+                  <input type="hidden" class="form-control" id="addNoteId" formControlName="noteID" [(ngModel)]="noteslistedit.id">
+                  <div *ngIf="editForm.get('title')?.invalid && (editForm.get('title')?.dirty || editForm.get('title')?.touched)">
+                    <small class="text-danger">Title is required</small>
+                  </div> -->
+            <div class="form_field">
+              <mat-form-field>
+                <input matInput type="text" class="form-control" formControlName="title" id="addNoteTitle"
+                  placeholder="Enter title" [(ngModel)]="noteslistedit.title" />
+                <input type="hidden" class="form-control" id="addNoteId" formControlName="noteID"
+                  [(ngModel)]="noteslistedit.id">
+                <div
+                  *ngIf="editForm.get('title')?.invalid && (editForm.get('title')?.dirty || editForm.get('title')?.touched)">
+                  <small class="text-danger">Title is required</small>
+                </div>
+              </mat-form-field>
+            </div>
+
+
+
+          </div>
+          <div class="mb-3">
+            <label for="quillEditor" class="form-label">Note Content</label>
+            <quill-editor formControlName="description" [(ngModel)]="noteslistedit.description"></quill-editor>
+          </div>
+          <div ngbDropdown class="d-inline-block remind_box">
+            <!-- <img src="../../../assets/img/dashboard/recurring-task.svg" width="30" class="" alt=""
+              (click)="reminderOpen = !reminderOpen" /> -->
+            <div class="opn_rmd" (clickOutside)="reminder()">
+              
+                <mat-slide-toggle class="my-2" formControlName="is_expiry"  [(ngModel)]="noteslistedit.is_expiry">Is Expire</mat-slide-toggle>
+                <div *ngIf="submitForm.get('is_expiry')?.value">
+                  <mat-divider></mat-divider>
+                    <div class="right_box">
+                      <div class="rgt_bor my-2">
+                          <div class="mb-3">
+                            <div class="form_field" *ngIf="noteslistedit.is_expiry">
+                              <mat-form-field>
+                                <input matInput formControlName="expiry_date" [matDatepicker]="pickeredit"
+                                  placeholder="Select expiry date" [(ngModel)]="noteslistedit.expiry_date" />
+                                <mat-datepicker-toggle matIconSuffix [for]="pickeredit"></mat-datepicker-toggle>
+                                <mat-datepicker #pickeredit></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                       
+                      
+                      </div>
+                    </div>
+                  <!-- <a href="javascript:void(0)" (click)="closeReminder()" class="toggle_btn">Done</a> -->
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+              <button (click)="updateusernotes(); closeEditNoteModal()" class="submit_btn">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Edit Note Modal -->
+
+
+<!-- share note modal -->
+
+<div class="modal fade" id="shareNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel ">Share Note</h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_shareusernote" />
+      </div>
+      <div class="modal-body">
+        <div>
+          <section class="example-section">
+            <span class="example-list-section">
+            </span>
+
+
+            <!-- <form [formGroup]="shareusernoteForm" (ngSubmit)="ShareUserNote()"> -->
+            <!-- <form #shareusernoteForm="ngForm" (ngSubmit)="ShareUserNote(shareusernoteForm.value, shareusernoteForm)">
+              <div class="table-responsive">
+                <table class="table role_table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th><mat-checkbox [(ngModel)]="unsharedselectAllChecked" (change)="unsharedtoggleSelectAllSelect()">Select People</mat-checkbox></th>
+                      <th><mat-checkbox [(ngModel)]="EditunsharedselectAllChecked" (change)="unsharedtoggleSelectAllEdit()">Edit Permission</mat-checkbox></th>
+                      <th><mat-checkbox [(ngModel)]="DeleteunsharedselectAllChecked" (change)="unsharedtoggleSelectAllDelete()">Delete Permission</mat-checkbox></th>
+                    </tr>
+                  </thead>
+                  <tbody class="dream-table">
+                    <tr *ngFor="let member of memberslist">
+                      <td>{{ member.name }}</td>
+                      <td>
+                        <mat-checkbox name="{{ member.id }}.selected" (change)="unsharedonCheckboxChange(member.id)" [(ngModel)]="member.selected"></mat-checkbox>
+                      </td>
+                      <td>
+                        <mat-checkbox name="{{ member.id }}.edited" (change)="EditunsharedonCheckboxChange(member.id)" [(ngModel)]="member.edited"></mat-checkbox>
+                      </td>
+                      <td>
+                        <mat-checkbox name="{{ member.id }}.deleted" (change)="DeleteunsharedonCheckboxChange(member.id)" [(ngModel)]="member.deleted"></mat-checkbox>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <button type="submit" class="submit_btn">Submit</button>
+                </div>
+              </div>
+            </form> -->
+            <form #shareusernoteForm="ngForm" (ngSubmit)="ShareUserNote(shareusernoteForm.value, shareusernoteForm)">
+              <div class="table-responsive">
+                <table class="table role_table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th><mat-checkbox (change)="unsharedtoggleSelectAllSelect()"></mat-checkbox>Select People</th>
+                      <th><mat-checkbox (change)="unsharedtoggleSelectAllEdit()"></mat-checkbox>Edit Permission</th>
+                      <th><mat-checkbox (change)="unsharedtoggleSelectAllDelete()"></mat-checkbox>Delete Permission</th>
+                    </tr>
+                  </thead>
+                  <tbody class="dream-table">
+                    <tr *ngFor="let member of memberslist" [class.selected]="member.selected">
+                      <td>{{ member.name }}</td>
+                      <td>
+                        <mat-checkbox name="{{ member.id }}.selected" [(ngModel)]="member.selected"
+                          (change)="unsharedonCheckboxChange(member.id)"></mat-checkbox>
+                      </td>
+                      <td>
+                        <mat-checkbox name="{{ member.id }}.edited" [(ngModel)]="member.edited"
+                          (change)="unsharedonCheckboxChangeEdit(member.id)"></mat-checkbox>
+                      </td>
+                      <td>
+                        <mat-checkbox name="{{ member.id }}.deleted" [(ngModel)]="member.deleted"
+                          (change)="unsharedonCheckboxChangeDelete(member.id)"></mat-checkbox>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+              </div>
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <button type="submit" class="submit_btn">Submit</button>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="sharedNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel ">Shared Note</h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" id="sharedusernoteupdate"
+          aria-label="Close" alt="" class="popup_close_btn_shareusernote" />
+      </div>
+      <div class="modal-body">
+        <div>
+          <section class="example-section">
+            <span class="example-list-section">
+            </span>
+
+            <form [formGroup]="editsharednoteForm">
+              <input matInput hidden="true" [(ngModel)]="editsharednoteID" formControlName="noteid" />
+              <div class="table-responsive">
+                <table class="table role_table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th><mat-checkbox (change)="toggleSelectAllSelect()">Select
+                          People</mat-checkbox></th>
+                      <th><mat-checkbox (change)="toggleSelectAllEdit()"> Edit
+                          Permisson </mat-checkbox></th>
+                      <th><mat-checkbox (change)="toggleSelectAllDelete()"> Delete
+                          Permisson </mat-checkbox></th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="dream-table">
+                    <tr *ngFor="let member of editsharednotea">
+                      <td>{{ member.name }}</td>
+                      <td>
+                        <mat-checkbox formControlName="{{ member.id }}.select" (change)="onCheckboxChange(member.id)"
+                          [(ngModel)]="member.select"></mat-checkbox>
+                      </td>
+                      <td>
+                        <mat-checkbox [(ngModel)]="member.edit" formControlName="{{ member.id }}.edit"
+                          (change)="onCheckboxChangeEdit(member.id)"></mat-checkbox>
+                      </td>
+                      <td>
+                        <mat-checkbox [(ngModel)]="member.delete" (change)="onCheckboxChangeDelete(member.id)"
+                          formControlName="{{ member.id }}.delete"></mat-checkbox>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <button type="submit" class="submit_btn" (click)="Updatesharedusernotes()">Submit</button>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add New Role Modal -->
+
+
+
+
+<div class="modal fade" id="deletenoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Delete Note
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_delete_note" />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to delete this note?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="confirmDelete()">Yes</button>
+            <!-- <button class="btn cancel_btn" (click)="dismissModal()">No</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

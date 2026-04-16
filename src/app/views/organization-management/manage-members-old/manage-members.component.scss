@@ -1,0 +1,220 @@
+
+
+.user_task_wrapper .nav-tabs,
+.nav-tabs .nav-link,
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:hover {
+  border: none;
+}
+
+
+.team_wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+
+.custom_edit_icon .dropdown-toggle {
+  background-color: white;
+  border: none;
+}
+
+.custom_edit_icon .dropdown-toggle::after {
+  display: none;
+}
+
+.custom_edit_icon .dropdown-menu.show {
+  transform: translate(0px, 50px) !important;
+}
+
+.manage_searchbar {
+  position: relative;
+}
+
+.searchbar_icon {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  background-color: white;
+}
+
+
+.table-responsive{
+  height: calc(100vh - 16em);
+  overflow: auto;
+}
+.task-table .card::-webkit-scrollbar, .table-responsive::-webkit-scrollbar{
+  display: none;
+}
+
+.task_table thead{
+  position:sticky;
+  top:0;
+  z-index: 9;
+}
+
+.task-table tbody tr a{
+  width: auto;
+}
+
+.projects_tabs{
+  display: flex;
+  justify-content: space-between;
+}
+
+.task_table_title {
+  color: #1C1F66;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  margin: 0;
+  max-width: 170px;
+}
+
+
+.task_table tr th,
+.task_table tr td {
+  font-size: 14px;
+  color: #707070;
+  font-weight: 400;
+  line-height: 19px;
+  vertical-align: middle;
+}
+
+.user_active_status {
+  position: absolute;
+  content: "";
+  width: 7px;
+  height: 7px;
+  background-color: #0cae00;
+  border-radius: 100%;
+  bottom: 9px;
+  right: -3px;
+}
+
+
+.projects_cards {
+  display: grid;
+}
+
+.projects_cards .card-header {
+  background-color: #FF5656;
+  border-radius: 10px 10px 0 0;
+  padding: 15px;
+}
+
+.projects_cards .card-body {
+  border-radius: 0 0 10px 10px;
+}
+
+.project_name {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 30px;
+  color: white;
+  margin: 0;
+  max-width: 170px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.project_date {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: white;
+  margin: 0;
+}
+
+.project_table_data {
+  width: 100%;
+}
+
+.project_table_data tr {
+  border-bottom: 1px dashed #DDDDDD;
+  margin: 10px 0;
+}
+
+.project_table_data tr td {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  padding: 10px 0;
+}
+
+.user_image {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+.report_table_data{
+  min-width:200px ;
+}
+
+@media only screen and (max-width: 1535px) {
+  .add_task_btn {
+    font-size: 14px;
+  }
+
+  .projects_tabs .nav-tabs .nav-link {
+    margin-right: 5px;
+  }
+
+  .projects_tabs .nav-tabs .nav-link,
+  .projects_tabs .nav-tabs .nav-link.active {
+    font-size: 14px;
+  }
+
+  .projects_tabs .nav-tabs .nav-link {
+    padding: 8px 12px;
+  }
+}
+
+
+
+@media only screen and (max-width: 1200px) {
+  .team_wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .team_wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+
+  .projects_tabs .nav-tabs .nav-link {
+    margin-right: 5px;
+  }
+
+  .projects_tabs .nav-tabs .nav-link,
+  .projects_tabs .nav-tabs .nav-link.active,
+  .add_task_btn {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .projects_tabs .nav-tabs {
+    border: none;
+    flex-wrap: nowrap;
+  }
+
+  .add_task_btn {
+    display: inline-block;
+    font-size: 14px;
+    min-width: 110px;
+    text-align: center;
+  }
+
+  .project_name {
+    max-width: 130px;
+  }
+}

@@ -1,0 +1,534 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+          <div class="d-flex gap-3">
+
+            <!-- <a
+              class="chat_btn"
+              data-bs-toggle="modal"
+              data-bs-target="#createMemberModal"
+            >
+              + Member Chat</a
+            > -->
+          </div>
+
+          <nav class="projects_tabs mb-4">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-General-tab" data-bs-toggle="tab" data-bs-target="#nav-General"
+                type="button" role="tab" aria-controls="nav-General" aria-selected="true">
+                Member Chat
+              </button>
+              <button class="nav-link" id="nav-task-tab" data-bs-toggle="tab" data-bs-target="#nav-task" type="button"
+                role="tab" aria-controls="nav-task" aria-selected="false">
+                Group Chat
+              </button>
+            </div>
+          </nav>
+
+          <hr />
+
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-General" role="tabpanel" aria-labelledby="nav-General-tab">
+              <div *ngFor="let user of memberlist">
+                <div class="general_chat_wrapper" (click)="setuser(user.id, user.name)"
+                  [class.active]="user.id == activeUserId" *ngIf="user.id != loggedinuser">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="user_short_name rounded position-relative"
+                      *ngIf="user.profile == domainName + 'public/images/user_avatar.png'">{{ getInitials(user.name) }}
+                      <span *ngIf="user.is_login == 0 && user.profile === domainName + 'public/images/user_avatar.png'"
+                      class="position-absolute start-100 translate-middle p-1 bg-danger border rounded-circle"
+                      style="bottom: -5px"></span>
+                      <span *ngIf="user.is_login == 1" class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border rounded-circle"></span>
+                    </div>
+                   <div class="position-relative">
+                    <img src="{{ user?.profile }}" alt="" class="profile_photo"
+                    *ngIf="user.profile !== domainName + 'public/images/user_avatar.png'">
+                    <span *ngIf="user.is_login == 0 && user.profile !== domainName + 'public/images/user_avatar.png'"
+                      class="position-absolute start-100 translate-middle p-1 bg-danger border rounded-circle"
+                      style="bottom: -5px;z-index: 1;"></span>
+                      <span *ngIf="user.is_login == 1 && user.profile !== domainName + 'public/images/user_avatar.png'" class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border rounded-circle" style="z-index: 1;"></span>
+                   </div>
+                    <div class="chat_user_name">{{ user.name }} </div>
+                  </div>
+                  <div *ngIf="user.unreadMessageCount > 0" class="unread-msg">
+                    {{ user.unreadMessageCount }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-task" role="tabpanel" aria-labelledby="nav-task-tab">
+              <div class="my-3">
+                <a class="chat_btn" data-bs-toggle="modal" data-bs-target="#createGroupModal">
+                  + Create Group</a>
+              </div>
+              <div class="d-flex gap-3 align-items-center" *ngFor="let team of teamList">
+                <div class="general_chat_wrapper" (click)="setteam(team.id,team.name)"
+                  [class.active]="team.id == activeUserTeam">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="user_short_name rounded">{{ getInitials(team.name) }}</div>
+                    <div class="chat_user_name">{{ team.name }}</div>
+                    <div *ngIf="team.unreadMessageCountgroup > 0" class="unread-msg">
+                      {{ team.unreadMessageCountgroup }}
+                    </div>
+                  </div>
+                </div>
+                <div mat-button [matMenuTriggerFor]="groupmenu" *ngIf="team.edit == 1 || team.delete == 1">
+                  <img src="../../../assets/img/dashboard/edit-group-btn.svg" style="cursor: pointer;height: 20px;"
+                    alt="">
+                </div>
+                <mat-menu #groupmenu="matMenu" xPosition="before">
+                  <button *ngIf="team.edit == 1" mat-menu-item data-bs-toggle="modal" data-bs-target="#editGroupModal"
+                    (click)="editGroup(team.id)">Edit</button>
+                  <button *ngIf="team.delete == 1" mat-menu-item data-bs-toggle="modal"
+                    data-bs-target="#deleteGroupModal" (click)="deletegroupopendialogue(team.id)">Delete</button>
+                </mat-menu>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12" *ngIf="activeUserId">
+          <div>
+            <div class="card">
+              <div class="card-body pb-0">
+
+                <form id="message" [formGroup]="form" (ngSubmit)="onChatSubmit(form.value)">
+                  <input type="hidden" formControlName="username">
+                  <input type="hidden" formControlName="tosenderid">
+                  <input type="hidden" formControlName="fromsenderid">
+                  <!-- new chat design -->
+
+                  <div class="chat">
+                    <div class="user_chat_header">
+                      <div class="d-flex align-items-center gap-3">
+                        <!-- <div class="user_short_name rounded">Jt</div>
+                        -->
+                        <div class="chat_user_title">
+                          <mat-form-field appearance="outline" class="fw">
+                            <input matInput formControlName="username" readonly>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="message-container" #scrollMe *ngIf="chatsmessage">
+                      <div *ngFor="let chatm of chatsmessage">
+                        <div class="comment me"
+                          *ngIf="chatm.sender_id==loggedinuser && chatm.receiver_id == senderid && chatm.is_read == '1'">
+                          <div class="bubble" *ngIf="!chatm.file">
+                            <p class="text-right" style="text-align:right;">{{chatm.message}} <br> <span class="chat_time">{{chatm.created_at |
+                              date:'shortTime'}} </span></p>
+                          </div>
+                          <div class="bubble" *ngIf="chatm.file">
+                            <p class="text-right" style="text-align:right;"><a href="{{chatm.file}}" download target="_blank" style="color: black;text-decoration: none;margin: 5px;padding: 5px;">Document / File</a> <br> <span
+                              class="chat_time">
+                              {{
+                              chatm.created_at | date : "shortTime"
+                              }}</span></p>
+                          </div>
+                        </div>
+                        <div class="comment other" id="pushermessage"
+                          *ngIf="chatm.sender_id!=loggedinuser && chatm.sender_id == senderid && chatm.is_read == '1'">
+                          <div class="bubble">
+                            <p class="text-left" style="text-align:right;">{{chatm.message}} <br>
+                              <span class="chat_time">
+                                {{
+                                chatm.created_at | date : "shortTime"
+                                }}</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngFor="let chatm of chatsmessage">
+                        <!-- <div>Unread Messages</div> -->
+                        <div class="comment me"
+                          *ngIf="chatm.sender_id==loggedinuser && chatm.receiver_id == senderid && chatm.is_read == '0'">
+                          <div class="bubble" *ngIf="!chatm.file">
+                            <p class="text-left">{{chatm.sender_name}}</p>
+                            <p class="text-right" style="text-align:right;">{{chatm.message}} <br> <span
+                                class="chat_time">
+                                {{
+                                chatm.created_at | date : "shortTime"
+                                }}</span></p>
+                          </div>
+                          <div class="bubble" *ngIf="chatm.file">
+                            <p class="text-left">{{chatm.sender_name}}</p>
+                            <p class="text-right" style="text-align:right;"><a href="{{chatm.file}}" download target="_blank" style="color: black;text-decoration: none;margin: 5px;padding: 5px;">Document / File</a> <br> <span
+                                class="chat_time">
+                                {{
+                                chatm.created_at | date : "shortTime"
+                                }}</span></p>
+                          </div>
+                        </div>
+                        <div class="comment other" id="pushermessage"
+                          *ngIf="chatm.sender_id!=loggedinuser">
+                          <div class="bubble" *ngIf="!chatm.file">
+                            <p class="text-left">{{chatm.sender_name}}</p>
+                            <p class="text-right" style="text-align:right;">{{chatm.message}} <br> <span
+                                class="chat_time">
+                                {{
+                                chatm.created_at | date : "shortTime"
+                                }}</span></p>
+                          </div>
+                          <div class="bubble" *ngIf="chatm.file">
+                            <p class="text-left">{{chatm.sender_name}}</p>
+                            <p class="text-right" style="text-align:right;"><a href="{{chatm.file}}" download target="_blank" style="color: black;text-decoration: none;margin: 5px;padding: 5px;">Document / File</a> <br> <span
+                                class="chat_time">
+                                {{
+                                chatm.created_at | date : "shortTime"
+                                }}</span></p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="comment other" *ngIf="messagesArrays && messagesArrays.length > 0">
+                        <div *ngFor="let messagesArrayes of messagesArrays">
+                          <div class="bubble">
+                            <p class="text-left">{{ messagesArrayes.message }} <br>{{messagesArrayes.created_at
+                              |date:'shortTime'}} </p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div id="appendrecording"></div> -->
+                    </div>
+
+                    <!-- new chat design -->
+                    <div class="chat_container">
+                      <div class="chat_footer">
+                        <div (click)="toggleEmojiPicker()"> 😀</div>
+                        <emoji-mart class="emoji-mart" *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)"
+                          title="Pick your emoji…"></emoji-mart>
+                        <mat-form-field appearance="outline" class="fw">
+                          <input matInput formControlName="message" placeholder="Enter Chat">
+                        </mat-form-field>
+                        <img src="../../../assets/img/dashboard/file-icon.png" height="25px" style="cursor: pointer;" alt="" (click)="hiddenfileinput.click()">
+                        <input type="file" style="display: none" (change)="uploaddocsingle($event)" #hiddenfileinput />
+                        <button type="submit" matSuffix mat-icon-button aria-label="Submit"
+                          [disabled]="!form.get('message')?.value">
+                          <mat-icon>send</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12" *ngIf="activeUserTeam">
+          <div>
+            <div class="card">
+              <div class="card-body">
+
+                <form id="message" [formGroup]="form" (ngSubmit)="onChatSubmitteam(form.value)">
+                  <input type="hidden" formControlName="group_id">
+                  <!-- new chat design -->
+
+                  <div class="chat">
+                    <div class="user_chat_header">
+                      <div class="d-flex align-items-center gap-3">
+                        <!-- <div class="user_short_name rounded">Jt</div>
+                        -->
+                        <div class="chat_user_title">
+                          <mat-form-field appearance="outline" class="fw">
+                            <input matInput formControlName="teamname" readonly>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div>
+                        <p class="chat_group_member" data-bs-toggle="offcanvas" data-bs-target="#groupList"
+                          aria-controls="offcanvasRight">
+                          {{teammemberslist?.length}} Members
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="message-container" #scrollMe *ngIf="chatsmessages">
+                      <div *ngFor="let chatm of chatsmessages">
+                        <div class="comment me" *ngIf="chatm.sender_id == loggedinuser">
+                          <div class="user_short_name rounded" title="{{chatm.sender_name}}" style="cursor: pointer;">
+                            {{ groupShortname(chatm.sender_name) }}</div>
+                          <div class="bubble" *ngIf="!chatm.file">
+                            <p class="text-left">{{chatm.sender_name}}</p>
+                            <p class="text-right" style="text-align:right;">{{chatm.message}} <br> <span
+                                class="chat_time">
+                                {{
+                                chatm.created_at | date : "shortTime"
+                                }}</span></p>
+                          </div>
+                          <div class="bubble" *ngIf="chatm.file">
+                            <p class="text-left">{{chatm.sender_name}}</p>
+                            <p class="text-right" style="text-align:right;"><a href="{{chatm.file}}" download target="_blank" style="color: black;text-decoration: none;margin: 5px;padding: 5px;">Document / File</a> <br> <span
+                                class="chat_time">
+                                {{
+                                chatm.created_at | date : "shortTime"
+                                }}</span></p>
+                          </div>
+                        </div>
+                        <div class="comment other" *ngIf="chatm.sender_id !== loggedinuser">
+                          <div class="user_short_name rounded" title="{{chatm.sender_name}}" style="cursor: pointer;">
+                            {{ groupShortname(chatm.sender_name) }}</div>
+                          <!-- <div class="bubble">
+                            <p class="text-left">{{chatm.sender_name}}</p>
+                            <p class="text-left" style="text-align:right;">{{chatm.message}}<br> <span class="chat_time">
+                                {{
+                                chatm.created_at | date : "shortTime"
+                                }}</span></p>
+                          </div> -->
+                          <div class="bubble">
+                            <p class="text-left">{{chatm.sender_name}} </p>
+                            <p *ngIf="!chatm.file" class="text-right" style="text-align:right;">{{chatm.message}} <br> <span
+                                class="chat_time">
+                                {{ chatm.created_at | date : "shortTime" }}</span></p>
+                            <p *ngIf="chatm.file" class="text-right" style="text-align:right;"><a href="{{chatm.file}}" download target="_blank" style="color: black;text-decoration: none;margin: 5px;padding: 5px;">Document / File</a> <br> <span
+                                    class="chat_time">
+                                    {{ chatm.created_at | date : "shortTime" }}</span></p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="comment other" *ngIf="grpmessagesArraysgrp && grpmessagesArraysgrp.length > 0">
+                        <div *ngFor="let messagesArrayes of grpmessagesArraysgrp">
+                          <div class="user_short_name rounded" title="{{messagesArrayes.sender_name}}"
+                            style="cursor: pointer;">
+                            {{ groupShortname(messagesArrayes.sender_name) }}</div>
+                          <div class="bubble">
+                            <p class="text-left">{{messagesArrayes.sender_name}}</p>
+                            <p class="text-left">{{ messagesArrayes.message }}<br>
+                              <span class="chat_time">
+                                {{messagesArrayes.created_at | date:'shortTime'}}</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="appendrecording"></div>
+                    </div>
+
+                    <!-- new chat design -->
+                    <div class="chat_container">
+                      <div class="chat_footer">
+                        <div (click)="toggleEmojiPicker()"> 😀</div>
+                        <emoji-mart class="emoji-mart" *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)"
+                          title="Pick your emoji…"></emoji-mart>
+                        <mat-form-field appearance="outline" class="fw">
+                          <input matInput formControlName="message" placeholder="Enter Chat">
+                          <input formControlName="members" type="hidden" value="{{ teamList.id }}">
+                        </mat-form-field>
+                        <img src="../../../assets/img/dashboard/file-icon.png" height="25px" style="cursor: pointer;" alt="" (click)="hiddenfileinput.click()">
+                        <input type="file" style="display: none" (change)="uploadtaskcomment($event)" #hiddenfileinput />
+
+                        <button type="submit" matSuffix mat-icon-button aria-label="Submit">
+                          <mat-icon>send</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- add discussion project modal start -->
+
+<div class="modal fade" id="createGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Create New Group Chat
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn" id="group_popup_close_btn" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="groupForm" (ngSubmit)="onSubmit(groupForm.value)">
+          <div class="mb-3">
+            <div class="form_field">
+              <mat-form-field>
+                <input matInput #input placeholder="Group Title" formControlName="group_name" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="task_multiselect">
+              <ng-multiselect-dropdown id="two" name="city" placeholder="Select Project" [settings]="dropdownSettings1"
+                [data]="team2" formControlName="project_id" (ngModelChange)="getusers($event)">
+                <div style="padding: 1px 10px; margin-right: 10px; right: 2px; top: -2px;"></div>
+                <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                  <div>{{ option }}</div>
+                </ng-template>
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="task_multiselect">
+              <ng-multiselect-dropdown id="two" name="city" placeholder="Members" [settings]="dropdownSettings2"
+                [data]="team1" formControlName="group_members">
+                <div style="padding: 1px 10px; margin-right: 10px; right: 2px; top: -2px;"></div>
+                <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                  <div>{{ option }}</div>
+                </ng-template>
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <button type="submit" class="btn submit_btn">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- add discussion project modal end -->
+
+<!-- member modal start -->
+
+<div class="modal fade" id="createMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Member list
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn" />
+      </div>
+      <div class="modal-body">
+        <form action="">
+
+          <div class="task_multiselect">
+            <ng-multiselect-dropdown id="two" name="city" placeholder="Assign" [settings]="dropdownSettings2"
+              [data]="user" [formControlName]="'selectedItems2'">
+              <ng-template #optionsTemplate let-item let-option="option" let-id="id" let-isSelected="isSelected">
+                <div style="
+                  padding: 1px 10px;
+                  margin-right: 10px;
+                  right: 2px;
+                  top: -2px;
+                "></div>
+              </ng-template>
+              <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                <div>
+                  {{ option }}
+                </div>
+              </ng-template>
+            </ng-multiselect-dropdown>
+          </div>
+          <button class="btn submit_btn">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- member modal end -->
+
+
+<!-- group member list -->
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="groupList" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Group List</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div *ngFor="let userslist of teammemberslist">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="user_short_name rounded">{{userslist.setWords}}</div>
+        <div class="chat_user_name">{{userslist.name}}</div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+
+<!-- group member list -->
+
+<!-- edit group group -->
+
+<div class="modal fade" id="editGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Group
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          id="group_popup_close_btn_update" class="popup_close_btn_delete_note" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="EditgroupForm">
+          <div class="mb-3">
+            <div class="form_field">
+              <mat-form-field>
+                <input matInput #input placeholder="Group Title" [(ngModel)]="groupedits.group_name"
+                  formControlName="group_name" />
+              </mat-form-field>
+              <input matInput hidden="true" [(ngModel)]="groupedits.id" formControlName="id" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="task_multiselect">
+              <ng-multiselect-dropdown id="two" name="city" placeholder="Select Project" [settings]="dropdownSettings1"
+                [data]="team2" formControlName="project_id" [(ngModel)]="groupedits.projects"
+                (ngModelChange)="getusers($event)">
+                <div style="padding: 1px 10px; margin-right: 10px; right: 2px; top: -2px;"></div>
+                <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                  <div>{{ option }}</div>
+                </ng-template>
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="task_multiselect">
+              <ng-multiselect-dropdown id="two" name="city" placeholder="Assign" [settings]="dropdownSettings2"
+                [data]="team1" formControlName="group_members" [(ngModel)]="groupedits.users">
+                <div style="padding: 1px 10px; margin-right: 10px; right: 2px; top: -2px;"></div>
+                <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                  <div>{{ option }}</div>
+                </ng-template>
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+          <button (click)="onupdate()" class="btn submit_btn">Done</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- edit group group -->
+<!-- delete group -->
+
+<div class="modal fade" id="deleteGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Delete Group
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_delete_note" id="popup_close_btn_delete_note" />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to delete this Group?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="confirmDelete()">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- delete group -->

@@ -1,0 +1,1537 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <nav class="projects_tabs">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <a routlink="/organization-management" class="me-3"
+                    ><img
+                      src="../../../assets/img/dashboard/back-arrow.svg"
+                      alt=""
+                  /></a>
+                  <button
+                    class="nav-link active"
+                    id="nav-Manage-Members-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-Manage-Members"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-Manage-Members"
+                    aria-selected="true"
+                  >
+                    Manage Members
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-Manage-Clients-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-Manage-Clients"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-Manage-Clients"
+                    aria-selected="false"
+                  >
+                    Manage Clients
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-Manage-Role-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-Manage-Role"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-Manage-Role"
+                    aria-selected="false"
+                  >
+                    Manage Role
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-Manage-Services-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-Manage-Services"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-Manage-Services"
+                    aria-selected="false"
+                  >
+                    Manage Services
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-Manage-Status-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-Manage-Status"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-Manage-Status"
+                    aria-selected="false"
+                  >
+                    Manage Status
+                  </button>
+                </div>
+              </nav>
+
+              <!-- <div
+                class="d-flex justify-content-between align-items-center gap-3"
+              >
+                <div class="tab-content" id="nav-tabContent">
+                  <div
+                    class="tab-pane show active"
+                    id="nav-Manage-Members"
+                    role="tabpanel"
+                    aria-labelledby="nav-Manage-Members-tab"
+                  >
+                    <a
+                      class="add_task_btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addNoteModal"
+                    >
+                      Add New Member</a
+                    >
+                  </div>
+
+                  <div
+                    class="tab-pane"
+                    id="nav-Manage-Clients"
+                    role="tabpanel"
+                    aria-labelledby="nav-Manage-Clients-tab"
+                  >
+                    <a
+                      class="add_task_btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addClientModal"
+                    >
+                      Add New Client</a
+                    >
+                  </div>
+                  <div
+                    class="tab-pane"
+                    id="nav-Manage-Role"
+                    role="tabpanel"
+                    aria-labelledby="nav-Manage-Role-tab"
+                  >
+                    <a
+                      class="add_task_btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addNewroleModal"
+                    >
+                      Add New Role</a
+                    >
+                  </div>
+                  <div
+                    class="tab-pane"
+                    id="nav-Manage-Services"
+                    role="tabpanel"
+                    aria-labelledby="nav-Manage-Services-tab"
+                  >
+                    <a
+                      class="add_task_btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addNoteModal"
+                    >
+                      Add New Service</a
+                    >
+                  </div>
+                  <div
+                    class="tab-pane"
+                    id="nav-Manage-Status"
+                    role="tabpanel"
+                    aria-labelledby="nav-Manage-Status-tab"
+                  >
+                    <a
+                      class="add_task_btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addStatusModal"
+                    >
+                      Add New Status</a
+                    >
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- company data  -->
+
+      <div class="company_details_inner">
+        <div class="d-flex gap-3 align-items-center">
+          <div class="company_logo">
+            <img
+              src="../../../assets/img/dashboard/company-name-icon.png"
+              alt=""
+            />
+          </div>
+          <div>
+            <h2 class="company_name">Dream Creation</h2>
+            <p class="company_email">rajputarvind@gmail.com</p>
+          </div>
+        </div>
+        <div>
+          <div class="setting_icon">
+            <img src="../../../assets/img/dashboard/setting-icon.svg" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <!-- company data  -->
+
+      <!-- tabs  view -->
+
+      <div>
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="nav-Manage-Members"
+            role="tabpanel"
+            aria-labelledby="nav-Manage-Members-tab"
+          >
+            <div class="">
+              <div class="card">
+                <div class="card-body">
+                  <app-manage-memeber></app-manage-memeber>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="nav-Manage-Clients"
+            role="tabpanel"
+            aria-labelledby="nav-Manage-Clients-tab"
+          >
+            <div class="">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center mb-4">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                      <h2 class="company_name">My Clients</h2>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                      <div
+                        class="d-flex align-items-center gap-3 justify-content-end"
+                      >
+                        <div class="manage_searchbar">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            aria-describedby="emailHelp"
+                            placeholder="Search here..."
+                          />
+                          <img
+                            src="../../../assets/img/dashboard/search-icon.png"
+                            alt="search"
+                            class="searchbar_icon"
+                          />
+                        </div>
+                        <div class="dropdown custom_edit_icon">
+                          <button
+                            class="dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <img
+                              src="../../../assets/img/dashboard/task_dots_icon.png"
+                              alt=""
+                            />
+                          </button>
+                          <ul
+                            class="dropdown-menu"
+                            aria-labelledby="dropdownMenuButton1"
+                          >
+                            <li><a class="dropdown-item">Bulk Upload</a></li>
+                            <li><a class="dropdown-item">Bulk Export</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="table task_table">
+                      <thead>
+                        <tr>
+                          <th>Client Name</th>
+                          <th colspan="1"></th>
+                        </tr>
+                      </thead>
+                      <tbody class="dream-table">
+                        <tr>
+                          <td routerLink="/discussion-details">
+                            <span class="client_short_alphabets">HS</span>Hirav
+                            Shah
+                          </td>
+
+                          <td class="text-end">
+                            <div>
+                              <a href="javascript:void(0)">
+                                <img
+                                  src="../../../assets/img/dashboard/table-edit-icon.svg"
+                                  alt=""
+                                  class="me-4"
+                                />
+                              </a>
+                              <a href="javascript:void(0)">
+                                <img
+                                  src="../../../assets/img/dashboard/table-delete-icon.svg"
+                                  alt=""
+                                />
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="nav-Manage-Role"
+            role="tabpanel"
+            aria-labelledby="nav-Manage-Role-tab"
+          >
+            <div class="">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center mb-4">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                      <h2 class="company_name">Roles</h2>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                      <div
+                        class="d-flex align-items-center gap-3 justify-content-end"
+                      >
+                        <div class="manage_searchbar">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            aria-describedby="emailHelp"
+                            placeholder="Search here..."
+                          />
+                          <img
+                            src="../../../assets/img/dashboard/search-icon.png"
+                            alt="search"
+                            class="searchbar_icon"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="table role_table">
+                      <thead>
+                        <tr>
+                          <th class="assign_role">Role Name</th>
+                          <th>Add</th>
+                          <th>Edit</th>
+                          <th>Delete</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody class="dream-table">
+                        <tr class="assign-role-inner">
+                          <td colspan="4" class="role_type">
+                            Frontend Designer
+                          </td>
+
+                          <td class="text-end">
+                            <div>
+                              <a
+                                href="javascript:void(0)"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editRoleModal"
+                              >
+                                <img
+                                  src="../../../assets/img/dashboard/table-edit-icon.svg"
+                                  alt=""
+                                  class="me-4"
+                                />
+                              </a>
+                              <a href="javascript:void(0)">
+                                <img
+                                  src="../../../assets/img/dashboard/table-delete-icon.svg"
+                                  alt=""
+                                />
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>DMS</td>
+                          <td>Yes</td>
+                          <td>No</td>
+                          <td colspan="2">Yes</td>
+                        </tr>
+                        <tr>
+                          <td>Tasks</td>
+                          <td>Yes</td>
+                          <td>No</td>
+                          <td colspan="2">Yes</td>
+                        </tr>
+                        <tr>
+                          <td>Projects</td>
+                          <td>Yes</td>
+                          <td>No</td>
+                          <td colspan="2">Yes</td>
+                        </tr>
+                        <tr>
+                          <td>Discussion</td>
+                          <td>Yes</td>
+                          <td>No</td>
+                          <td colspan="2">Yes</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="nav-Manage-Services"
+            role="tabpanel"
+            aria-labelledby="nav-Manage-Services-tab"
+          >
+            <div class="">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center mb-4">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                      <h2 class="company_name">Services</h2>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                      <div
+                        class="d-flex align-items-center gap-3 justify-content-end"
+                      >
+                        <div class="manage_searchbar">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            aria-describedby="emailHelp"
+                            placeholder="Search here..."
+                          />
+                          <img
+                            src="../../../assets/img/dashboard/search-icon.png"
+                            alt="search"
+                            class="searchbar_icon"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table role_table">
+                      <thead>
+                        <tr>
+                          <th class="assign_role">Service Name</th>
+                        </tr>
+                      </thead>
+                      <tbody class="dream-table">
+                        <tr>
+                          <td>Design</td>
+                          <td class="text-end">
+                            <div>
+                              <a
+                                href="javascript:void(0)"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editmanageServiceModal"
+                              >
+                                <img
+                                  src="../../../assets/img/dashboard/table-edit-icon.svg"
+                                  alt=""
+                                  class="me-4"
+                                />
+                              </a>
+                              <a href="javascript:void(0)">
+                                <img
+                                  src="../../../assets/img/dashboard/table-delete-icon.svg"
+                                  alt=""
+                                />
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="nav-Manage-Status"
+            role="tabpanel"
+            aria-labelledby="nav-Manage-Status-tab"
+          >
+            <div class="">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center mb-4">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                      <h2 class="company_name">Status</h2>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                      <div
+                        class="d-flex align-items-center gap-3 justify-content-end"
+                      >
+                        <div class="manage_searchbar">
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            aria-describedby="emailHelp"
+                            placeholder="Search here..."
+                          />
+                          <img
+                            src="../../../assets/img/dashboard/search-icon.png"
+                            alt="search"
+                            class="searchbar_icon"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table role_table">
+                      <thead>
+                        <tr>
+                          <th class="assign_role">Status Name</th>
+                          <th class="assign_role">Color</th>
+                        </tr>
+                      </thead>
+                      <tbody class="dream-table">
+                        <tr>
+                          <td>Closed</td>
+                          <td><span class="status_closed_color" ></span></td>
+                          <td class="text-end">
+                            <div>
+                              <a
+                                href="javascript:void(0)"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editStatuscolorModal"
+                              >
+                                <img
+                                  src="../../../assets/img/dashboard/table-edit-icon.svg"
+                                  alt=""
+                                  class="me-4"
+                                />
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Under Review</td>
+                          <td><span class="status_review_color"></span></td>
+                          <td class="text-end">
+                            <div>
+                              <a
+                                href="javascript:void(0)"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editStatuscolorModal"
+                              >
+                                <img
+                                  src="../../../assets/img/dashboard/table-edit-icon.svg"
+                                  alt=""
+                                  class="me-4"
+                                />
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Rejected</td>
+                          <td><span class="status_reject_color"></span></td>
+                          <td class="text-end">
+                            <div>
+                              <a
+                                href="javascript:void(0)"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editStatuscolorModal"
+                              >
+                                <img
+                                  src="../../../assets/img/dashboard/table-edit-icon.svg"
+                                  alt=""
+                                  class="me-4"
+                                />
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Pending</td>
+                          <td><span class="status_pending_color"></span></td>
+                          <td class="text-end">
+                            <div>
+                              <a
+                                href="javascript:void(0)"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editStatuscolorModal"
+                              >
+                                <img
+                                  src="../../../assets/img/dashboard/table-edit-icon.svg"
+                                  alt=""
+                                  class="me-4"
+                                />
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>On-hold</td>
+                          <td><span class="status_onhold_color"></span></td>
+                          <td class="text-end">
+                            <div>
+                              <a
+                                href="javascript:void(0)"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editStatuscolorModal"
+                              >
+                                <img
+                                  src="../../../assets/img/dashboard/table-edit-icon.svg"
+                                  alt=""
+                                  class="me-4"
+                                />
+                              </a>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Add Note Modal -->
+<div
+  class="modal fade"
+  id="addNoteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Assignee</h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+        />
+      </div>
+      <div class="modal-body">
+        <h2 class="new_task_title">Update Member</h2>
+
+        <form>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 co-md-4 col-sm-12">
+              <div class="avatar-upload">
+                <div class="avatar-edit">
+                  <input
+                    type="file"
+                    id="imageUpload"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                  <label for="imageUpload"
+                    ><img
+                      src="../../../assets/img/dashboard/image-icon.png"
+                      alt=""
+                  /></label>
+                </div>
+                <div class="avatar-preview">
+                  <div
+                    id="imagePreview"
+                    style="background-image: url('')"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-8 col-lg-8 co-md-8 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="exampleInputdiscussion" class="form-label">
+                      Member First Name</label
+                    >
+                    <div class="position-relative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="client-name"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <img
+                        src="../../../assets/img/dashboard/client-name-icon.png"
+                        alt=""
+                        class="create_client_icons"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="floatingTextarea" class="form-label"
+                      >Member Last Name
+                    </label>
+                    <div class="position-relative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="client-address"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <img
+                        src="../../../assets/img/dashboard/client-name-icon.png"
+                        alt=""
+                        class="create_client_icons"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="floatingTextarea" class="form-label"
+                      >Designation
+                    </label>
+                    <div class="position-relative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="client-address"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <img
+                        src="../../../assets/img/dashboard/designation-icon.svg"
+                        alt=""
+                        class="create_client_icons"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="floatingTextarea" class="form-label"
+                      >Date of Birth
+                    </label>
+                    <div class="position-relative">
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="client-address"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <!-- <img
+                      src="../../../assets/img/dashboard/small-date-icon.png"
+                      alt=""
+                      class="create_client_icons"
+                    /> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="exampleInputdiscussion" class="form-label"
+                      >Mobile Number *</label
+                    >
+                    <div class="position-relative">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="client-number"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <img
+                        src="../../../assets/img/dashboard/mobile-icon.png"
+                        alt=""
+                        class="create_client_icons"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="floatingTextarea" class="form-label"
+                      >Email *
+                    </label>
+                    <div class="position-relative">
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="client-email"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <img
+                        src="../../../assets/img/dashboard/email-icon.png"
+                        alt=""
+                        class="create_client_icons"
+                      />
+                    </div>  
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                  <label for="floatingTextarea" class="form-label"
+                    >Reporting to
+                  </label>
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="client-address"
+                      aria-describedby="discussiomHelp"
+                    />
+                    <img
+                      src="../../../assets/img/dashboard/address-icon.png"
+                      alt=""
+                      class="create_client_icons"
+                    />
+                  </div>
+                </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                  <label for="floatingTextarea" class="form-label"
+                    >Gender
+                  </label>
+                  <div class="position-relative">
+                    <select
+                      _ngcontent-htj-c187=""
+                      formcontrolname="gender"
+                      class="form-control "
+                    >
+                      <option
+                        _ngcontent-htj-c187=""
+                        value=""
+                        disabled=""
+                        selected=""
+                      >
+                        Select Gender
+                      </option>
+                      <option
+                        _ngcontent-htj-c187=""
+                        value="Male"
+                        class="ng-star-inserted"
+                      >
+                        Male
+                      </option>
+                      <option
+                        _ngcontent-htj-c187=""
+                        value="Female"
+                        class="ng-star-inserted"
+                      >
+                        Female
+                      </option>
+                      <!---->
+                    </select>
+                  </div>
+                </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <label for="exampleInputdiscussion" class="form-label">
+                        Assign Role *</label
+                      >
+                      <a data-bs-toggle="modal" data-bs-target="#addNewroleModal">
+                        <img
+                          src="../../../assets/img/dashboard/add-icon.png"
+                          alt=""
+                          class="pe-auto"
+                        />
+                      </a>
+                    </div>
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
+                      <option selected>Open this select menu</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="reqired_task_redio">
+                    <div class="form-check-inline">
+                      <label class="form-check-label" for="inlineCheckbox1"
+                        >Admin Rights?</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions"
+                        id="inlineRadioYes"
+                        value="optionYes"
+                      />
+                      <label class="form-check-label" for="inlineRadioYes"
+                        >Yes</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="inlineRadioOptions"
+                        id="inlineRadioNo"
+                        value="optionNo"
+                        (change)="permissioncheckbox();"
+                      />
+                      <label class="form-check-label" for="inlineRadioNo"
+                        >No</label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" *ngIf="Mastersetuppermission">
+                  <div class="mb-3" >
+                  <label for="floatingTextarea" class="form-label"
+                    >Gender
+                  </label>
+                  <div class="position-relative">
+                    <select
+                      _ngcontent-htj-c187=""
+                      formcontrolname="gender"
+                      class="form-control "
+                    >
+                      <option
+                        _ngcontent-htj-c187=""
+                        value=""
+                        disabled=""
+                        selected=""
+                      >
+                        Select Gender
+                      </option>
+                      <option
+                        _ngcontent-htj-c187=""
+                        value="Male"
+                        class="ng-star-inserted"
+                      >
+                        Male
+                      </option>
+                      <option
+                        _ngcontent-htj-c187=""
+                        value="Female"
+                        class="ng-star-inserted"
+                      >
+                        Female
+                      </option>
+                      <!---->
+                    </select>
+                  </div>
+                </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add Note Modal -->
+
+<!-- Add New Role Modal -->
+<div
+  class="modal fade"
+  id="addNewroleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New Role</h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+        />
+      </div>
+      <div class="modal-body">
+        <mat-form-field>
+          <mat-label>Input</mat-label>
+          <input matInput />
+        </mat-form-field>
+
+        <div>
+          <section class="example-section">
+            <span class="example-list-section">
+              <mat-checkbox
+                class="example-margin"
+                [checked]="allComplete"
+                [indeterminate]="someComplete()"
+                (change)="setAll($event.checked)"
+              >
+                {{ task.name }}
+              </mat-checkbox>
+            </span>
+
+            <div class="table-responsive">
+              <table class="table role_table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Add</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody class="dream-table">
+                  <ng-container *ngIf="task.subtasks && task.subtasks.length">
+                    <tr>
+                      <td>Select All</td>
+                      <td *ngFor="let subtask of task.subtasks">
+                        <mat-checkbox
+                          [(ngModel)]="subtask.completed"
+                          (ngModelChange)="updateAllComplete()"
+                        ></mat-checkbox>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngFor="let subtask of task.subtasks">
+                    <td>{{ subtask.name }}</td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                      ></mat-checkbox>
+                    </td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                      ></mat-checkbox>
+                    </td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                      ></mat-checkbox>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add New Role Modal -->
+
+<!-- Edit Role Modal -->
+<div
+  class="modal fade"
+  id="editRoleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New Role</h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+        />
+      </div>
+      <div class="modal-body">
+        <mat-form-field>
+          <mat-label>Input</mat-label>
+          <input matInput />
+        </mat-form-field>
+
+        <div>
+          <section class="example-section">
+            <span class="example-list-section">
+              <mat-checkbox
+                class="example-margin"
+                [checked]="allComplete"
+                [indeterminate]="someComplete()"
+                (change)="setAll($event.checked)"
+              >
+                {{ task.name }}
+              </mat-checkbox>
+            </span>
+
+            <div class="table-responsive">
+              <!-- <table class="table role_table">
+                <thead>
+                  <tr>
+                    <th colspan="1"></th>
+                    <th>Add</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody class="dream-table">
+                  <tr>
+                    <td>Project</td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="allComplete"
+                        (ngModelChange)="setAll($event)"
+                      ></mat-checkbox>
+                    </td>
+                    <td *ngFor="let subtask of task.subtasks">
+                      <mat-checkbox [(ngModel)]="subtask.completed"></mat-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Task</td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="allComplete"
+                        (ngModelChange)="setAll($event)"
+                      ></mat-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Discussion</td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="allComplete"
+                        (ngModelChange)="setAll($event)"
+                      ></mat-checkbox>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>DMS</td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="allComplete"
+                        (ngModelChange)="setAll($event)"
+                      ></mat-checkbox>
+                    </td>
+                  </tr>
+                </tbody>
+              </table> -->
+
+              <table class="table role_table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Add</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody class="dream-table">
+                  <ng-container *ngIf="task.subtasks && task.subtasks.length">
+                    <tr>
+                      <td>Select All</td>
+                      <td *ngFor="let subtask of task.subtasks">
+                        <mat-checkbox
+                          [(ngModel)]="subtask.completed"
+                          (ngModelChange)="updateAllComplete()"
+                        ></mat-checkbox>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngFor="let subtask of task.subtasks">
+                    <td>{{ subtask.name }}</td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                      ></mat-checkbox>
+                    </td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                      ></mat-checkbox>
+                    </td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                      ></mat-checkbox>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Edit Role Modal -->
+
+<!-- Edit Manage Service Modal -->
+<div
+  class="modal fade"
+  id="editmanageServiceModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Service</h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+        />
+      </div>
+      <div class="modal-body">
+        <mat-form-field>
+          <mat-label>Input</mat-label>
+          <input matInput />
+        </mat-form-field>
+
+        <!-- <mat-form-field>
+          <mat-select
+            [formControl]="carCtrl"
+            placeholder="Car"
+            [multiple]="true"
+            #singleSelect
+          >
+            <mat-option>
+              <ngx-mat-select-search
+                [formControl]="carFilterCtrl"
+                placeholderLabel="Find cars..."
+                noEntriesFoundLabel="'no matching found'"
+                [showToggleAllCheckbox]="true"
+                toggleAllCheckboxTooltipMessage="Select / Unselect All"
+                [toggleAllCheckboxIndeterminate]="isIndeterminate"
+                [toggleAllCheckboxChecked]="isChecked"
+                (toggleAll)="toggleSelectAll($event)"
+              >
+                <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+              </ngx-mat-select-search>
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Edit Manage Service Modal -->
+
+<!-- Edit Status color Modal -->
+<div
+  class="modal fade"
+  id="editStatuscolorModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Stauts</h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+        />
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <mat-form-field>
+            <mat-label>Input</mat-label>
+            <input matInput />
+          </mat-form-field>
+
+          <div>
+            <color-sketch [color]="state" (onChange)="handleChange($event)" ng-model="test" ></color-sketch>
+
+            <!-- <input [(colorPicker)]="color" [style.background]="color"> -->
+          </div>
+
+          <!-- <label for="favcolor">Select your favorite color:</label>
+          <input type="color" id="favcolor" name="favcolor" value="#ff0000" /> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Edit Status Color Modal -->
+
+<!-- Add New Status color Modal -->
+<div
+  class="modal fade"
+  id="addStatusModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Stauts</h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+        />
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <mat-form-field>
+            <mat-label>Input</mat-label>
+            <input matInput />
+          </mat-form-field>
+
+          <div>
+            <!-- <input [(colorPicker)]="color" [style.background]="color"> -->
+          </div>
+
+          <!-- <label for="favcolor">Select your favorite color:</label>
+          <input type="color" id="favcolor" name="favcolor" value="#ff0000" /> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add New Status Color Modal -->
+
+<!-- create client modal start -->
+
+<div
+  class="modal fade"
+  id="addClientModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h2 class="new_task_title">Add New Client</h2>
+
+        <form>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 co-md-4 col-sm-12">
+              <div class="avatar-upload">
+                <div class="avatar-edit">
+                  <input
+                    type="file"
+                    id="imageUpload"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                  <label for="imageUpload"
+                    ><img
+                      src="../../../assets/img/dashboard/image-icon.png"
+                      alt=""
+                  /></label>
+                </div>
+                <div class="avatar-preview">
+                  <div
+                    id="imagePreview"
+                    style="background-image: url('')"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-8 col-lg-8 co-md-8 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="exampleInputdProject" class="form-label"
+                      >Title *</label
+                    >
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
+                      <option selected>MR.</option>
+                      <option value="1">Mrs.</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="exampleInputdiscussion" class="form-label">
+                      Client Name *</label
+                    >
+                    <div class="position-relative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="client-name"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <img
+                        src="../../../assets/img/dashboard/client-name-icon.png"
+                        alt=""
+                        class="create_client_icons"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="exampleInputdiscussion" class="form-label"
+                      >Company Name *</label
+                    >
+                    <div class="position-relative">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="company-name"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <img
+                        src="../../../assets/img/dashboard/company-name-icon.png"
+                        alt=""
+                        class="create_client_icons"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="exampleInputdiscussion" class="form-label"
+                      >Mobile Number *</label
+                    >
+                    <div class="position-relative">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="client-number"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <img
+                        src="../../../assets/img/dashboard/mobile-icon.png"
+                        alt=""
+                        class="create_client_icons"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <label for="floatingTextarea" class="form-label"
+                      >Email *
+                    </label>
+                    <div class="position-relative">
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="client-email"
+                        aria-describedby="discussiomHelp"
+                      />
+                      <img
+                        src="../../../assets/img/dashboard/email-icon.png"
+                        alt=""
+                        class="create_client_icons"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <label for="floatingTextarea" class="form-label"
+                    >Attachments
+                  </label>
+                  <div class="create_client_file position-relative">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="client-file"
+                      aria-describedby="discussiomHelp"
+                      multiple
+                    />
+                    <img
+                      src="../../../assets/img/dashboard/file-icon.png"
+                      alt=""
+                      class="create_client_icons"
+                    />
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <label for="floatingTextarea" class="form-label"
+                    >Address
+                  </label>
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="client-address"
+                      aria-describedby="discussiomHelp"
+                    />
+                    <img
+                      src="../../../assets/img/dashboard/address-icon.png"
+                      alt=""
+                      class="create_client_icons"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- create client modal end -->
+
+
+

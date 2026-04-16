@@ -1,0 +1,1333 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.3)"
+  size="medium"
+  color="#fff"
+  type="timer"
+  [fullScreen]="true"
+></ngx-spinner>
+<main>
+  <section class="user_task_wrapper">
+    <nav class="projects_tabs mb-4">
+      <div class="mb-3">
+        <a [routerLink]="['/company-details', companyId]" class="me-3"
+          ><img
+            src="../../../assets/img/dashboard/back-arrow.svg"
+            width="35px"
+            height="35px"
+            alt=""
+        /></a>
+
+        <span class="task_table_title">Members</span>
+      </div>
+
+      <div class="d-flex align-items-center gap-3 justify-content-end">
+        <!-- <div class="manage_searchbar">
+          <input
+            type="text"
+            formControlName="searchQueryControl"
+            (input)="filterItems($event)"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Search here..."
+          />
+          <img
+            src="../../../assets/img/dashboard/search-icon.png"
+            alt="search"
+            class="searchbar_icon"
+          />
+        </div> -->
+        <button
+          class="nav-link"
+          [class.active]="activeTabId === 'nav-My-Members-tab'"
+          (click)="setActiveTab('nav-My-Members-tab')"
+          type="button"
+          role="tab"
+          aria-controls="nav-My-Members"
+          aria-selected="false"
+        >
+          <ng-container *ngIf="activeTabId === 'nav-My-Members-tab'">
+            <a
+              *ngIf="userpermission?.add !== 0"
+              class="add_task_btn"
+              data-bs-toggle="modal"
+              data-bs-target="#addNoteModal"
+            >
+              Add New Member
+            </a>
+          </ng-container>
+        </button>
+        <button
+          class="d-none nav-link"
+          [class.active]="activeTabId === 'nav-Outsiders-tab'"
+          (click)="setActiveTab('nav-Outsiders-tab')"
+          type="button"
+          role="tab"
+          aria-controls="nav-My-Members"
+          aria-selected="false"
+        >
+          <ng-container *ngIf="activeTabId === 'nav-Outsiders-tab'">
+            <a
+              class="add_task_btn"
+              data-bs-toggle="modal"
+              data-bs-target="#addNoteModal"
+            >
+              Add New Member
+            </a>
+          </ng-container>
+        </button>
+        <button
+          class="d-none nav-link"
+          [class.active]="activeTabId === 'nav-Invited-tab'"
+          (click)="setActiveTab('nav-Invited-tab')"
+          type="button"
+          role="tab"
+          aria-controls="nav-My-Members"
+          aria-selected="false"
+        >
+          <ng-container *ngIf="activeTabId === 'nav-Invited-tab'">
+            <a
+              class="add_task_btn"
+              data-bs-toggle="modal"
+              data-bs-target="#addNoteModal"
+            >
+              Add New Member
+            </a>
+          </ng-container>
+        </button>
+        <button
+          class="nav-link"
+          [class.active]="activeTabId === 'nav-Team-Group-tab'"
+          (click)="setActiveTab('nav-Team-Group-tab')"
+          type="button"
+          role="tab"
+          aria-controls="nav-Team-Group"
+          aria-selected="false"
+        >
+          <ng-container *ngIf="activeTabId === 'nav-Team-Group-tab'">
+            <a
+              *ngIf="userpermission?.add !== 0"
+              class="add_task_btn"
+              data-bs-toggle="modal"
+              data-bs-target="#addTeamModal"
+            >
+              Add New Team
+            </a>
+          </ng-container>
+        </button>
+        <div class="dropdown custom_edit_icon">
+          <!--  <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img src="../../../assets/img/dashboard/task_dots_icon.png" alt="" />
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item">Bulk Upload</a></li>
+            <li><a class="dropdown-item">Bulk Export</a></li>
+          </ul> -->
+        </div>
+      </div>
+    </nav>
+
+    <div class="task-table">
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="nav-My-Members"
+          role="tabpanel"
+          aria-labelledby="nav-My-Members-tab"
+        >
+          <div>
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <!-- <table class="table task_table">
+                    <thead>
+                      <tr>
+                        <th class="report_table_data">Name</th>
+                        <th class="report_table_data">Designation</th>
+                        <th class="report_table_data">Email</th>
+                        <th class="report_table_data">Reporting To</th>
+                        <th class="report_table_data">Mobile Number</th>
+                        <th class="report_table_data">Status</th>
+                        <th class="report_table_data">Roles</th>
+                        <th
+                          *ngIf="
+                            userpermission?.edit !== 0 ||
+                            userpermission?.delete !== 0
+                          "
+                        >
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="dream-table">
+                      <tr *ngFor="let memberlist of memberlist">
+                        <td class="d-flex gap-4 align-items-center">
+                          <div class="position-relative">
+                            <div class="d-flex align-items-center gap-3">
+                              <div
+                                class="user_short_name rounded position-relative"
+                                *ngIf="
+                                  memberlist.profile ==
+                                  domainName + 'public/images/user_avatar.png'
+                                "
+                              >
+                                {{ getInitials(memberlist.name) }}
+                                <span
+                                  *ngIf="
+                                    memberlist.is_login == 0 &&
+                                    memberlist.profile ===
+                                      domainName +
+                                        'public/images/user_avatar.png'
+                                  "
+                                  class="position-absolute start-100 translate-middle p-1 bg-danger border rounded-circle"
+                                  style="bottom: -5px"
+                                ></span>
+                                <span
+                                  *ngIf="memberlist.is_login == 1"
+                                  class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border rounded-circle"
+                                ></span>
+                              </div>
+                              <div class="position-relative">
+                                <img
+                                  src="{{ memberlist?.profile }}"
+                                  alt=""
+                                  class="profile_photo"
+                                  *ngIf="
+                                    memberlist.profile !==
+                                    domainName + 'public/images/user_avatar.png'
+                                  "
+                                />
+                                <span
+                                  *ngIf="
+                                    memberlist.is_login == 0 &&
+                                    memberlist.profile !==
+                                      domainName +
+                                        'public/images/user_avatar.png'
+                                  "
+                                  class="position-absolute start-100 translate-middle p-1 bg-danger border rounded-circle"
+                                  style="bottom: -5px; z-index: 1"
+                                ></span>
+                                <span
+                                  *ngIf="
+                                    memberlist.is_login == 1 &&
+                                    memberlist.profile !==
+                                      domainName +
+                                        'public/images/user_avatar.png'
+                                  "
+                                  class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success border rounded-circle"
+                                  style="z-index: 1"
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                          <p class="m-0">{{ memberlist.name }}</p>
+                        </td>
+
+                        <td>{{ memberlist.designation ?? "Owner" }}</td>
+
+                        <td>{{ memberlist.email }}</td>
+
+                        <td>{{ memberlist.reportingTo }}</td>
+
+                        <td>{{ memberlist.phone_no }}</td>
+                        <td>{{ memberlist.is_active }}</td>
+
+                        <td>{{ memberlist.assignRole }}</td>
+
+                        <td
+                          *ngIf="
+                            userpermission?.edit !== 0 ||
+                            userpermission?.delete !== 0
+                          "
+                        >
+                          <div class="d-flex">
+                            <a
+                              data-bs-toggle="modal"
+                              (click)="EditMember(memberlist.id)"
+                              data-bs-target="#editMemberModal"
+                            >
+                              <img
+                                src="../../../assets/img/dashboard/table-edit-icon.svg"
+                                alt=""
+                                class="me-3"
+                                *ngIf="userpermission?.edit !== 0"
+                              />
+                            </a>
+                            <a
+                              data-bs-toggle="modal"
+                              data-bs-target="#deletememberModal"
+                              (click)="deletememberopendialogue(memberlist.id)"
+                            >
+                              <img
+                                src="../../../assets/img/dashboard/table-delete-icon.svg"
+                                alt=""
+                                *ngIf="userpermission?.delete !== 0"
+                              />
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table> -->
+
+                  <ag-grid-angular
+                  style="width: 100%; height: 100%;"
+                  [columnDefs]="columnDefs"
+                  [rowData]="memberRowData"
+                  [defaultColDef]="defaultColDef"
+                  [class]="themeClass"
+                  [pagination]="pagination"
+                  [paginationPageSize]="paginationPageSize"
+                  [paginationPageSizeSelector]="paginationPageSizeSelector"
+                /> 
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Add Note Modal -->
+<div
+  class="modal fade"
+  id="addNoteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add Member
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_member_add"
+        />
+      </div>
+      <div class="modal-body">
+        <form
+          [formGroup]="memberForm"
+          (ngSubmit)="addmember(memberForm.value, clearaddform)"
+          #clearaddform="ngForm"
+        >
+          <div class="row">
+            <div class="col-xl-3 col-lg-4 co-md-4 col-sm-12">
+              <div class="avatar-upload">
+                <div class="avatar-edit">
+                  <input
+                    type="file"
+                    id="imageUpload"
+                    (change)="onFileChange($event)"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                  <label for="imageUpload"
+                    ><img
+                      src="../../../assets/img/dashboard/image-icon.png"
+                      alt=""
+                  /></label>
+                </div>
+                <div class="avatar-preview">
+                  <img
+                    width="100%"
+                    *ngIf="imageUrladd"
+                    [src]="imageUrladd"
+                    class="image"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-9 col-lg-8 co-md-8 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          #input
+                          formControlName="name"
+                          placeholder="Member Name"
+                          maxLength="25"
+                        />
+                        <mat-error
+                          *ngIf="memberForm.get('name')?.hasError('required')"
+                          >Name is required.</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          #input
+                          formControlName="designation"
+                          placeholder="Designation"
+                        />
+                        <mat-error
+                          *ngIf="
+                            memberForm.get('designation')?.hasError('required')
+                          "
+                          >Designation is required.</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3" id="Mastersetuppermission">
+                    <div
+                      class="d-flex justify-content-between align-items-center gap-2"
+                    >
+                      <div class="form_field">
+                        <mat-form-field>
+                          <mat-select
+                            placeholder="Assign Role *"
+                            formControlName="assignRole"
+                          >
+                            <mat-option
+                              value="{{ rolelist.id }}"
+                              *ngFor="let rolelist of rolelist"
+                              >{{ rolelist.name }}</mat-option
+                            >
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              memberForm.get('assignRole')?.hasError('required')
+                            "
+                            >Assign Role is required.</mat-error
+                          >
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <mat-select
+                          placeholder="Reporting To *"
+                          formControlName="reportingTo"
+                        >
+                          <mat-option
+                            value="{{ memberlist.id }}"
+                            *ngFor="let memberlist of memberlist"
+                            >{{ memberlist.name }}</mat-option
+                          >
+                        </mat-select>
+                        <mat-error
+                          *ngIf="
+                            memberForm.get('reportingTo')?.hasError('required')
+                          "
+                          >Reporting To is required.</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          [matDatepicker]="picker1"
+                          placeholder="Select Date of Birth"
+                          formControlName="dob"
+                        />
+                        <mat-datepicker-toggle
+                          matIconSuffix
+                          [for]="picker1"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error
+                          *ngIf="memberForm.get('dob')?.hasError('required')"
+                          >Dob is required.</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          #input
+                          formControlName="phone_no"
+                          placeholder="Mobile Number"
+                          maxLength="10"
+                        />
+                        <mat-error
+                          *ngIf="
+                            memberForm.get('phone_no')?.hasError('required')
+                          "
+                          >Mobile Number is required.</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          placeholder="Email"
+                          formControlName="email_id"
+                        />
+                        <mat-error
+                          *ngIf="
+                            memberForm.get('email_id')?.hasError('required')
+                          "
+                          >Email is required.</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <mat-select
+                          placeholder="Select Gender"
+                          formControlName="gender"
+                          required
+                        >
+                          <mat-option value="0">Male</mat-option>
+                          <mat-option value="1">Female</mat-option>
+                        </mat-select>
+                        <mat-error
+                          *ngIf="memberForm.get('gender')?.hasError('required')"
+                          >Gender is required.</mat-error
+                        >
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3" id="Mastersetuppermission">
+                    <div
+                      class="d-flex justify-content-between align-items-center gap-2"
+                    >
+                      <div class="form_field">
+                        <mat-form-field>
+                          <mat-select
+                            placeholder="User Type *"
+                            formControlName="user_type"
+                          >
+                            <mat-option
+                              value="{{ usertypelist.id }}"
+                              *ngFor="let usertypelist of usertypelist"
+                              >{{ usertypelist.name }}</mat-option
+                            >
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              memberForm
+                                .get('usertype')
+                                ?.hasError('requser_typeuired')
+                            "
+                            >Member Type is required.</mat-error
+                          >
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+           
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <mat-select
+                          placeholder="Select status"
+                          formControlName="is_active"
+                          required
+                        >
+                          <mat-option [value]="0">Active</mat-option>
+                          <mat-option [value]="1">InActive</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="ownerChceck == '1'">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input
+                            matInput
+                            placeholder="Per Hour Cost"
+                            formControlName="hour_per_cost"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add Note Modal -->
+<!-- Edit Member Modal -->
+<div
+  class="modal fade"
+  id="editMemberModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Member
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_member_edit"
+        />
+      </div>
+      <div class="modal-body">
+        <form
+          [formGroup]="memberForm"
+          (ngSubmit)="UpdateMember(memberForm.value, clearaddform)"
+          #clearaddform="ngForm"
+        >
+          <div class="row">
+            <div class="col-xl-3 col-lg-4 co-md-4 col-sm-12">
+              <div class="avatar-upload">
+                <div class="avatar-edit">
+                  <input
+                    type="file"
+                    id="imageUploads"
+                    (change)="onFileChangeEdit($event)"
+                    accept=".png, .jpg, .jpeg"
+                  />
+                  <label for="imageUploads"
+                    ><img
+                      src="../../../assets/img/dashboard/image-icon.png"
+                      alt=""
+                  /></label>
+                </div>
+                <div class="avatar-preview">
+                  <img
+                    width="100%"
+                    *ngIf="imageUrl"
+                    [src]="imageUrl"
+                    class="image"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-9 col-lg-8 co-md-8 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          #input
+                          formControlName="name"
+                          placeholder="Member Name"
+                          [(ngModel)]="memberedit.name"
+                        />
+                        <input
+                          matInput
+                          #input
+                          hidden="true"
+                          [(ngModel)]="memberedit.id"
+                          formControlName="memberId"
+                        />
+                        <!-- <mat-error *ngIf="memberForm.get('name')?.invalid">
+                          {{ getErrorMessage("name") }}
+                        </mat-error> -->
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          #designation
+                          formControlName="designation"
+                          placeholder="Designation"
+                          [(ngModel)]="memberedit.designation"
+                        />
+                   
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3" id="Mastersetuppermission">
+                    <div
+                      class="d-flex justify-content-between align-items-center gap-2"
+                    >
+                      <div class="form_field">
+                        <mat-form-field>
+                          <mat-select
+                            placeholder=" Assign Role *"
+                            formControlName="assignRole"
+                            [(ngModel)]="memberedit.assignRole"
+                          >
+                            <mat-option
+                              [value]="rolelist.id"
+                              *ngFor="let rolelist of rolelist"
+                              >{{ rolelist.name }}</mat-option
+                            >
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <mat-select
+                          placeholder="Reporting To *"
+                          formControlName="reportingTo"
+                          [(ngModel)]="memberedit.reportingTo"
+                        >
+                          <mat-option
+                            *ngFor="let member of memberlist"
+                            [value]="member.id"
+                          >
+                            {{ member.name }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          [matDatepicker]="picker"
+                          placeholder="Select Date of Birth"
+                          formControlName="dob"
+                          [(ngModel)]="memberedit.dob"
+                        />
+                        <mat-datepicker-toggle
+                          matIconSuffix
+                          [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                     
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          #input
+                          formControlName="phone_no"
+                          placeholder="Mobile Number"
+                          [(ngModel)]="memberedit.phone_no"
+                        />
+                        <!-- <mat-error *ngIf="memberForm.get('phone_no')?.invalid">
+                          {{ getErrorMessage("phone_no") }}
+                        </mat-error> -->
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input
+                          matInput
+                          placeholder="Email"
+                          formControlName="email_id"
+                          [(ngModel)]="memberedit.email_id"
+                        />
+                        <!-- <mat-error *ngIf="memberForm.get('email_id')?.invalid">
+                          {{ getErrorMessage("email_id") }}
+                        </mat-error> -->
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <mat-select
+                          placeholder="Select Gender"
+                          formControlName="gender"
+                          required
+                          [(ngModel)]="memberedit.gender"
+                        >
+                          <mat-option [value]="0">Male</mat-option>
+                          <mat-option [value]="1">Female</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <mat-select
+                          placeholder="Select status"
+                          formControlName="is_active"
+                          required
+                          [(ngModel)]="memberedit.is_active"
+                        >
+                          <mat-option [value]="0">Active</mat-option>
+                          <mat-option [value]="1">InActive</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3" id="Mastersetuppermission">
+                    <div
+                      class="d-flex justify-content-between align-items-center gap-2"
+                    >
+                      <div class="form_field">
+                        <mat-form-field>
+                          <mat-select
+                            placeholder="User Type *"
+                            formControlName="user_type"
+                            [(ngModel)]="memberedit.user_type"
+                          >
+                            <mat-option
+                              [value]="usertypelist.id"
+                              *ngFor="let usertypelist of usertypelist"
+                              >{{ usertypelist.name }}</mat-option
+                            >
+                          </mat-select>
+                          <mat-error
+                            *ngIf="
+                              memberForm.get('user_type')?.hasError('required')
+                            "
+                            >Member Type is required.</mat-error
+                          >
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="ownerChceck == '1'">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input
+                            matInput
+                            placeholder="Per Hour Cost"
+                            formControlName="hour_per_cost"
+                            [(ngModel)]="memberedit.hour_per_cost"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Edit Member Modal -->
+
+<!-- Add New Role Modal -->
+<div
+  class="modal fade"
+  id="addNewroleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New Role</h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+        />
+      </div>
+      <div class="modal-body">
+        <div class="form_field">
+          <mat-form-field>
+            <mat-label>Input</mat-label>
+            <input matInput />
+          </mat-form-field>
+        </div>
+        <div>
+          <section class="example-section">
+            <span class="example-list-section">
+              <mat-checkbox
+                class="example-margin"
+                [checked]="allComplete"
+                [indeterminate]="someComplete()"
+                (change)="setAll($event.checked)"
+              >
+                {{ task.name }}
+              </mat-checkbox>
+            </span>
+
+            <div class="table-responsive">
+              <table class="table role_table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Add</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody class="dream-table">
+                  <ng-container *ngIf="task.subtasks && task.subtasks.length">
+                    <tr>
+                      <td>Select All</td>
+                      <td *ngFor="let subtask of task.subtasks">
+                        <mat-checkbox
+                          [(ngModel)]="subtask.completed"
+                          (ngModelChange)="updateAllComplete()"
+                        ></mat-checkbox>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngFor="let subtask of task.subtasks">
+                    <td>{{ subtask.name }}</td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                      ></mat-checkbox>
+                    </td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                      ></mat-checkbox>
+                    </td>
+                    <td>
+                      <mat-checkbox
+                        [(ngModel)]="subtask.completed"
+                        (ngModelChange)="updateAllComplete()"
+                      ></mat-checkbox>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add New Role Modal -->
+
+<!-- Add team Modal -->
+<div
+  class="modal fade"
+  id="addTeamModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add Team
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_team_add"
+        />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="submitForm" (ngSubmit)="addTeam()">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="mb-3">
+                <div class="form_field">
+                  <mat-form-field>
+                    <input
+                      matInput
+                      #input
+                      ngModel
+                      formControlName="name"
+                      placeholder="Team Name"
+                    />
+                    <mat-error
+                      *ngIf="submitForm.get('name')?.hasError('required')"
+                      >Team Name is required.</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="mb-3">
+                <div class="task_multiselect">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Select Project</mat-label>
+                    <mat-select
+                      matInput
+                      #input
+                      ngModel
+                      formControlName="projectId"
+                    >
+                      <mat-option
+                        *ngFor="let projects of projectlist"
+                        [value]="projects.id"
+                      >
+                        {{ projects.name }}
+                      </mat-option>
+                      <mat-option>Jeet </mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="submitForm.get('projectId')?.hasError('required')"
+                      >Project is required.</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="mb-3">
+                <div class="task_multiselect">
+                  <ng-multiselect-dropdown
+                    ngModel
+                    id="two"
+                    name="city"
+                    placeholder=" Create Team "
+                    [settings]="dropdownSettings2"
+                    [data]="team"
+                    formControlName="members_id"
+                  >
+                    <mat-error
+                      *ngIf="submitForm.get('members_id')?.hasError('required')"
+                      >Members is required.</mat-error
+                    >
+                    <ng-template
+                      #optionsTemplate
+                      let-item
+                      let-option="option"
+                      let-id="id"
+                      let-isSelected="isSelected"
+                    >
+                      <div
+                        style="
+                          padding: 1px 10px;
+                          margin-right: 10px;
+                          right: 2px;
+                          top: -2px;
+                        "
+                      ></div>
+                    </ng-template>
+                    <ng-template
+                      #optionSelectedTemplate
+                      let-option="option"
+                      let-id="id"
+                    >
+                      <div>
+                        {{ option }}
+                      </div>
+                    </ng-template>
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <button class="btn submit_btn">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add Note Modal -->
+
+<!-- Edit team Modal -->
+<div
+  class="modal fade"
+  id="editTeamModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Team
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_team_edit"
+        />
+      </div>
+      <div class="modal-body">
+        <!-- <form [formGroup]="updateForm"> -->
+        <form [formGroup]="editTeamForm" (ngSubmit)="updateTeam()">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="mb-3">
+                <div class="form_field">
+                  <mat-form-field>
+                    <input
+                      matInput
+                      #input
+                      [(ngModel)]="editteamgroups.name"
+                      formControlName="name"
+                      placeholder="Team Name"
+                    />
+                    <mat-error
+                      *ngIf="editTeamForm.get('name')?.hasError('required')"
+                      >Team Name is required.</mat-error
+                    >
+                  </mat-form-field>
+                  <input
+                    matInput
+                    #input
+                    hidden="true"
+                    [(ngModel)]="editteamgroups.id"
+                    formControlName="teamId"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="mb-3">
+                <div class="task_multiselect">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Select Project</mat-label>
+                    <mat-select
+                      matInput
+                      #input
+                      ngModel
+                      formControlName="projectId"
+                      [value]="editteamgroups.project_id"
+                    >
+                      <mat-option
+                        *ngFor="let projects of projectlist"
+                        [value]="projects.id"
+                      >
+                        {{ projects.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="
+                        editTeamForm.get('projectId')?.hasError('required')
+                      "
+                      >Project is required.</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="mb-3">
+                <div class="task_multiselect">
+                  <ng-multiselect-dropdown
+                    id="two"
+                    name="city"
+                    placeholder=" Create Team "
+                    [settings]="dropdownSettings2"
+                    [data]="team"
+                    formControlName="members_id"
+                    [(ngModel)]="editmembers_id"
+                  >
+                    <mat-error
+                      *ngIf="
+                        editTeamForm.get('members_id')?.hasError('required')
+                      "
+                      >Members is required.</mat-error
+                    >
+                    <ng-template
+                      #optionsTemplate
+                      let-item
+                      let-option="option"
+                      let-id="id"
+                      let-isSelected="isSelected"
+                    >
+                      <div
+                        style="
+                          padding: 1px 10px;
+                          margin-right: 10px;
+                          right: 2px;
+                          top: -2px;
+                        "
+                      ></div>
+                    </ng-template>
+                    <ng-template
+                      #optionSelectedTemplate
+                      let-option="option"
+                      let-id="id"
+                    >
+                      <div>
+                        {{ option }}
+                      </div>
+                    </ng-template>
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <button type="submit" class="btn submit_btn">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Add Note Modal -->
+
+<div
+  class="modal fade"
+  id="deletememberModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Delete Member
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_delete_member"
+        />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to delete this member?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="confirmDeleteMember()">
+              Yes
+            </button>
+            <!-- <button class="btn cancel_btn" (click)="dismissModal()">No</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteteamModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Delete Team
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_delete_team"
+        />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to delete this team?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="confirmDeleteTeam()">
+              Yes
+            </button>
+            <!-- <button class="btn cancel_btn" (click)="dismissModal()">No</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

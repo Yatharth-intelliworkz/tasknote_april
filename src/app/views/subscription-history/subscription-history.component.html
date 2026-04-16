@@ -1,0 +1,44 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="projects_cards">
+        <div class="card">
+          <div class="card-body">
+            <div class="row align-items-center mb-4">
+              <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+                <h2 class="company_name">Summary</h2>
+              </div>
+            </div>
+
+            <div class="task-table">
+              <div class="table-responsive">
+                <table class="table task_table">
+                  <thead>
+                    <tr>
+                      <th>Current Plan</th>
+                      <th>Total Members</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Next Payment Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="dream-table">
+                    <tr *ngFor="let plan of PlanData">
+                      <td>{{ plan.plan }}</td>
+                      <td>{{ plan.no_of_employees }}</td>
+                      <td>{{ plan.startDate }}</td>
+                      <td>{{ plan.endDate }}</td>
+                      <td>{{ plan.nextPaymentDate }}</td>
+                      <td>{{ (plan.status == 0)?'Active':'InActive' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

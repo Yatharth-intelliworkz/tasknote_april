@@ -1,0 +1,1171 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit(taskForm.value)">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="d-flex gap-2">
+                      <div
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Files"
+                      >
+                        <img
+                          src="../../../assets/img/dashboard/file-icon.png"
+                          class=""
+                          alt=""
+                          (click)="hiddenfileinput.click()"
+                        />
+                        <input
+                          type="file"
+                          style="display: none"
+                          (change)="onFileChange($event)"
+                          #hiddenfileinput
+                        />
+                      </div>
+                      <div ngbDropdown class="d-inline-block remind_box">
+                        <img
+                          src="../../../assets/img/dashboard/recurring-task.svg"
+                          width="30"
+                          class=""
+                          alt=""
+                          (click)="reminderOpen = !reminderOpen"
+                        />
+                        <div
+                          class="opn_rmd"
+                          *ngIf="reminderOpen"
+                          (clickOutside)="reminder()"
+                        >
+                          <mat-slide-toggle
+                            class="my-2"
+                            formControlName="remindOnControl"
+                            >Is Recurring</mat-slide-toggle
+                          >
+                          <div *ngIf="taskForm.get('remindOnControl')?.value">
+                            <mat-divider></mat-divider>
+                            <div class="right_box">
+                              <div class="rgt_bor my-2">
+                                <p>Recurring Task</p>
+
+                                <mat-chip-listbox
+                                  formControlName="notificationTypes"
+                                  aria-label="Fish selection"
+                                >
+                                  <mat-chip-option value="0"
+                                    >Daily</mat-chip-option
+                                  >
+                                  <mat-chip-option value="1"
+                                    >Weekly</mat-chip-option
+                                  >
+                                  <mat-chip-option value="2"
+                                    >monthly</mat-chip-option
+                                  >
+                                  <mat-chip-option value="3"
+                                    >Quarterly</mat-chip-option
+                                  >
+                                  <mat-chip-option value="4"
+                                    >Half Yearly</mat-chip-option
+                                  >
+                                  <mat-chip-option value="5"
+                                    >Yearly</mat-chip-option
+                                  >
+                                </mat-chip-listbox>
+                              </div>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <a
+                              href="javascript:void(0)"
+                              (click)="closeReminder()"
+                              class="toggle_btn"
+                              >Done</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-4 flex-md-wrap">
+                      <div class="priority_wrapper">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex gap-2 flex-wrap">
+                    <div class="position-relative">
+                      <!-- <iframe [src]="previewfile" type="application/pdf" style="width: 100%; height: 500px;" *ngIf="selctedfiletype === 'file'"></iframe> -->
+                      <progress
+                        *ngIf="previewfile && selctedfiletype === 'file'"
+                        class="progress is-primary"
+                        [attr.value]="previewfile"
+                        max="100"
+                      ></progress>
+                      <p
+                        class="upload_file_name mt-2"
+                        *ngIf="previewfile && selctedfiletype === 'file'"
+                      >
+                        <span
+                          class="img_delelte_btn"
+                          (click)="onFileChangeWithNull()"
+                        >
+                          X
+                        </span>
+                        {{ selctedfilename }}
+                      </p>
+
+                      <img
+                        src="{{ previewfile }}"
+                        width="70"
+                        height="70"
+                        *ngIf="previewfile && selctedfiletype === 'image'"
+                        alt=""
+                      />
+                      <span
+                        class="img_delelte_btn"
+                        (click)="onFileChangeWithNull()"
+                        *ngIf="previewfile && selctedfiletype === 'image'"
+                      >
+                        X
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-xl-0 mb-lg-3 mb-md-3"
+          >
+            <div class="card h-100">
+              <div class="card-body">
+                <div>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                      <div class="mb-3">
+                        <div class="task_multiselect">
+                          <ng-select
+                            [items]="team2"
+                            bindLabel="item_text"
+                            bindValue="item_id"
+                            placeholder="Select Project"
+                            (change)="getusers($event)"
+                            formControlName="project_id"
+                          >
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                      <div class="mb-3">
+                        <div class="task_multiselect">
+                          <ng-select
+                            [items]="team3"
+                            bindLabel="item_text"
+                            bindValue="item_id"
+                            placeholder="Select Client"
+                            formControlName="client_id"
+                            [multiple] = "multipleclient"
+                          >
+                          </ng-select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4">
+                      <div class="task_multiselect">
+                
+                        <ng-select
+                          [items]="team5"
+                          bindLabel="item_text"
+                          bindValue="item_id"
+                          placeholder="Select Task Type"
+                          (change)="getchecklist($event)"
+                          formControlName="tasktype"
+                        >
+                        </ng-select>
+                      </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4">
+                      <div class="task_multiselect">
+                        <ng-select
+                          [items]="team1"
+                          bindLabel="item_text"
+                          bindValue="item_id"
+                          placeholder="Select Assign"
+                          formControlName="members_id"
+                          [multiple]="true"
+                          (ngModelChange)="checklistassignes($event)"
+                        >
+                        </ng-select>
+                      </div>
+                    </div>
+
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                      <div class="mb-3">
+                        <div class="form_field custom_textarea">
+                          <mat-form-field>
+                            <textarea
+                              matInput
+                              placeholder="Task Description"
+                              style="resize: none"
+                              formControlName="description"
+                              [(ngModel)]="descriptionTask"
+                            ></textarea>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                      <div class="mb-3">
+                        <div class="form_field">
+                          <mat-form-field>
+                            <mat-date-range-input
+                              [formGroup]="range"
+                              [rangePicker]="picker"
+                            >
+                              <input
+                                matStartDate
+                                formControlName="start"
+                                placeholder="Start Date"
+                                datePickerFormat="YYYY/MM/DD"
+                              />
+                              <input
+                                matEndDate
+                                formControlName="due_date"
+                                placeholder="Due Date"
+                                datePickerFormat="YYYY/MM/DD"
+                              />
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle
+                              matSuffix
+                              [for]="picker"
+                            ></mat-datepicker-toggle>
+                            <mat-date-range-picker
+                              #picker
+                            ></mat-date-range-picker>
+                            <mat-error
+                              *ngIf="range.get('start')?.hasError('required')"
+                              >Task Start Date is required.</mat-error
+                            >
+                            <mat-error
+                              *ngIf="
+                                range.get('due_date')?.hasError('required')
+                              "
+                              >Task Due Date is required.</mat-error
+                            >
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                      <div class="mb-3">
+                        <div class="form_field">
+                          <mat-form-field>
+                            <mat-select
+                              placeholder="Select Priority"
+                              formControlName="priority"
+                              [(ngModel)]="selectedpriority.priority"
+                            >
+                              <mat-option [value]="1">High</mat-option>
+                              <mat-option [value]="2">Medium</mat-option>
+                              <mat-option [value]="0">Low</mat-option>
+                            </mat-select>
+                            <mat-error
+                              *ngIf="
+                                taskForm.get('priority')?.hasError('required')
+                              "
+                              >Priority is required.</mat-error
+                            >
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                      <div class="task_multiselect">
+                        <ng-select
+                          [items]="team4"
+                          bindLabel="item_text"
+                          bindValue="item_id"
+                          placeholder="Select Responsible Person"
+                          formControlName="responsible_person"
+                          [multiple]="true"
+                          (ngModelChange)="checklistresponsibleperson($event)"
+                        >
+                        </ng-select>
+                      </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 cl-md-6 col-sm-12">
+                      <mat-form-field class="w-100">
+                        <mat-label>Periodic Date</mat-label>
+                        <input
+                          matInput
+                          [matDatepicker]="dp"
+                          [formControl]="periodic_date"
+                          formControlName="periodic_date"
+                        />
+                        <mat-datepicker-toggle
+                          matIconSuffix
+                          [for]="dp"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker
+                          #dp
+                          (monthSelected)="setMonthAndYear($event, dp)"
+                          panelClass="example-month-picker"
+                        >
+                        </mat-datepicker>
+                      </mat-form-field>
+                    </div>
+
+                  <div >
+                    <div
+                      class="table-responsive my-4"
+                      *ngIf="checkslistsData !== undefined"
+                    >
+                      <div formArrayName="checklistsForm" >
+                        <table class="table modal-table" >
+                          <thead>
+                            <tr>
+                              <td class="text-center" colspan="9">
+                                <h5 class="m-0">Check List</h5>
+                              </td>
+                            </tr>
+                          </thead>
+                          <tbody cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" >
+                            <tr>
+                              <td>
+                                <p class="add_checklist_inner">Sr. No</p>
+                              </td>
+                              <td>
+                                <p
+                                  class="add_checklist_inner"
+                                  style="min-width: 180px"
+                                >
+                                  Title
+                                </p>
+                              </td>
+
+                              <td>
+                                <p class="add_checklist_inner">
+                                  Document <br />
+                                  Required
+                                </p>
+                              </td>
+                              <td style="max-width: 70px">
+                                <p
+                                  class="add_checklist_inner"
+
+                                >
+                                  Time Hour
+                                </p>
+                              </td>
+                              <td style="max-width: 70px">
+                                <p
+                                  class="add_checklist_inner"
+
+                                >
+                                  Time Minute
+                                </p>
+                              </td>
+                              <td>
+                                <p
+                                  class="add_checklist_inner"
+                                  style="min-width: 180px"
+                                >
+                                  Assign
+                                </p>
+                              </td>
+                              <td>
+                                <p
+                                  class="add_checklist_inner"
+                                  style="min-width: 200px"
+                                >
+                                  Responsible Person
+                                </p>
+                              </td>
+                              <td>
+                                <p class="add_checklist_inner" style="min-width: 150px">Remark</p>
+                              </td>
+                              <td>
+                                <!-- <p class="add_checklist_inner">Remove</p> -->
+                                <a
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#taskChecklistAddModal"
+                                  id="hideaddchecklist"
+                                >
+                                  <img
+                                    src="../../../assets/img/dashboard/add-icon.svg"
+                                    alt=""
+                                    class="task_plus_icon ms-3"
+                                  />
+                                </a>
+                              </td>
+                              <!-- <td>
+                              <a data-bs-toggle="modal" data-bs-target="#taskChecklistAddModal" id="hideaddchecklist">
+                                <img src="../../../assets/img/dashboard/add-icon.svg" alt="" class="task_plus_icon ms-3" />
+                              </a>
+                            </td> -->
+                            </tr>
+                            <tr *ngFor="let checklists of checklistsTask.controls; let i = index" [formGroupName]="i" cdkDrag>
+                              <td>
+                                <p class="add_checklist_inner">{{ i + 1 }}</p>
+                              </td>
+                              <td>
+                                <p class="add_checklist_inner">
+                                  <input hidden matInput formControlName="checklist_name" placeholder="Enter Checklist Name" />
+                                  {{ checklists.get('checklist_name')?.value }}
+                                </p>
+                              </td>
+                             <td>
+                                <input type="checkbox" formControlName="checklist_document" />
+                              </td>
+                              <td style="max-width: 70px">
+                                <div class="form_field" >
+                                  <mat-form-field  >
+                                    <input matInput formControlName="checklist_time_hour" placeholder="Enter Time Hour" />
+                                  </mat-form-field>
+                                </div>
+                              </td>
+                              <td style="max-width: 70px">
+                                <div class="form_field" >
+                                  <mat-form-field  >
+                                    <input matInput formControlName="checklist_time_minute" placeholder="Enter Time Minute" />
+                                  </mat-form-field>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="task_multiselect">
+                                  <ng-select
+                                    [items]="team7"
+                                    bindLabel="item_text"
+                                    bindValue="item_id"
+                                    placeholder="Select Assign"
+                                    formControlName="checklist_members_id">
+                                  </ng-select>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="task_multiselect">
+                                  <ng-select
+                                    [items]="team8"
+                                    placeholder="Select Responsible Person"
+                                    bindLabel="item_text"
+                                    bindValue="item_id"
+                                    formControlName="checklist_responsible_person">
+                                  </ng-select>
+                                </div>
+                              </td>
+                              <td>
+                                <p class="add_checklist_inner">
+                                  <mat-form-field  >
+                                    <input  matInput formControlName="checklist_remark" [value]="checklists.get('checklist_remark')?.value" placeholder="Enter Remark" />
+                                  </mat-form-field>
+                                </p>
+                              </td>
+                              <td>
+                                <a (click)="removeItem(checklists.get('id')?.value)">
+                                  <img src="../../../assets/img/dashboard/remove-icon.svg" alt="Remove" class="task_plus_icon ms-3" />
+                                </a>
+                              </td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                    <!-- new sub task and checklist -->
+
+                    <!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                      <div>
+                        <div class="mb-3" formGroupName="subtasks">
+                          <div class="position-relative">
+                            <div class="form_field">
+                              <mat-form-field>
+                                <input matInput #input formControlName="sub_title" placeholder="Sub Task Name" />
+                              </mat-form-field>
+                            </div>
+                            <div class="create_task_client_icons">
+                              <div class="priority_wrapper">
+                                <span mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+                                  <img src="{{ img }}" alt="" class="me-2" />
+                                </span>
+
+                                <mat-menu #menu="matMenu" class="priority_inner">
+                                  <span mat-menu-item (click)="selectPriority('1')">
+                                    <img src="../../../assets/img/dashboard/flag-R.svg" alt="" class="me-2" />
+                                    <span>High</span>
+                                  </span>
+                                  <span mat-menu-item (click)="selectPriority('2')">
+                                    <img src="../../../assets/img/dashboard/flag-Y.svg" alt="" class="me-2" />
+                                    <span>Medium</span>
+                                  </span>
+                                  <span mat-menu-item (click)="selectPriority('0')">
+                                    <img src="../../../assets/img/dashboard/flag-G.svg" alt="" class="me-2" />
+                                    <span>Low</span>
+                                  </span>
+                                </mat-menu>
+                              </div>
+                              <div class="subtask_comman_dropdown">
+                                <div>
+                                  <a>
+                                    <img src="../../../assets/img/dashboard/input-status-icon.svg" alt=""
+                                      class="position-relative" [matMenuTriggerFor]="taskStatus" aria-label="menu" />
+
+                                  </a>
+
+                                  <mat-menu #taskStatus="matMenu" class="subtask_satus_list">
+                                    <mat-form-field>
+                                      <mat-select placeholder="Select Status" formControlName="sub_status">
+                                        <mat-option *ngFor="let status of statuslist"
+                                          [value]="status.status">{{status.status}}</mat-option>
+                                      </mat-select>
+                                    </mat-form-field>
+                                  </mat-menu>
+
+                                </div>
+                              </div>
+                              <div>
+                                <img src="../../../assets/img/dashboard/input-assign-icon.svg" alt="assgin qwe"
+                                  class="position-relative" (click)="toggleDropdown()" />
+                                <div *ngIf="showAssignlist">
+                                  <div class="task_multiselect subtask_assign_list">
+                                    <ng-multiselect-dropdown id="two" name="city" placeholder="Assign"
+                                      [settings]="dropdownSettings2" [data]="team1" formControlName="sub_members_id">
+                                      <ng-template #optionsTemplate let-item let-option="option" let-id="id"
+                                        let-isSelected="isSelected">
+                                        <div style="padding: 1px 10px;margin-right: 10px;right: 2px;top: -2px;"></div>
+                                      </ng-template>
+                                      <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                                        <div>
+                                          {{ option }}
+                                        </div>
+                                      </ng-template>
+                                    </ng-multiselect-dropdown>
+                                  </div>
+                                </div>
+
+                              </div>
+
+                              <div class="position-relative">
+                                <a data-bs-toggle="tooltip" data-bs-placement="top" title="Due Date">
+                                  <img src="../../../assets/img/dashboard/input-date-icon.svg" alt=""
+                                    [matMenuTriggerFor]="subtaskDate" class="subtask_date_icon" />
+                                </a>
+                                <div>
+                                  <mat-menu #subtaskDate="matMenu" xPosition="before" class="subtask_date_inner">
+                                    <mat-calendar [(selected)]="selected" [minDate]="minDate"></mat-calendar>
+                                  </mat-menu>
+
+                                </div>
+                              </div>
+                              <input type="hidden" formControlName="subtaskdue_date" [value]="selected">
+                              <div>
+                                <a data-bs-toggle="tooltip" data-bs-placement="top" title="Add Sub Task"
+                                  (click)="addSubTask()">
+                                  <img src="../../../assets/img/dashboard/add-icon.svg" alt="" />
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                      <div
+                        *ngFor="let subtaskItem of subtasksArray; let i = index"
+                        #listsubTask
+                      >
+                        <div
+                          class="d-flex align-items-start justify-content-between"
+                        >
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              value=""
+                              id="flexCheckDefault"
+                            />
+                            <p class="sub_task_inner">
+                              {{ subtaskItem.sub_title }}
+                            </p>
+                          </div>
+                          <div
+                            class="d-flex gap-3 align-items-center flex-md-wrap"
+                          >
+                            <img
+                              src="../../../assets/img/dashboard/flag-G.svg"
+                              *ngIf="subtaskItem.sub_priority == 0"
+                              alt=""
+                            />
+                            <img
+                              src="../../../assets/img/dashboard/flag-R.svg"
+                              *ngIf="subtaskItem.sub_priority == 1"
+                              alt=""
+                            />
+                            <img
+                              src="../../../assets/img/dashboard/flag-Y.svg"
+                              *ngIf="subtaskItem.sub_priority == 2"
+                              alt=""
+                            />
+                            <span class="status_label">{{
+                              subtaskItem.sub_status
+                            }}</span>
+                            <img
+                              src="../../../assets/img/dashboard/input-date-icon.png"
+                              alt=""
+                            />
+                            <p class="date_format_show">
+                              {{
+                                subtaskItem.sub_due_date | date : "shortDate"
+                              }}
+                            </p>
+                            <img
+                              src="../../../assets/img/dashboard/remove-icon.svg"
+                              alt=""
+                              (click)="removeSubtask(i)"
+                            />
+                          </div>
+                        </div>
+                        <hr />
+                      </div>
+                    </div>
+
+                    <!-- sub task output  -->
+
+                    <!-- new sub task and checklist -->
+
+                    <div class="row">
+                      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                        <button
+                          class="submit_btn"
+                          [disabled]="isButtonDisabled"
+                        >
+                          Submit
+                        </button>
+                        <a href="/tasks" class="submit_btn ms-2 text-decoration-none">cancel</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+       
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- create client modal start -->
+
+<div
+  class="modal fade"
+  id="ClientModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add New Client
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn"
+        />
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <form>
+              <div class="col-xl-4 col-lg-4 co-md-4 col-sm-12">
+                <div class="avatar-upload">
+                  <div class="avatar-edit">
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      accept=".png, .jpg, .jpeg"
+                    />
+                    <label for="imageUpload"
+                      ><img
+                        src="../../../assets/img/dashboard/image-icon.png"
+                        alt=""
+                    /></label>
+                  </div>
+                  <div class="avatar-preview">
+                    <div
+                      id="imagePreview"
+                      style="background-image: url('')"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-8 col-lg-8 co-md-8 col-sm-12">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <mat-select placeholder="Select Title" required>
+                            <mat-option value="">Mr.</mat-option>
+                            <mat-option value="">Mrs.</mat-option>
+                            <mat-option value="">Ms.</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input matInput #input placeholder="Add Client" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input matInput #input placeholder="Add Company" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field class="example-full-width">
+                          <input
+                            type="tel"
+                            matInput
+                            placeholder="Mobile Number"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input
+                            matInput
+                            placeholder="Email"
+                            [formControl]="email"
+                            required
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <!-- <mat-form-field>
+                    <ngx-mat-file-input formControlName="multiplefile" placeholder="Multiple inputs" multiple></ngx-mat-file-input>
+                    <mat-icon matSuffix>folder</mat-icon>
+                  </mat-form-field> -->
+
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Attechments" required />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input placeholder="Address" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                      <button class="submit_btn">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- create client modal end -->
+
+<!-- create service modal start -->
+<div
+  class="modal fade"
+  id="ServiceModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add New Service
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="serviceclose"
+          alt=""
+          class="popup_close_btn"
+        />
+      </div>
+      <div class="modal-body">
+        <form
+          role="form"
+          #submitForm="ngForm"
+          (ngSubmit)="insertservice(submitForm.value)"
+        >
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="mb-3">
+                <div class="form_field">
+                  <mat-form-field>
+                    <input
+                      matInput
+                      #input
+                      type="text"
+                      class="form-control"
+                      ngModel
+                      id="addNoteTitle"
+                      name="title"
+                      placeholder="Enter title"
+                    />
+                    <input
+                      type="hidden"
+                      [(ngModel)]="companyId"
+                      name="companyId"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <button class="submit_btn">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- create serve modal end -->
+
+<!-- edit sub task popup -->
+
+<div
+  class="modal fade"
+  id="editsubTaskModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Sub Task
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn"
+        />
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <form>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+              <div class="mb-3">
+                <div class="position-relative">
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input matInput #input placeholder="Sub Task Name" />
+                    </mat-form-field>
+                  </div>
+                  <div class="create_task_client_icons">
+                    <div class="priority_wrapper">
+                      <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="menu"
+                      >
+                        <img
+                          *ngIf="selectedPriority.image"
+                          [src]="selectedPriority.image"
+                          alt=""
+                          class=""
+                        />
+                      </button>
+
+                      <mat-menu #menu="matMenu" class="priority_inner">
+                        <button
+                          mat-menu-item
+                          (click)="
+                            selectPriority(
+                              '../../../assets/img/dashboard/flag-R.svg'
+                            )
+                          "
+                        >
+                          <img
+                            src="../../../assets/img/dashboard/flag-R.svg"
+                            alt=""
+                            class="me-2"
+                          />
+                          <span>High</span>
+                        </button>
+                        <button
+                          mat-menu-item
+                          (click)="
+                            selectPriority(
+                              '../../../assets/img/dashboard/flag-G.svg'
+                            )
+                          "
+                        >
+                          <img
+                            src="../../../assets/img/dashboard/flag-G.svg"
+                            alt=""
+                            class="me-2"
+                          />
+                          <span>Medium</span>
+                        </button>
+                        <button
+                          mat-menu-item
+                          (click)="
+                            selectPriority(
+                              '../../../assets/img/dashboard/flag-Y.svg'
+                            )
+                          "
+                        >
+                          <img
+                            src="../../../assets/img/dashboard/flag-Y.svg"
+                            alt=""
+                            class="me-2"
+                          />
+                          <span>Low</span>
+                        </button>
+                      </mat-menu>
+                    </div>
+                    <div class="subtask_comman_dropdown">
+                      <div class="dropdown">
+                        <a
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Priority"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <img
+                            src="../../../assets/img/dashboard/input-status-icon.svg"
+                            alt=""
+                          />
+                        </a>
+                        <ul
+                          class="dropdown-menu"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <li>
+                            <a class="dropdown-item"> Pending </a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item"> Other </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div>
+                      <img
+                        src="../../../assets/img/dashboard/input-assign-icon.svg"
+                        alt="assgin qwe"
+                        class="position-relative"
+                        (click)="edituserAssign()"
+                      />
+                      <div *ngIf="showeditAssignlist">
+                        <div class="task_multiselect subtask_assign_list">
+                          <ng-multiselect-dropdown
+                            id="two"
+                            name="city"
+                            placeholder="Assign"
+                            [settings]="dropdownSettings2"
+                            [data]="team1"
+                            [formControlName]="'selectedItems2'"
+                          >
+                            <ng-template
+                              #optionsTemplate
+                              let-item
+                              let-option="option"
+                              let-id="id"
+                              let-isSelected="isSelected"
+                            >
+                              <div
+                                style="
+                                  padding: 1px 10px;
+                                  margin-right: 10px;
+                                  right: 2px;
+                                  top: -2px;
+                                "
+                              ></div>
+                            </ng-template>
+                            <ng-template
+                              #optionSelectedTemplate
+                              let-option="option"
+                              let-id="id"
+                            >
+                              <div>
+                                {{ option }}
+                              </div>
+                            </ng-template>
+                          </ng-multiselect-dropdown>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="">
+                      <img
+                        src="../../../assets/img/dashboard/input-date-icon.png"
+                        alt=""
+                        [matMenuTriggerFor]="subtaskDate"
+                        class="subtask_date_icon"
+                      />
+                      <div class="subtask_date_inner">
+                        <mat-menu
+                          #subtaskDate="matMenu"
+                          xPosition="before"
+                          class="subtask_date_inner"
+                        >
+                          <mat-calendar [(selected)]="selected"></mat-calendar>
+                        </mat-menu>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <button class="submit_btn">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- edit sub task popup -->
+
+<!-- edit checklist  popup -->
+
+<!-- edit checklist popup -->
+
+<div
+  class="modal fade"
+  id="taskChecklistAddModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Checklist
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_delete_project"
+        />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="taskFormchecklist">
+          <table class="table modal-table">
+            <tbody>
+              <tr>
+                <td>
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input
+                        matInput
+                        formControlName="tasktypechecklist"
+                        placeholder="Checklist"
+                      />
+                    </mat-form-field>
+                  </div>
+                </td>
+                <td>
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input
+                        matInput
+                        formControlName="tasktyperemark"
+                        placeholder="Remark"
+                      />
+                    </mat-form-field>
+                    <!-- <input matInput [(ngModel)]="currentChecklistIndex" formControlName="taskinchecklist" hidden /> -->
+                  </div>
+                </td>
+                <td>
+                  <div class="form_field">
+                    <mat-checkbox formControlName="is_documentupload"
+                      >Upload Document</mat-checkbox
+                    >
+                  </div>
+                </td>
+                <!-- <td>
+                  <a (click)="addChecklistTaskType()">
+                    <img src="../../../assets/img/dashboard/add-icon.svg" alt="" class="task_plus_icon ms-3" />
+                  </a>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+              <button
+                class="btn submit_btn"
+                (click)="addChecklistTaskType()"
+                data-bs-dismiss="modal"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+.table-responsive {
+    height: calc(100vh - 14em);
+    overflow: auto;
+  }
+  .table-responsive::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .top_title_inner_flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .add_task_btn {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    text-transform: capitalize;
+    background-color: #1c1f66;
+    border-radius: 10px;
+    padding: 8px 14px;
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .multiselect_main {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: start;
+  }
+  

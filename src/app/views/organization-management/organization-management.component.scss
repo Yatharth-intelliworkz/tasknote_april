@@ -1,0 +1,164 @@
+img{
+  cursor: pointer;
+}
+
+
+.user_task_wrapper .nav-tabs,
+.nav-tabs .nav-link,
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:hover {
+  border: none;
+}
+
+
+.projects_cards {
+  display: grid;
+}
+.projects_cards .card-header {
+  background-color: white;
+  border-radius: 10px 10px 0 0;
+  padding: 15px;
+  border-bottom: none;
+}
+.projects_cards .card-body {
+  border-radius: 0 0 10px 10px;
+}
+
+.projects_cards a {
+  text-decoration: none;
+}
+.project_name {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19px;
+  color: white;
+  margin: 0;
+}
+.project_date {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: white;
+  margin: 0;
+}
+.add_note_title {
+  border: 2px solid #dddddd;
+  background-color: white;
+}
+
+.oraganization_name {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #666666;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.oraganization_logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.oraganization_logo img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 8px;
+}
+.dashed_border {
+  border-top: none;
+  opacity: 1;
+  border-bottom: 1px dashed #dddddd;
+}
+
+.company_name {
+  color: #1c1f66;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+.company_create_date {
+  color: #666666;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+.company_projects {
+  color: #333333;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 48px;
+  text-align: center;
+  margin: 0;
+}
+.company_projects_name {
+  color: #707070;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: center;
+  margin: 0;
+}
+
+
+.no_data_content_wrapper{
+  height: calc(100vh - 14em);
+  // overflow: auto;
+}
+
+
+@media only screen and (max-width: 1535px) {
+  .company_name {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 125px;
+  }
+  .oraganization_logo {
+    width: 70px;
+    height: 70px;
+  }
+  .oraganization_logo img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+  }
+
+  .company_projects {
+    font-size: 30px;
+  }
+}
+@media only screen and (max-width: 560px) {
+  .projects_tabs .nav-tabs .nav-link {
+    margin-right: 5px;
+  }
+  .projects_tabs .nav-tabs .nav-link,
+  .projects_tabs .nav-tabs .nav-link.active,
+  .add_task_btn {
+    padding: 6px;
+    font-size: 12px;
+  }
+  .oraganization_logo,
+  .oraganization_logo img {
+    width: 70px;
+    height: 50px;
+  }
+
+  .company_name {
+    font-size: 16px;
+  }
+  .company_projects {
+    font-size: 30px;
+    line-height: 36px;
+  }
+}

@@ -1,0 +1,34 @@
+// @supports (scrollbar-width: thin) {
+//   * {
+//     scrollbar-width: 10px;
+//     scrollbar-color: #c02828 transparent;
+//   }
+// }
+
+::-webkit-scrollbar {
+  width: .9em;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cui-body-bg, #fff);
+  border-radius: 100vw;
+  margin-block: .2em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E0EAF0;
+  border: .2em solid var(--cui-body-bg, #fff);
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E0EAF0;
+}
+
+.dark-theme::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+.dark-theme::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}

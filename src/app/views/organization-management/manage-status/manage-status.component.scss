@@ -1,0 +1,119 @@
+
+
+.manage_searchbar {
+  position: relative;
+}
+.searchbar_icon {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  background-color: white;
+}
+
+
+
+.table-responsive{
+  height: calc(100vh - 14.5em);
+  overflow: auto;
+}
+.task-table .card::-webkit-scrollbar, .table-responsive::-webkit-scrollbar{
+  display: none;
+}
+
+.task_table thead{
+  position:sticky;
+  top:0;
+  z-index: 9;
+}
+
+.task-table tbody tr a{
+  width: auto;
+}
+
+.role_table .role_type {
+  font-size: 18px !important;
+  line-height: 24px !important;
+  font-weight: 600 !important;
+  color: #111111 !important;
+}
+
+.role_table thead tr {
+  background-color: #f6f6f6;
+}
+
+
+.role_table tr td {
+  border-bottom: 1px dashed #dddddd;
+}
+
+.role_table tbody .assign-role-inner td {
+  border: none;
+}
+
+.status_bg {
+  padding: 6px;
+}
+.status_closed_color {
+  // background-color: #CFF2C3;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+.status_review_color {
+  background-color: #f9ecc1;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+.status_reject_color {
+  background-color: #f2c3f2;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+.status_pending_color {
+  background-color: #ffe2e2;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+.status_onhold_color {
+  background-color: #def6ff;
+  border-radius: 3px;
+  padding: 6px;
+  display: inline-block;
+}
+.form_field {
+  width: 100% !important;
+}
+
+.form_field .mat-mdc-form-field {
+  width: 100% !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+  border-bottom-color: #ddd !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+  border-bottom-color: #1c1f66 !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: #111111 !important;
+}
+.priority_wrapper button {
+  border: none;
+  background-color: transparent;
+  color: #707070;
+}
+
+@media only screen and (max-width: 560px) {
+  .add_task_btn {
+    display: inline-block;
+    min-width: 130px;
+    text-align: center;
+    font-size: 12px;
+    padding: 10px;
+  }
+}

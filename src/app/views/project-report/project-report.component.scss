@@ -1,0 +1,128 @@
+.top_title_inner_flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add_task_btn {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 21px;
+  text-transform: uppercase;
+  background-color: #1c1f66;
+  border-radius: 10px;
+  padding: 10px 16px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.report_inner_title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27px;
+  color: #1C1F66;
+  margin: 0;
+}
+
+
+
+.multiselect_main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.task_table {
+  border-collapse: separate;
+  border-spacing: 1px 10px;
+}
+
+.task_table tr th,
+.task_table tr td {
+  font-size: 14px;
+  color: #707070;
+  font-weight: 400;
+  line-height: 19px;
+  vertical-align: middle;
+}
+
+.task_table thead tr {
+  border-color: transparent;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  height: 55px;
+}
+
+.task_table tbody tr {
+  // border-color: transparent;
+  border: 1px solid #dddddd;
+  border-style: solid !important;
+  border-radius: 10px;
+}
+
+.total_project_wrapper {
+  background-color: #1c1f66bc;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+ display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+}
+.total_project {
+  font-size: 16px;
+  color: white;
+  line-height: 20px;
+  margin: 0;
+}
+.projects_inner_title {
+  font-size: 16px;
+  color: black;
+  line-height: 20px;
+  margin: 0;
+}
+
+.project_table_data tr {
+  border-bottom: 1px dashed #dddddd;
+  margin: 10px 0;
+}
+.project_table_data tr td {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  padding: 10px 0;
+}
+.project_table_data tr td:nth-child(1) {
+  width: 150px;
+}
+
+svg{
+  height: 100px;
+}
+
+
+//   responsive
+
+
+@media only screen and (max-width: 1366px) {}
+
+@media only screen and (max-width: 1199px) {}
+
+@media only screen and (max-width: 1024px) {}
+
+@media only screen and (max-width: 992px) {}
+
+@media only screen and (max-width: 768px) {}
+
+@media only screen and (max-width: 560px) {
+  .top_title_inner_flex {
+    display: block;
+  }
+}

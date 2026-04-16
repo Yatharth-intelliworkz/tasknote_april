@@ -1,0 +1,977 @@
+<main>
+  <section class="user_task_wrapper">
+    <!-- main tab -->
+    <nav class="projects_tabs mb-4">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button
+          class="nav-link active"
+          id="nav-overview-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-overview"
+          type="button"
+          role="tab"
+          aria-controls="nav-overview"
+          aria-selected="true"
+        >
+          Overview
+        </button>
+        <button
+          class="nav-link"
+          id="nav-list-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-list"
+          type="button"
+          role="tab"
+          aria-controls="nav-list"
+          aria-selected="true"
+        >
+          List
+        </button>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="nav-overview"
+        role="tabpanel"
+        aria-labelledby="nav-overview-tab"
+      >
+        <!-- overview start -->
+
+        <div class="user_task_list mb-4">
+          <div class="">
+            <div class="card">
+              <div class="card-body">
+                <img
+                  src="../../../assets/img/dashboard/close-icon.png"
+                  class="mb-4"
+                  alt=""
+                />
+                <h6 class="user_task_title mb-2">Completed Tasks</h6>
+                <h5 class="user_task_count">
+                  {{ memberdata?.totalCompletedTasks }}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <div class="card">
+              <div class="card-body">
+                <img
+                  src="../../../assets/img/dashboard/incomplete-task.svg"
+                  class="mb-4"
+                  alt=""
+                />
+                <h6 class="user_task_title mb-2">Incomplete Tasks</h6>
+                <h5 class="user_task_count">
+                  {{ memberdata?.totalIncompleteTasks }}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <div class="card">
+              <div class="card-body">
+                <img
+                  src="../../../assets/img/dashboard/task-icon.png"
+                  class="mb-4"
+                  alt=""
+                />
+                <h6 class="user_task_title mb-2">Total Task</h6>
+                <h5 class="user_task_count">{{ memberdata.totalAllTasks }}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <div class="card">
+              <div class="card-body">
+                <img
+                  src="../../../assets/img/dashboard/past-due-icon.png"
+                  class="mb-4"
+                  alt=""
+                />
+                <h6 class="user_task_title mb-2">Overdue Tasks</h6>
+                <h5 class="user_task_count">
+                  {{ memberdata.totalOverdueTasks }}
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h2 class="task_table_title">Priority Analysis</h2>
+                  <div>
+                    <canvas id="priority">{{ chart2 }}</canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h2 class="task_table_title">Performance Analysis</h2>
+                  <div>
+                    <canvas id="performance" style="height: 100; width: 100">
+                      {{ chart }}</canvas
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="task_table_title">User Analysis</h2>
+              <div>
+                <canvas id="canvas">{{ chart3 }}</canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- overview end -->
+
+      <div
+        class="tab-pane fade"
+        id="nav-list"
+        role="tabpanel"
+        aria-labelledby="nav-list-tab"
+      >
+        <div class="row project_list_tabs">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <nav class="projects_tabs mb-4">
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link"
+                  id="Pin-Task-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Pin-Task"
+                  type="button"
+                  role="tab"
+                  aria-controls="Pin-Task"
+                  aria-selected="true"
+                >
+                  Pin Task ({{ memberdata.tasklist.pinTaskData.length }})
+                </button>
+                <button
+                  class="nav-link active"
+                  id="Today-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Today"
+                  type="button"
+                  role="tab"
+                  aria-controls="Today"
+                  aria-selected="false"
+                >
+                  Today ({{ memberdata.tasklist.todayTaskData.length }})
+                </button>
+                <button
+                  class="nav-link"
+                  id="Overdue-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Overdue"
+                  type="button"
+                  role="tab"
+                  aria-controls="Overdue"
+                  aria-selected="false"
+                >
+                  Overdue ({{ memberdata.tasklist.overDueTaskData.length }})
+                </button>
+                <button
+                  class="nav-link"
+                  id="Upcoming-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Upcoming"
+                  type="button"
+                  role="tab"
+                  aria-controls="Upcoming"
+                  aria-selected="false"
+                >
+                  Upcoming ({{ memberdata.tasklist.upcomingTaskData.length }})
+                </button>
+                <button
+                  class="nav-link"
+                  id="Completed-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Completed"
+                  type="button"
+                  role="tab"
+                  aria-controls="Completed"
+                  aria-selected="false"
+                >
+                  Completed ({{ memberdata.tasklist.completedTaskData.length }})
+                </button>
+              </div>
+            </nav>
+
+            <div class="card">
+              <div class="card-body">
+                <div class="tab-content" id="nav-tabContent">
+                  <div
+                    class="tab-pane fade show active"
+                    id="nav-task-list"
+                    role="tabpanel"
+                    aria-labelledby="nav-task-list-tab"
+                  >
+                    <!-- task tabs -->
+
+                    <div class="tab-content" id="nav-tabContent">
+                      <div
+                        class="tab-pane fade"
+                        id="Pin-Task"
+                        role="tabpanel"
+                        aria-labelledby="Pin-Task-tab"
+                      >
+                        <!-- <h3 class="task_table_title">Pin-Task {{memberdata.tasklist.pinTaskData.length}}</h3> -->
+
+                        <div
+                          class="table-responsive"
+                          *ngIf="memberdata.tasklist.pinTaskData?.length > 0"
+                        >
+                          <table class="table task_table">
+                            <thead>
+                              <tr>
+                                <th></th>
+                                <th class="table_fix_width">Task Name</th>
+                                <th class="table_fix_width">Created Date</th>
+                                <th class="table_fix_width">Due Date</th>
+                                <th class="table_fix_width">Status</th>
+                                <th class="table_fix_width">Client Name</th>
+                                <th class="table_fix_width">Service Name</th>
+                                <th class="table_fix_width">Project Name</th>
+                              </tr>
+                            </thead>
+                            <tbody
+                              *ngFor="
+                                let pinTaskList of memberdata.tasklist
+                                  .pinTaskData
+                              "
+                            >
+                              <tr>
+                                <td class="p-0">
+                                  <div class="d-flex gap-3 align-items-center">
+                                    <div *ngIf="checkbox">
+                                      <input
+                                        class="form-check-label table_checkbox"
+                                        type="checkbox"
+                                        value=""
+                                        id="flexCheckDefault"
+                                      />
+                                    </div>
+                                    <img
+                                      src="../../../assets/img/dashboard/after-pin-icon.svg"
+                                      alt=""
+                                    />
+
+                                    <div class="position-relative">
+                                      <span
+                                        class="user_short_name rounded"
+                                        title="{{ pinTaskList.createdName }}"
+                                        style="
+                                          background-color: rgb(72, 104, 209);
+                                        "
+                                        >{{
+                                          getInitials(pinTaskList.createdName)
+                                        }}</span
+                                      >
+                                      <span
+                                        class="position-absolute start-100 translate-middle p-1 bg-danger border rounded-circle"
+                                        style="bottom: -5px"
+                                      ></span>
+                                    </div>
+                                    <div class="priority_wrapper">
+                                      <button
+                                        mat-icon-button
+                                        [matMenuTriggerFor]="menu"
+                                        aria-label="menu"
+                                      >
+                                        <img
+                                          *ngIf="selectedPriority.image"
+                                          [src]="selectedPriority.image"
+                                          alt=""
+                                          class="me-2"
+                                        />
+                                      </button>
+
+                                      <mat-menu
+                                        #menu="matMenu"
+                                        class="priority_inner"
+                                      >
+                                        <button
+                                          *ngIf="pinTaskList.pinTask === 1"
+                                          mat-menu-item
+                                          (click)="
+                                            selectPriority(
+                                              '../../../assets/img/dashboard/flag-R.svg'
+                                            )
+                                          "
+                                        >
+                                          <img
+                                            src="../../../assets/img/dashboard/flag-R.svg"
+                                            alt=""
+                                            class="me-2"
+                                          />
+                                          <span>High</span>
+                                        </button>
+                                        <button
+                                          *ngIf="pinTaskList.pinTask === 2"
+                                          mat-menu-item
+                                          (click)="
+                                            selectPriority(
+                                              '../../../assets/img/dashboard/flag-G.svg'
+                                            )
+                                          "
+                                        >
+                                          <img
+                                            src="../../../assets/img/dashboard/flag-G.svg"
+                                            alt=""
+                                            class="me-2"
+                                          />
+                                          <span>Medium</span>
+                                        </button>
+                                        <button
+                                          *ngIf="pinTaskList.pinTask === 3"
+                                          mat-menu-item
+                                          (click)="
+                                            selectPriority(
+                                              '../../../assets/img/dashboard/flag-Y.svg'
+                                            )
+                                          "
+                                        >
+                                          <img
+                                            src="../../../assets/img/dashboard/flag-Y.svg"
+                                            alt=""
+                                            class="me-2"
+                                          />
+                                          <span>Low</span>
+                                        </button>
+                                      </mat-menu>
+                                    </div>
+                                  </div>
+                                </td>
+                                <!-- <td>
+                                 
+                                </td> -->
+                                <!-- <td>
+                                 
+                                </td> -->
+                                <td
+                                  routerLink="/view-task/{{
+                                    pinTaskList.task_id
+                                  }}"
+                                  class="table_link"
+                                >
+                                  {{ pinTaskList.description.slice(0, 10) }}...
+                                </td>
+                                <td>{{ pinTaskList.created_at }}</td>
+                                <td>{{ pinTaskList.due_date }}</td>
+                                <td>
+                                  <div class="priority_wrapper">
+                                    <button
+                                      mat-icon-button
+                                      [matMenuTriggerFor]="status"
+                                      aria-label="status"
+                                    >
+                                      {{ pinTaskList.status }}
+                                    </button>
+
+                                    <mat-menu
+                                      #status="matMenu"
+                                      class="priority_inner"
+                                    >
+                                      <div
+                                        *ngFor="
+                                          let statuses of memberdata.statuslist
+                                        "
+                                      >
+                                        <button
+                                          mat-menu-item
+                                          (click)="
+                                            selectStatus(pinTaskList.task_id)
+                                          "
+                                        >
+                                          <span>{{ statuses.status }}</span>
+                                        </button>
+                                      </div>
+                                    </mat-menu>
+                                  </div>
+                                </td>
+                                <td>{{ pinTaskList.clientName }}</td>
+                                <td>{{ pinTaskList.service }}</td>
+                                <td>
+                                  {{ pinTaskList.projectName.toUpperCase() }}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <div
+                          class="task-table"
+                          *ngIf="
+                            !memberdata.tasklist.pinTaskData ||
+                            memberdata.tasklist.pinTaskData.length === 0
+                          "
+                        >
+                          <p class="no_data_content">
+                            Pinned task will appear here
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="tab-pane fade show active"
+                        id="Today"
+                        role="tabpanel"
+                        aria-labelledby="Today-tab"
+                      >
+                        <!-- <h3 class="task_table_title">Today ({{memberdata.tasklist.todayTaskData.length}})</h3> -->
+
+                        <div
+                          class="table-responsive"
+                          *ngIf="memberdata.tasklist.todayTaskData?.length > 0"
+                        >
+                          <ag-grid-angular
+                            style="width: 100%; height: 100%"
+                            [columnDefs]="columnDefs"
+                            [rowData]="rowData"
+                            [defaultColDef]="defaultColDef"
+                            [class]="themeClass"
+                            [pagination]="pagination"
+                            [paginationPageSize]="paginationPageSize"
+                            [paginationPageSizeSelector]="
+                              paginationPageSizeSelector
+                            "
+                          >
+                          </ag-grid-angular>
+                        </div>
+
+                        <div
+                          class="task-table"
+                          *ngIf="
+                            !memberdata.tasklist.todayTaskData ||
+                            memberdata.tasklist.todayTaskData.length === 0
+                          "
+                        >
+                          <p class="no_data_content">
+                            No deadlines ending today
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        class="tab-pane fade"
+                        id="Overdue"
+                        role="tabpanel"
+                        aria-labelledby="Overdue-tab"
+                      >
+                        <!-- <h3 class="task_table_title">Overdue {{memberdata.tasklist.overDueTaskData.length}}</h3> -->
+
+                        <div
+                          class="table-responsive"
+                          *ngIf="
+                            memberdata.tasklist.overDueTaskData?.length > 0
+                          "
+                        >
+                        <ag-grid-angular
+                        style="width: 100%; height: 100%"
+                        [columnDefs]="columnDefs"
+                        [rowData]="rowOverDueData"
+                        [defaultColDef]="defaultColDef"
+                        [class]="themeClass"
+                        [pagination]="pagination"
+                        [paginationPageSize]="paginationPageSize"
+                        [paginationPageSizeSelector]="
+                          paginationPageSizeSelector
+                        "
+                      >
+                      </ag-grid-angular>
+                        </div>
+
+                        <div
+                          class="task-table"
+                          *ngIf="
+                            !memberdata.tasklist.overDueTaskData ||
+                            memberdata.tasklist.overDueTaskData.length === 0
+                          "
+                        >
+                          <p class="no_data_content">No deadlines passed</p>
+                        </div>
+                      </div>
+                      <div
+                        class="tab-pane fade"
+                        id="Upcoming"
+                        role="tabpanel"
+                        aria-labelledby="Upcoming-tab"
+                      >
+                        <!-- <h3 class="task_table_title">Upcoming {{memberdata.tasklist.upcomingTaskData.length}}</h3> -->
+
+                        <div
+                          class="table-responsive"
+                          *ngIf="
+                            memberdata.tasklist.upcomingTaskData?.length > 0
+                          "
+                        >
+                        <ag-grid-angular
+                        style="width: 100%; height: 100%"
+                        [columnDefs]="columnDefs"
+                        [rowData]="rowUpcomingData"
+                        [defaultColDef]="defaultColDef"
+                        [class]="themeClass"
+                        [pagination]="pagination"
+                        [paginationPageSize]="paginationPageSize"
+                        [paginationPageSizeSelector]="
+                          paginationPageSizeSelector
+                        "
+                      >
+                      </ag-grid-angular>
+                        </div>
+
+                        <div
+                          class="task-table"
+                          *ngIf="
+                            !memberdata.tasklist.upcomingTaskData ||
+                            memberdata.tasklist.upcomingTaskData.length === 0
+                          "
+                        >
+                          <p class="no_data_content">No upcoming task passed</p>
+                        </div>
+                      </div>
+                      <div
+                        class="tab-pane fade"
+                        id="Completed"
+                        role="tabpanel"
+                        aria-labelledby="Completed-tab"
+                      >
+                        <!-- <h3 class="task_table_title">Completed ({{memberdata.tasklist.completedTaskData.length}})</h3> -->
+
+                        <div
+                          class="table-responsive"
+                          *ngIf="
+                            memberdata.tasklist.completedTaskData?.length > 0
+                          "
+                        >
+                        <ag-grid-angular
+                        style="width: 100%; height: 100%"
+                        [columnDefs]="columnDefs"
+                        [rowData]="rowCompletedData"
+                        [defaultColDef]="defaultColDef"
+                        [class]="themeClass"
+                        [pagination]="pagination"
+                        [paginationPageSize]="paginationPageSize"
+                        [paginationPageSizeSelector]="
+                          paginationPageSizeSelector
+                        "
+                      >
+                      </ag-grid-angular>
+                        </div>
+
+                        <div
+                          class="task-table"
+                          *ngIf="
+                            !memberdata.tasklist.completedTaskData ||
+                            memberdata.tasklist.completedTaskData.length === 0
+                          "
+                        >
+                          <p class="no_data_content">
+                            Completed task will appear here
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- task tabs -->
+                  </div>
+
+                  <div
+                    class="tab-pane fade"
+                    id="nav-calender"
+                    role="tabpanel"
+                    aria-labelledby="nav-calender-tab"
+                  >
+                    <div class="row text-center">
+                      <div class="col-md-6 m-auto">
+                        <div class="btn-group align-items-center">
+                          <div
+                            class="me-3"
+                            mwlCalendarPreviousView
+                            [view]="view"
+                            [(viewDate)]="viewDate"
+                            (viewDateChange)="closeOpenMonthViewDay()"
+                          >
+                            <img
+                              src="../../../assets/img/dashboard/left-arrow.png"
+                              alt=""
+                            />
+                          </div>
+                          <div
+                            class=""
+                            mwlCalendarToday
+                            [(viewDate)]="viewDate"
+                          >
+                            <div>
+                              <h3 class="task_table_title">
+                                {{
+                                  viewDate
+                                    | calendarDate : view + "ViewTitle" : "en"
+                                }}
+                              </h3>
+                            </div>
+                          </div>
+                          <div
+                            class="ms-3"
+                            mwlCalendarNextView
+                            [view]="view"
+                            [(viewDate)]="viewDate"
+                            (viewDateChange)="closeOpenMonthViewDay()"
+                          >
+                            <img
+                              src="../../../assets/img/dashboard/right-arrow.png"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- <div class="col-md-4">
+                      <div class="btn-group">
+                        <div
+                          class="btn btn-primary"
+                          (click)="setView(CalendarView.Month)"
+                          [class.active]="view === CalendarView.Month"
+                        >
+                          Month
+                        </div>
+                        <div
+                          class="btn btn-primary"
+                          (click)="setView(CalendarView.Week)"
+                          [class.active]="view === CalendarView.Week"
+                        >
+                          Week
+                        </div>
+                        <div
+                          class="btn btn-primary"
+                          (click)="setView(CalendarView.Day)"
+                          [class.active]="view === CalendarView.Day"
+                        >
+                          Day
+                        </div>
+                      </div>
+                    </div> -->
+                    </div>
+                    <br />
+                    <div [ngSwitch]="view">
+                      <mwl-calendar-month-view
+                        *ngSwitchCase="CalendarView.Month"
+                        [viewDate]="viewDate"
+                        [events]="events"
+                        [refresh]="refresh"
+                        [activeDayIsOpen]="activeDayIsOpen"
+                        (dayClicked)="dayClicked($event.day)"
+                        (eventClicked)="handleEvent('Clicked', $event.event)"
+                        (eventTimesChanged)="eventTimesChanged($event)"
+                      >
+                      </mwl-calendar-month-view>
+                      <mwl-calendar-week-view
+                        *ngSwitchCase="CalendarView.Week"
+                        [viewDate]="viewDate"
+                        [events]="events"
+                        [refresh]="refresh"
+                        (eventClicked)="handleEvent('Clicked', $event.event)"
+                        (eventTimesChanged)="eventTimesChanged($event)"
+                      >
+                      </mwl-calendar-week-view>
+                      <mwl-calendar-day-view
+                        *ngSwitchCase="CalendarView.Day"
+                        [viewDate]="viewDate"
+                        [events]="events"
+                        [refresh]="refresh"
+                        (eventClicked)="handleEvent('Clicked', $event.event)"
+                        (eventTimesChanged)="eventTimesChanged($event)"
+                      >
+                      </mwl-calendar-day-view>
+                    </div>
+
+                    <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+
+                    <br /><br /><br />
+
+                    <h3>
+                      Edit events
+                      <button
+                        class="btn btn-primary float-end"
+                        (click)="addEvent()"
+                      >
+                        Add new
+                      </button>
+                      <div class="clearfix"></div>
+                    </h3>
+
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Title</th>
+                            <th>Primary color</th>
+                            <th>Secondary + text color</th>
+                            <th>Starts at</th>
+                            <th>Ends at</th>
+                            <th>Remove</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr *ngFor="let event of events">
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                [(ngModel)]="event.title"
+                                (keyup)="refresh.next()"
+                              />
+                            </td>
+                            <!-- <td>
+                            <input
+                              type="color"
+                              [(ngModel)]="event.color.primary"
+                              (change)="refresh.next()"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="color"
+                              [(ngModel)]="event.color.secondary"
+                              (change)="refresh.next()"
+                            />
+                            <input
+                              type="color"
+                              [ngModel]="event.color.secondaryText ?? '#1e90ff'"
+                              (ngModelChange)="event.color.secondaryText = $event"
+                              (change)="refresh.next()"
+                            />
+                          </td> -->
+                            <!-- <td>
+                            <input
+                              class="form-control"
+                              type="text"
+                              mwlFlatpickr
+                              [(ngModel)]="event.start"
+                              (ngModelChange)="refresh.next()"
+                              [altInput]="true"
+                              [convertModelValue]="true"
+                              [enableTime]="true"
+                              dateFormat="Y-m-dTH:i"
+                              altFormat="F j, Y H:i"
+                              placeholder="Not set"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              class="form-control"
+                              type="text"
+                              mwlFlatpickr
+                              [(ngModel)]="event.end"
+                              (ngModelChange)="refresh.next()"
+                              [altInput]="true"
+                              [convertModelValue]="true"
+                              [enableTime]="true"
+                              dateFormat="Y-m-dTH:i"
+                              altFormat="F j, Y H:i"
+                              placeholder="Not set"
+                            />
+                          </td>
+                          <td>
+                            <button class="btn btn-danger" (click)="deleteEvent(event)">
+                              Delete
+                            </button>
+                          </td> -->
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <!-- <ng-template #modalContent let-close="close">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Event action occurred</h5>
+                      <button type="button" class="close" (click)="close()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div>
+                        Action:
+                        <pre>{{ modalData?.action }}</pre>
+                      </div>
+                      <div>
+                        Event:
+                        <pre>{{ modalData?.event | json }}</pre>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-secondary" (click)="close()">
+                        OK
+                      </button>
+                    </div>
+                  </ng-template> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- main tab -->
+  </section>
+</main>
+
+<!-- customize icon -->
+<div class="customize_filter_wrapper">
+  <ng-template #content let-offcanvas>
+    <div class="offcanvas-header">
+      <h4 class="offcanvas-title customize_title">Customize Field</h4>
+      <img
+        src="../../../assets/img/dashboard/popup-close-btn.svg"
+        aria-label="Close"
+        alt=""
+        class="popup_close_btn"
+        (click)="offcanvas.dismiss('Cross click')"
+      />
+    </div>
+    <div class="offcanvas-body">
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Close Date</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Due Date</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Status</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Creator</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Create Date</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Assignee</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Follower</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Service</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Client</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Project</span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Perfomance </span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+        <div class="example-box" cdkDrag>
+          <img src="../../../assets/img/dashboard/dots-menu.png" alt="" />
+          <span>Progress </span>
+          <mat-slide-toggle></mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<!-- complete task popup -->
+
+<div
+  class="modal fade"
+  id="completeTaskModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Complete Task
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn"
+        />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to mark this task as completed?
+        </h2>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+        <button type="button" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- complete task popup -->
+
+<div class="delete_bottom_action text-center" *ngIf="checkbox">
+  <div class="d-flex align-items-center justify-content-between">
+    <p class="selected_action_count">1 tasks selected</p>
+    <div>
+      <a href="javascript:void(0)"
+        ><img
+          src="../../../assets/img/dashboard/bottom-delete.svg"
+          alt=""
+          width="24px"
+          height="24px"
+          class="me-3"
+      /></a>
+      <a (click)="hideBottomaction()"
+        ><img
+          src="../../../assets/img/dashboard/white-delete-icon.svg"
+          alt=""
+          width="24px"
+          height="24px"
+      /></a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,592 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.3)"
+  size="medium"
+  color="#fff"
+  type="timer"
+  [fullScreen]="true"
+></ngx-spinner>
+<main>
+  <section class="user_task_wrapper">
+    <div>
+      <a
+        routerLink="/organization-setting/leave-configuration"
+        routerLinkActive="router-link-active"
+      >
+        setting</a
+      >
+    </div>
+
+    <div class="mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="task_table_title">Members</h2>
+            <a class="veiw_btn" [routerLink]="['/manage-members', companyId]">
+              View all</a
+            >
+          </div>
+          <div>
+            <nav class="projects_tabs mb-4">
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link active"
+                  id="Staff-Members-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Staff-Members"
+                  type="button"
+                  role="tab"
+                  aria-controls="Staff-Members"
+                  aria-selected="true"
+                >
+                  Staff Members
+                </button>
+              </div>
+            </nav>
+          </div>
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="Staff-Members"
+              role="tabpanel"
+              aria-labelledby="Staff-Members-tab"
+            >
+              <div class="member_wrapper">
+                <div *ngFor="let member of memberlist.members; let i = index">
+                  <div class="member_inner">
+                    <div>
+                      <img
+                        *ngIf="
+                          member.profile !==
+                          domainName + 'public/images/user_avatar.png'
+                        "
+                        src="{{ member.profile }}"
+                        class="member_img"
+                        alt=""
+                      />
+                      <div
+                        *ngIf="
+                          member.profile ===
+                          domainName + 'public/images/user_avatar.png'
+                        "
+                        class="group_short_name"
+                      >
+                        {{ getInitials(member.name) }}
+                      </div>
+                    </div>
+                    <div>
+                      <h2 class="member_name">{{ member.name }}</h2>
+                      <p class="member_position">
+                        {{ member.designation ? member.designation : "Owner" }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="Team-Group"
+              role="tabpanel"
+              aria-labelledby="Team-Group-tab"
+            >
+              <div class="member_wrapper">
+                <div *ngFor="let teams of memberlist.team; let i = index">
+                  <div class="member_inner" *ngIf="i < 4">
+                    <div class="groupshortname">
+                      <span
+                        class="group_short_name"
+                        style="background-color: rgb(211, 65, 34)"
+                        >{{ teams.setWords }}</span
+                      >
+                    </div>
+                    <div>
+                      <h2 class="member_name">{{ teams.title }}</h2>
+                      <p class="member_position">
+                        Member ({{ teams.totalMember }})
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <div
+                class="d-flex justify-content-between align-items-center mb-3"
+              >
+                <h2 class="task_table_title">Roles</h2>
+                <a class="veiw_btn" [routerLink]="['/manage-roles', companyId]">
+                  View all</a
+                >
+              </div>
+              <ngx-slick-carousel
+                class="carousel role_slider"
+                #slickCarousel
+                [config]="role_slideConfig"
+                (afterChange)="afterChange($event)"
+                (wheel)="onWheel($event)"
+              >
+                <div
+                  ngxSlickItem
+                  class="slide role_wrapper"
+                  *ngFor="let rolelists of rolelist"
+                >
+                  <p class="role_designation">{{ rolelists.name }}</p>
+                  <div class="table-responsive me-2">
+                    <table class="table role_table">
+                      <thead>
+                        <tr>
+                          <th class="assign_role">Permission</th>
+                          <th>
+                            <img
+                              src="../../../../assets/img/dashboard/small-plus-icon.svg"
+                              alt=""
+                            />
+                          </th>
+                          <th>
+                            <img
+                              src="../../../../assets/img/dashboard/small-edit-icon.svg"
+                              alt=""
+                            />
+                          </th>
+                          <th>
+                            <img
+                              src="../../../../assets/img/dashboard/small-delete-icon.svg"
+                              alt=""
+                            />
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="dream-table">
+                        <tr>
+                          <td>Projects</td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[0].add === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[0].add === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[0].edit === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[0].edit === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[0].delete === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[0].delete === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Tasks</td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[1].add === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[1].add === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[1].edit === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[1].edit === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[1].delete === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[1].delete === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Discussion</td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[2].add === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[2].add === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[2].edit === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[2].edit === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[2].delete === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[2].delete === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Note</td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[3].add === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[3].add === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[3].edit === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[3].edit === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[3].delete === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[3].delete === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Organization Management</td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[4].add === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[4].add === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[4].edit === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[4].edit === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                          <td>
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[4].delete === 1
+                              "
+                              src="../../../../assets/img/dashboard/correct-icon.svg"
+                              alt=""
+                            />
+                            <img
+                              *ngIf="
+                                rolelist && rolelists.permission[4].delete === 0
+                              "
+                              src="../../../../assets/img/dashboard/cross-icon.svg"
+                              alt=""
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </ngx-slick-carousel>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <div class="mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <div
+                class="d-flex justify-content-between align-items-center mb-3"
+              >
+                <h2 class="task_table_title">Status</h2>
+                <a
+                  class="veiw_btn"
+                  [routerLink]="['/manage-status', companyId]"
+                >
+                  View all</a
+                >
+              </div>
+              <div class="table-responsive">
+                <table class="table role_table">
+                  <thead>
+                    <tr>
+                      <th class="assign_role">Color</th>
+                      <th class="assign_role">Name</th>
+                      <th class="assign_role text-end">Preview</th>
+                    </tr>
+                  </thead>
+                  <tbody class="dream-table">
+                    <tr *ngFor="let member of memberlist.status.slice(0, 4)">
+                      <td>
+                        <span
+                          class="status_closed_color"
+                          [style.backgroundColor]="member.code"
+                        ></span>
+                      </td>
+                      <td>{{ member.status }}</td>
+                      <td class="text-end">
+                        <span
+                          class="status_closed_color"
+                          [style.backgroundColor]="member.code"
+                        >
+                          {{ member.status }}</span
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="task_table_title">Clients</h2>
+            <a class="veiw_btn" [routerLink]="['/manage-clients', companyId]">
+              View all</a
+            >
+          </div>
+
+          <div class="member_wrapper">
+            <div *ngFor="let member of memberlist.clients; let i = index">
+              <div class="client_member_inner">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <div>
+                      <img
+                        *ngIf="
+                          member.profile !==
+                          domainName + 'public/images/user_avatar.png'
+                        "
+                        src="{{ member.profile }}"
+                        class="member_img"
+                        alt=""
+                      />
+                      <div
+                        *ngIf="
+                          member.profile ===
+                          domainName + 'public/images/user_avatar.png'
+                        "
+                        class="group_short_name"
+                      >
+                        {{ getInitials(member.name) }}
+                      </div>
+                    </div>
+                    <h2 class="member_name">{{ member.name.toUpperCase() }}</h2>
+                    <p class="member_position">
+                      {{ member.designation ? member.designation : "Owner" }}
+                    </p>
+                  </div>
+                  <div class="card-footer">
+                    <span> {{ member.email }} </span> &nbsp; &nbsp;
+                    <a
+                      ><img
+                        [cdkCopyToClipboard]="member.email"
+                        src="../../../../assets/img/dashboard/copy-icon.svg"
+                        alt=""
+                    /></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row company-details-list">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <h2 class="task_table_title">Service Segment</h2>
+              <a class="veiw_btn" [routerLink]="['/manage-service', companyId]">
+                View all</a
+              >
+            </div>
+            <mat-list
+              *ngFor="
+                let member of memberlist.services.slice(0, 4);
+                let i = index
+              "
+            >
+              <div *ngIf="i < 4">
+                <mat-list-item class="my-2 px-0">
+                  <h2 class="sevice_name">{{ member.title }}</h2>
+                  <!-- <p class="service_creater">{{ getUsernameFromLocalStorage() }}</p> -->
+                </mat-list-item>
+                <mat-divider></mat-divider>
+              </div>
+            </mat-list>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="task_table_title">Task Type</h2>
+              <a class="veiw_btn" [routerLink]="['/task-type', companyId]">
+                View all</a
+              >
+            </div>
+            <mat-list
+              *ngFor="let member of servicelist.slice(0, 4); let i = index"
+            >
+              <div *ngIf="i < 4">
+                <mat-list-item class="my-2 px-0">
+                  <h2 class="sevice_name">{{ member.title }}</h2>
+                  <!-- <p class="service_creater">{{ getUsernameFromLocalStorage() }}</p> -->
+                </mat-list-item>
+                <mat-divider></mat-divider>
+              </div>
+            </mat-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

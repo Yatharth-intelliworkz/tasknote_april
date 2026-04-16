@@ -1,0 +1,58 @@
+.discussion_back_btn{
+    color: #666666;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+    text-decoration: none;
+    border: 2px solid #DDDDDD;
+    padding: 15px 25px;
+    border-radius: 10px;
+}
+
+.projects_cards{
+    display: grid;
+}
+.projects_cards .card-header{
+  background-color: #FF5656;
+  border-radius: 10px 10px 0 0;
+  padding: 15px;
+}
+.projects_cards .card-body{
+  border-radius: 0 0 10px 10px;
+}
+.project_name{
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 30px;
+  color: white;
+  margin:0;
+}
+.discussion_creater_name{
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #111111;
+  margin: 0;
+  margin-right: 15px;
+}
+.project_table_data tr {
+  border-bottom: 1px dashed #DDDDDD;
+  margin: 10px 0;
+}
+.project_table_data tr td{
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  padding: 10px 0;
+}
+.project_table_data tr td:nth-child(1){
+width: 150px;
+}
+.discussion_attach_file_title{
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  text-align: center;
+}

@@ -1,0 +1,418 @@
+<main>
+  <section class="user_task_wrapper">
+    <nav class="projects_tabs mb-4">
+      <div class="row">
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button
+              class="nav-link active"
+              id="nav-My-Members-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-My-Members"
+              type="button"
+              role="tab"
+              aria-controls="nav-My-Members"
+              aria-selected="true"
+            >
+              My Members
+            </button>
+            <button
+              class="nav-link"
+              id="nav-Outsiders-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-Outsiders"
+              type="button"
+              role="tab"
+              aria-controls="nav-Outsiders"
+              aria-selected="false"
+            >
+              Outsiders
+            </button>
+            <button
+              class="nav-link"
+              id="nav-Invited-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-Invited"
+              type="button"
+              role="tab"
+              aria-controls="nav-Invited"
+              aria-selected="false"
+            >
+              Invited
+            </button>
+            <button
+              class="nav-link"
+              id="nav-Team-Group-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-Team-Group"
+              type="button"
+              role="tab"
+              aria-controls="nav-Team-Group"
+              aria-selected="false"
+            >
+              Team Group
+            </button>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+          <div class="d-flex align-items-center gap-3 justify-content-end">
+            <div class="manage_searchbar">
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Search here..."
+              />
+              <img
+                src="../../../assets/img/dashboard/search-icon.png"
+                alt="search"
+                class="searchbar_icon"
+              />
+            </div>
+            <div class="dropdown custom_edit_icon">
+              <button
+                class="dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="../../../assets/img/dashboard/task_dots_icon.png"
+                  alt=""
+                />
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item">Bulk Upload</a></li>
+                <li><a class="dropdown-item">Bulk Export</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div>
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="nav-My-Members"
+          role="tabpanel"
+          aria-labelledby="nav-My-Members-tab"
+        >
+          <div class="table-responsive">
+            <table class="table task_table">
+              <thead>
+                <tr>
+                  <th>Member Name</th>
+                  <th>Email</th>
+                  <th>Reporting To</th>
+                  <th>Mobile Number</th>
+                  <th>Credit Used</th>
+                  <th colspan="1"></th>
+                </tr>
+              </thead>
+              <tbody class="dream-table">
+                <tr>
+                  <td class="d-flex gap-4 align-items-center">
+                    <div class="position-relative">
+                      <img
+                        src="../../../assets/img/dashboard/user-img.png"
+                        alt=""
+                        class="active_user_wrapper position-relative"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Nikunj Sojitra"
+                      />
+                      <span
+                        class="position-absolute bottom-0 start-100 translate-middle p-1 bg-success  border rounded-circle"
+                      ></span>
+                    </div>
+                    <p class="m-0">
+                      Brijesh Soni
+                    </p>
+                  </td>
+
+                  <td routerLink="/discussion-details">
+                    brijeshsoni3500@gmail.com
+                  </td>
+
+                  <td class="d-flex gap-4 align-items-center">
+                    <div class="position-relative">
+                      <img
+                        src="../../../assets/img/dashboard/user-img.png"
+                        alt=""
+                        class="active_user_wrapper position-relative"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Nikunj Sojitra"
+                      />
+                      <span
+                        class="position-absolute bottom-0 start-100 translate-middle p-1 bg-danger border rounded-circle"
+                      ></span>
+                    </div>
+                    <p class="m-0">
+                      Brijesh Soni
+                    </p>
+                  </td>
+
+                  <td>9636552319</td>
+
+                  <td>No</td>
+
+                  <td>
+                    <div>
+                      <a  data-bs-toggle="modal"
+                      data-bs-target="#addNoteModal">
+                        <img
+                          src="../../../assets/img/dashboard/table-edit-icon.svg"
+                          alt=""
+                          class="me-4"
+                        />
+                      </a>
+                      <a href="javascript:void(0)">
+                        <img
+                          src="../../../assets/img/dashboard/table-delete-icon.svg"
+                          alt=""
+                        />
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nav-Outsiders"
+          role="tabpanel"
+          aria-labelledby="nav-Outsiders-tab"
+        >
+          <div class="table-responsive">
+            <table class="table task_table">
+              <thead>
+                <tr>
+                  <th>Member Name</th>
+                  <th>Email</th>
+                  <th>Reporting To</th>
+                  <th>Mobile Number</th>
+                  <th>Credit Used</th>
+                  <th colspan="1"></th>
+                </tr>
+              </thead>
+              <tbody class="dream-table">
+                <tr>
+                  <td class="d-flex gap-4 align-items-center">
+                    <div class="position-relative">
+                      <img
+                        src="../../../assets/img/dashboard/user-img.png"
+                        alt=""
+                        class="active_user_wrapper position-relative"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Nikunj Sojitra"
+                      />
+                      <span
+                        class="position-absolute bottom-0 start-100 translate-middle p-1 bg-danger border rounded-circle"
+                      ></span>
+                    </div>
+                    <p class="m-0">
+                      Brijesh Soni
+                    </p>
+                  </td>
+
+                  <td routerLink="/discussion-details">
+                    brijeshsoni3500@gmail.com
+                  </td>
+
+                  <td class="d-flex gap-4 align-items-center">
+                    <div class="position-relative">
+                      <img
+                        src="../../../assets/img/dashboard/user-img.png"
+                        alt=""
+                        class="active_user_wrapper position-relative"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Nikunj Sojitra"
+                      />
+                      <span
+                        class="position-absolute bottom-0 start-100 translate-middle p-1 bg-danger border rounded-circle"
+                      ></span>
+                    </div>
+                    <p class="m-0">
+                      Brijesh Soni
+                    </p>
+                  </td>
+
+                  <td>9636552319</td>
+
+                  <td>No</td>
+
+                  <td>
+                    <div>
+                      <a href="javascript:void(0)">
+                        <img
+                          src="../../../assets/img/dashboard/table-edit-icon.svg"
+                          alt=""
+                          class="me-4"
+                        />
+                      </a>
+                      <a href="javascript:void(0)">
+                        <img
+                          src="../../../assets/img/dashboard/table-delete-icon.svg"
+                          alt=""
+                        />
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nav-Invited"
+          role="tabpanel"
+          aria-labelledby="nav-Invited-tab"
+        >
+          <div class="table-responsive">
+            <table class="table task_table">
+              <thead>
+                <tr>
+                  <th>Member Name</th>
+                  <th>Email</th>
+                  <th>Reporting To</th>
+                  <th>Mobile Number</th>
+                  <th>Credit Used</th>
+                  <th colspan="1"></th>
+                </tr>
+              </thead>
+              <tbody class="dream-table">
+                <tr>
+                  <td class="d-flex gap-4 align-items-center">
+                    <div class="position-relative">
+                      <img
+                        src="../../../assets/img/dashboard/user-img.png"
+                        alt=""
+                        class="active_user_wrapper position-relative"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Nikunj Sojitra"
+                      />
+                      <span
+                        class="position-absolute bottom-0 start-100 translate-middle p-1 bg-danger border rounded-circle"
+                      ></span>
+                    </div>
+                    <p class="m-0">
+                      Brijesh Soni
+                    </p>
+                  </td>
+
+                  <td routerLink="/discussion-details">
+                    brijeshsoni3500@gmail.com
+                  </td>
+
+                  <td class="d-flex gap-4 align-items-center">
+                    <div class="position-relative">
+                      <img
+                        src="../../../assets/img/dashboard/user-img.png"
+                        alt=""
+                        class="active_user_wrapper position-relative"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Nikunj Sojitra"
+                      />
+                      <span
+                        class="position-absolute bottom-0 start-100 translate-middle p-1 bg-danger border rounded-circle"
+                      ></span>
+                    </div>
+                    <p class="m-0">
+                      Brijesh Soni
+                    </p>
+                  </td>
+
+                  <td>9636552319</td>
+
+                  <td>No</td>
+
+                  <td>
+                    <div>
+                      <a href="javascript:void(0)">
+                        <img
+                          src="../../../assets/img/dashboard/table-edit-icon.svg"
+                          alt=""
+                          class="me-4"
+                        />
+                      </a>
+                      <a href="javascript:void(0)">
+                        <img
+                          src="../../../assets/img/dashboard/table-delete-icon.svg"
+                          alt=""
+                        />
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nav-Team-Group"
+          role="tabpanel"
+          aria-labelledby="nav-Team-Group-tab"
+        >
+          <div class="projects_cards">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <div class="d-flex gap-3 align-items-center">
+                        <h2 class="project_name">Moments</h2>
+                        <p class="project_date">(3 Members)</p>
+                      </div>
+                      <div class="d-flex gap-3">
+                        <a href="javascript:void(0)">
+                          <img
+                            src="../../../assets/img/dashboard/project-edit-icon.svg"
+                            alt=""
+                        /></a>
+                        <a href="javascript:void(0)"
+                          ><img
+                            src="../../../assets/img/dashboard/project-delete-icon.svg"
+                            alt=""
+                        /></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive">
+                    <table class="project_table_data">
+                      <tbody>
+                        <tr>
+                          <td>Arvind Rajput</td>
+                        </tr>
+                        <tr>
+                          <td>Mital Gandhi</td>
+                        </tr>
+                        <tr>
+                          <td>Jeet Thaker</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,1443 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="mb-3">
+        <div
+          class="d-lg-flex justify-content-between align-items-center d-sm-block"
+        >
+          <nav class="task_wrapper">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                class="nav-link p-2 listclass"
+                type="button"
+                (click)="toggleTaskList()"
+                [ngClass]="{ active: showDiv.taskList }"
+              >
+                <svg
+                  id="Layer_1"
+                  data-name="Layer 1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 21.41 16.1"
+                >
+                  <path
+                    d="M1.62,2.86c.71-.1,1.24-.71,1.25-1.43,0-.63-.42-1.19-1.02-1.37C1.09-.17,.29,.26,.06,1.02c-.02,.06-.04,.12-.06,.18H0v.5c.02,.06,.05,.11,.07,.17,.21,.66,.87,1.08,1.56,.99Z"
+                  />
+                  <path
+                    d="M1.87,13.31c-.75-.24-1.56,.17-1.8,.92-.02,.06-.04,.11-.07,.17H0v.5c.02,.06,.04,.12,.06,.18,.13,.45,.48,.81,.93,.95,.75,.24,1.56-.17,1.8-.92s-.17-1.56-.92-1.8Z"
+                  />
+                  <path
+                    d="M1.67,6.63c-.71-.12-1.4,.31-1.61,.99-.02,.06-.04,.11-.06,.17H0v.5c.02,.06,.04,.11,.06,.17,.21,.69,.9,1.11,1.61,.99,.6-.1,1.08-.58,1.18-1.18,.13-.78-.4-1.52-1.18-1.65Z"
+                  />
+                  <path
+                    d="M20.14,9.13c.13,0,.25,0,.38-.02,0,0,.01,0,.02,0,.58-.11,.95-.67,.84-1.25-.11-.55-.62-.93-1.18-.87H6.15c-.1,0-.19,0-.29,.02-.17,.02-.34,.09-.48,.2-.47,.35-.57,1.01-.23,1.48,.23,.3,.6,.47,.98,.44h7.02s6.98,0,6.98,0Z"
+                  />
+                  <path
+                    d="M6.12,2.41h7.05s6.55,0,6.55,0c.21,0,.42,0,.63,0,.44-.01,.83-.3,.97-.72,.19-.56-.11-1.16-.67-1.34-.17-.04-.34-.07-.51-.06H6.18c-.08,0-.15,0-.23,0-.3,.02-.58,.16-.77,.39-.37,.46-.3,1.13,.16,1.5,.22,.17,.5,.25,.78,.24Z"
+                  />
+                  <path
+                    d="M20.25,13.68h-7.08s-3.05,0-3.05,0c-1.38,0-2.75,0-4.13,0-.16,0-.32,.04-.46,.11-.52,.26-.74,.89-.48,1.41,.19,.4,.61,.65,1.05,.61h14.28s.03,0,.04,0c.59-.05,1.03-.57,.98-1.15s-.57-1.03-1.15-.98Z"
+                  />
+                </svg>
+              </button>
+
+              <button
+                class="nav-link active p-2"
+                type="button"
+                (click)="toggleCalendar()"
+                [ngClass]="{ active: showDiv.calendar }"
+              >
+                <svg
+                  id="Layer_1"
+                  data-name="Layer 1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 21.14 21.14"
+                >
+                  <path
+                    d="M21.04,4.79c-.43-1.84-2.05-3.14-3.94-3.16-.27,0-.53,0-.83,0,0-.29,0-.56,0-.82-.01-.39-.29-.71-.67-.78-.37-.07-.74,.12-.9,.46-.05,.13-.08,.26-.08,.4,0,.24,0,.48,0,.73H6.53c0-.27,0-.54,0-.8C6.52,.36,6.16,.01,5.72,0c-.46-.01-.84,.35-.85,.81v.81h-.65c-.71-.02-1.42,.15-2.05,.48C.84,2.77,0,4.15,.02,5.65,0,9.47,0,13.29,.01,17.11c.03,2.03,1.54,3.74,3.56,3.99,.04,0,.08,.02,.12,.04h13.78c.24-.05,.48-.09,.72-.16,1.56-.43,2.71-1.75,2.92-3.36,0-.04,.02-.08,.04-.12V5.28c-.04-.17-.06-.33-.1-.5Zm-1.54,12.24c.01,1.16-.8,2.17-1.93,2.4-.19,.04-.38,.06-.57,.06-4.27,0-8.55,0-12.82,0-.06,0-.11,0-.17,0-1.34-.05-2.39-1.18-2.34-2.52V8.17H19.5v8.85ZM1.7,6.47c-.28-1.76,.7-3.06,2.24-3.18,.3-.02,.61,0,.94,0,0,.55,0,1.08,0,1.61,.01,.44,.37,.79,.81,.8,.46,0,.84-.35,.85-.81v-1.59H14.63v1.52s0,.08,0,.11c.03,.46,.42,.81,.88,.78,.46-.03,.81-.42,.78-.88v-1.52h0c1.53-.21,2.78,.39,3.14,1.86,.07,.43,.1,.87,.1,1.3H1.7Z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </nav>
+
+          <a
+            class="add_task_btn"
+            routerLink="/create-task"
+            *ngIf="addbutton == 1"
+          >
+            Add New Task</a
+          >
+        </div>
+      </div>
+
+      <div>
+        <div *ngIf="showDiv.taskList">
+          <div class="task-table">
+            <nav class="projects_tabs d-flex justify-content-between mb-3">
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link"
+                  id="Pin-Task-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Pin-Task"
+                  type="button"
+                  role="tab"
+                  aria-controls="Pin-Task"
+                  aria-selected="true"
+                >
+                  Pin Task ({{ taskListData?.pinTaskData?.length || 0 }})
+                </button>
+                <button
+                  class="nav-link active"
+                  id="Today-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Today"
+                  type="button"
+                  role="tab"
+                  aria-controls="Today"
+                  aria-selected="false"
+                >
+                  Today ({{ taskListData?.todayTaskData?.length || 0 }})
+                </button>
+                <button
+                  class="nav-link"
+                  id="Overdue-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Overdue"
+                  type="button"
+                  role="tab"
+                  aria-controls="Overdue"
+                  aria-selected="false"
+                >
+                  Overdue ({{ taskListData?.overDueTaskData?.length || 0 }})
+                </button>
+                <button
+                  class="nav-link"
+                  id="Upcoming-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Upcoming"
+                  type="button"
+                  role="tab"
+                  aria-controls="Upcoming"
+                  aria-selected="false"
+                >
+                  Upcoming ({{ taskListData?.upcomingTaskData?.length || 0 }})
+                </button>
+                <button
+                  class="nav-link"
+                  id="Completed-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Completed"
+                  type="button"
+                  role="tab"
+                  aria-controls="Completed"
+                  aria-selected="false"
+                >
+                  Completed ({{ taskListData?.completedTaskData?.length || 0 }})
+                </button>
+              </div>
+
+              <div
+                class="d-flex justify-content-between align-items-center gap-3 flex-xl-nowrap flex-md-wrap flex-sm-wrap flex-wrap position-relative"
+              >
+                <form
+                  role="form"
+                  [formGroup]="submitForm"
+                  (ngSubmit)="filterhtask()"
+                >
+                  <div
+                    class="d-flex justify-content-between align-items-center gap-3"
+                  >
+                    <!-- <div class="task_multiselect">
+                      <ng-multiselect-dropdown id="two" name="city" placeholder="Status" [settings]="dropdownSettings2"
+                        [data]="toppingList1" formControlName="statusID">
+                        <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                          <div>{{ option }}</div>
+                        </ng-template>
+                      </ng-multiselect-dropdown>
+                    </div> -->
+                    <!-- <img src="../../../assets/img/dashboard/task_multidate_icon.svg" alt="" width="26px" height="26px"
+                      (click)="opened = !opened" style="cursor: pointer;" /> -->
+                    <div
+                      class="multi_date_filter"
+                      *ngIf="opened"
+                      (clickOutside)="clickOutside()"
+                    >
+                      <div>
+                        <h2 class="multidate_title">Select Date Type</h2>
+                        <div class="d-flex gap-2">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              formControlName="duedate"
+                              value="1"
+                              id="flexCheckDefault"
+                            />
+                            <label
+                              class="form-check-label"
+                              for="flexCheckDefault"
+                            >
+                              Due Date
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              formControlName="createddate"
+                              type="checkbox"
+                              value="1"
+                              id="CreatedDate"
+                            />
+                            <label class="form-check-label" for="CreatedDate">
+                              Created Date
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              formControlName="closeddate"
+                              type="checkbox"
+                              value="1"
+                              id="ClosedDate"
+                            />
+                            <label class="form-check-label" for="ClosedDate">
+                              Closed Date
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h2 class="multidate_title">Select Range Type</h2>
+                        <nav class="date_range_tab my-4">
+                          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <div
+                              class="nav-link active"
+                              id="date-range-tab"
+                              data-bs-toggle="tab"
+                              (click)="whichclicked(1)"
+                              data-bs-target="#date-range"
+                              role="tab"
+                              aria-controls="date-range"
+                              aria-selected="true"
+                            >
+                              <img
+                                src="../../../assets/img/dashboard/small-date-icon.png"
+                                alt=""
+                              />
+                              <p class="date_range_tab">Range</p>
+                            </div>
+                            <div
+                              class="nav-link"
+                              id="date-Before-tab"
+                              data-bs-toggle="tab"
+                              data-bs-target="#date-Before"
+                              (click)="whichclicked(2)"
+                              role="tab"
+                              aria-controls="date-Before"
+                              aria-selected="false"
+                            >
+                              <img
+                                src="../../../assets/img/dashboard/small-date-icon.png"
+                                alt=""
+                              />
+                              <p class="date_range_tab">Before</p>
+                            </div>
+                            <div
+                              class="nav-link"
+                              id="On-date-tab"
+                              data-bs-toggle="tab"
+                              data-bs-target="#On-date"
+                              (click)="whichclicked(3)"
+                              role="tab"
+                              aria-controls="On-date"
+                              aria-selected="false"
+                            >
+                              <img
+                                src="../../../assets/img/dashboard/small-date-icon.png"
+                                alt=""
+                              />
+                              <p class="date_range_tab">On</p>
+                            </div>
+                            <div
+                              class="nav-link"
+                              id="After-date-tab"
+                              data-bs-toggle="tab"
+                              data-bs-target="#After-date"
+                              (click)="whichclicked(4)"
+                              role="tab"
+                              aria-controls="After-date"
+                              aria-selected="false"
+                            >
+                              <img
+                                src="../../../assets/img/dashboard/small-date-icon.png"
+                                alt=""
+                              />
+                              <p class="date_range_tab">After</p>
+                            </div>
+                          </div>
+                        </nav>
+                      </div>
+
+                      <hr />
+
+                      <div class="tab-content" id="myTabContent">
+                        <div
+                          class="tab-pane fade show active"
+                          id="date-range"
+                          role="tabpanel"
+                          aria-labelledby="home-tab"
+                        >
+                          <mat-form-field class="example-form-field">
+                            <mat-label>Range</mat-label>
+                            <mat-date-range-input
+                              [formGroup]="campaignOne"
+                              [rangePicker]="campaignOnePicker"
+                              [comparisonStart]="campaignTwo?.value?.rangestart"
+                              [comparisonEnd]="campaignTwo.value?.rangeend"
+                            >
+                              <input
+                                matStartDate
+                                placeholder="Start date"
+                                formControlName="rangestart"
+                              />
+                              <input
+                                matEndDate
+                                placeholder="End date"
+                                formControlName="rangeend"
+                              />
+                            </mat-date-range-input>
+                            <!-- <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint> -->
+                            <mat-datepicker-toggle
+                              matIconSuffix
+                              [for]="campaignOnePicker"
+                            ></mat-datepicker-toggle>
+                            <mat-date-range-picker
+                              #campaignOnePicker
+                            ></mat-date-range-picker>
+                          </mat-form-field>
+                        </div>
+
+                        <div
+                          class="tab-pane"
+                          id="date-Before"
+                          role="tabpanel"
+                          aria-labelledby="date-Before-tab"
+                        >
+                          <div class="single_date_range">
+                            <mat-card class="demo-inline-calendar-card">
+                              <mat-calendar
+                                [(selected)]="befordate"
+                              ></mat-calendar>
+                              <input
+                                type="hidden"
+                                formControlName="befordate"
+                                [value]="befordate"
+                              />
+                            </mat-card>
+                            <p>Selected date: {{ befordate }}</p>
+                          </div>
+                        </div>
+                        <div
+                          class="tab-pane"
+                          id="On-date"
+                          role="tabpanel"
+                          aria-labelledby="On-date-tab"
+                        >
+                          <div class="single_date_range">
+                            <mat-card class="demo-inline-calendar-card">
+                              <mat-calendar
+                                [(selected)]="ondate"
+                              ></mat-calendar>
+                              <input
+                                type="hidden"
+                                formControlName="ondate"
+                                [value]="ondate"
+                              />
+                            </mat-card>
+                            <p>Selected date: {{ ondate }}</p>
+                          </div>
+                        </div>
+                        <div
+                          class="tab-pane"
+                          id="After-date"
+                          role="tabpanel"
+                          aria-labelledby="After-date-tab"
+                        >
+                          <div class="single_date_range">
+                            <mat-card class="demo-inline-calendar-card">
+                              <mat-calendar
+                                [(selected)]="afterdate"
+                              ></mat-calendar>
+                              <input
+                                type="hidden"
+                                formControlName="afterdate"
+                                [value]="afterdate"
+                              />
+                            </mat-card>
+                            <p>Selected date: {{ afterdate }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <ng-multiselect-dropdown
+                        id="two"
+                        *ngIf="addbutton == 1"
+                        name="user"
+                        placeholder="User"
+                        [settings]="dropdownSettings2"
+                        [data]="memberlistData"
+                        formControlName="userID"
+                      >
+                        <ng-template
+                          #optionSelectedTemplate
+                          let-option="option"
+                          let-id="id"
+                        >
+                          <div>{{ option }}</div>
+                        </ng-template>
+                      </ng-multiselect-dropdown>
+                      <div class="text-end mt-3">
+                        <button
+                          class="btn border border-1 me-2"
+                          (click)="opened = !opened"
+                        >
+                          Cancel
+                        </button>
+                        <button type="submit" class="add_task_btn">Done</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <button class="add_task_btn"> Done </button> -->
+                </form>
+              </div>
+            </nav>
+
+            <div class="card">
+              <div class="card-body">
+                <!-- task tabs -->
+                <div class="tab-content" id="nav-tabContent">
+                  <div
+                    class="tab-pane fade"
+                    id="Pin-Task"
+                    role="tabpanel"
+                    aria-labelledby="Pin-Task-tab"
+                  >
+                    <div
+                      class="table-responsive"
+                      *ngIf="taskListData?.pinTaskData?.length > 0"
+                    >
+                      <ag-grid-angular
+                        style="width: 100%; height: 100%"
+                        [columnDefs]="pinColumnDefs"
+                        [rowData]="pinListRowData"
+                        [defaultColDef]="defaultColDef"
+                        [class]="themeClass"
+                        [pagination]="pagination"
+                        [paginationPageSize]="paginationPageSize"
+                        [paginationPageSizeSelector]="
+                          paginationPageSizeSelector
+                        "
+                      />
+                    </div>
+
+                    <div
+                      *ngIf="
+                        !taskListData?.pinTaskData ||
+                        taskListData?.pinTaskData.length === 0
+                      "
+                    >
+                      <p class="no_data_content">
+                        Pinned task will appear here
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade show active"
+                    id="Today"
+                    role="tabpanel"
+                    aria-labelledby="Today-tab"
+                  >
+                    <div
+                      class="table-responsive"
+                      *ngIf="taskListData?.todayTaskData?.length > 0"
+                    >
+                      <ag-grid-angular
+                        style="width: 100%; height: 100%"
+                        [columnDefs]="todayColumnDefs"
+                        [rowData]="todayListRowData"
+                        [defaultColDef]="defaultColDef"
+                        [class]="themeClass"
+                        [pagination]="pagination"
+                        [paginationPageSize]="paginationPageSize"
+                        [paginationPageSizeSelector]="
+                          paginationPageSizeSelector
+                        "
+                      />
+                    </div>
+
+                    <div
+                      *ngIf="
+                        !taskListData?.todayTaskData ||
+                        taskListData?.todayTaskData.length === 0
+                      "
+                    >
+                      <p class="no_data_content">No deadlines ending today</p>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="Overdue"
+                    role="tabpanel"
+                    aria-labelledby="Overdue-tab"
+                  >
+                    <!-- <h3 class="task_table_title">
+                      Overdue ({{ taskListData?.overDueTaskData?.length || 0 }})
+                    </h3> -->
+                    <div
+                      class="table-responsive"
+                      *ngIf="taskListData?.overDueTaskData?.length > 0"
+                    >
+                      <ag-grid-angular
+                        style="width: 100%; height: 100%"
+                        [columnDefs]="overDueColumnDefs"
+                        [rowData]="overDueListRowData"
+                        [defaultColDef]="defaultColDef"
+                        [class]="themeClass"
+                        [pagination]="pagination"
+                        [paginationPageSize]="paginationPageSize"
+                        [paginationPageSizeSelector]="
+                          paginationPageSizeSelector
+                        "
+                      />
+                    </div>
+
+                    <div
+                      *ngIf="
+                        !taskListData?.overDueTaskData ||
+                        taskListData?.overDueTaskData.length === 0
+                      "
+                    >
+                      <p class="no_data_content">No deadlines passed</p>
+                    </div>
+
+                    <!-- <div class="text-end my-3">
+                      <pagination-controls (pageChange)="ups = $event"></pagination-controls>
+                     </div> -->
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="Upcoming"
+                    role="tabpanel"
+                    aria-labelledby="Upcoming-tab"
+                  >
+                    <!-- <h3 class="task_table_title">
+                      Upcoming ({{ taskListData?.upcomingTaskData?.length || 0 }})
+                    </h3> -->
+
+                    <div
+                      class="table-responsive"
+                      *ngIf="taskListData?.upcomingTaskData?.length > 0"
+                    >
+                      <ag-grid-angular
+                        style="width: 100%; height: 100%"
+                        [columnDefs]="upComingColumnDefs"
+                        [rowData]="upcomingListRowData"
+                        [defaultColDef]="defaultColDef"
+                        [class]="themeClass"
+                        [pagination]="pagination"
+                        [paginationPageSize]="paginationPageSize"
+                        [paginationPageSizeSelector]="
+                          paginationPageSizeSelector
+                        "
+                      />
+                    </div>
+
+                    <div
+                      *ngIf="
+                        !taskListData?.upcomingTaskData ||
+                        taskListData?.upcomingTaskData.length === 0
+                      "
+                    >
+                      <p class="no_data_content">No upcoming task</p>
+                    </div>
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="Completed"
+                    role="tabpanel"
+                    aria-labelledby="Completed-tab"
+                  >
+                    <div
+                      class="table-responsive"
+                      *ngIf="taskListData?.completedTaskData?.length > 0"
+                    >
+                      <ag-grid-angular
+                        style="width: 100%; height: 100%"
+                        [columnDefs]="completedColumnDefs"
+                        [rowData]="rowData"
+                        [defaultColDef]="defaultColDef"
+                        [class]="themeClass"
+                        [pagination]="pagination"
+                        [paginationPageSize]="paginationPageSize"
+                        [paginationPageSizeSelector]="
+                          paginationPageSizeSelector
+                        "
+                      />
+                    </div>
+
+                    <div
+                      *ngIf="
+                        !taskListData?.completedTaskData ||
+                        taskListData?.completedTaskData.length === 0
+                      "
+                    >
+                      <p class="no_data_content">
+                        Completed task will appear here
+                      </p>
+                    </div>
+
+                    <!-- <pagination-controls (pageChange)="onPageChange(currentPage)" class="pagination" id="pagination"></pagination-controls> -->
+                    <!-- <div class="text-end my-3">
+                      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div> -->
+                  </div>
+                </div>
+                <!-- task tabs -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="" *ngIf="showDiv.calendar">
+          <div class="calender-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="task_calender_wrapper">
+                  <full-calendar
+                    [options]="calendarOptions"
+                    [calendarVisible]="true"
+                  ></full-calendar>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- complete task popup -->
+
+<div
+  class="modal fade"
+  id="completeTaskModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Complete Task
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_delete_project"
+        />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to mark this task as completed?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="confirmDelete()">
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="incompleteTaskModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          InComplete Task
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_delete_project_in"
+        />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to mark this task as Incompleted?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="inconfirmDelete()">
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- complete task popup -->
+
+<!-- Delay task popup -->
+
+<div
+  class="modal fade"
+  id="delayTaskModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="Delaymodal">Delay Task</h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt="Close"
+          class="popup_close_btn_delete_project"
+        />
+      </div>
+      <div class="modal-body">
+        <!-- Form for adding delay task -->
+        <form
+          [formGroup]="delayForm"
+          (ngSubmit)="DelayFormSubmit(delayForm.value)"
+        >
+          <div class="form_field">
+            <div class="row">
+              <div class="col-lg-8 col-md-8 col-sm-12">
+                <mat-form-field>
+                  <input
+                    matInput
+                    placeholder="Reason"
+                    formControlName="reason"
+                    id="reason"
+                    #reasonInput
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <mat-form-field>
+                  <mat-label>Choose a date</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    formControlName="reason_date"
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <!-- Hidden input to store delaytask_id -->
+              <input
+                type="hidden"
+                formControlName="delaytask_id"
+                [value]="delaytaskId"
+              />
+            </div>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn submit_btn">Add</button>
+          </div>
+        </form>
+
+        <!-- Table for displaying delay tasks -->
+        <div class="table-responsive-md">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let delaytask of delaytasklist">
+                <td>{{ delaytask.reason }}</td>
+                <td>{{ delaytask.reason_date }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="delete_bottom_action text-center" *ngIf="checkbox">
+  <div class="d-flex align-items-center justify-content-between">
+    <p class="selected_action_count">1 tasks selected</p>
+    <div>
+      <a href="javascript:void(0)"
+        ><img
+          src="../../../assets/img/dashboard/bottom-delete.svg"
+          alt=""
+          width="24px"
+          height="24px"
+          class="me-3"
+      /></a>
+      <a (click)="hideBottomaction()"
+        ><img
+          src="../../../assets/img/dashboard/white-delete-icon.svg"
+          alt=""
+          width="24px"
+          height="24px"
+      /></a>
+    </div>
+  </div>
+</div>
+
+<!-- table chat canvas start-->
+
+<div
+  class="offcanvas offcanvas-end table_chat"
+  tabindex="-1"
+  id="offcanvasTaskchat"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">{{ taskCommenttitle }}</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- chat design -->
+    <form
+      [formGroup]="submitFormComment"
+      (ngSubmit)="commentontask(submitFormComment.value)"
+    >
+      <div class="chat">
+        <div class="message-container" *ngIf="taskCommentData">
+          <div *ngFor="let dateKey of getDateKeys(); let i = index">
+            <div class="divider">
+              <span
+                >{{ taskCommentData[dateKey].date }}
+                {{ taskCommentData[dateKey].comments[0].time }}</span
+              >
+            </div>
+            <div
+              *ngFor="
+                let comment of taskCommentData[dateKey].comments;
+                let j = index
+              "
+            >
+              <div
+                class="comment me"
+                *ngIf="comment.user_id == localstorageuserId"
+              >
+                <div class="user_short_name">
+                  {{ getInitials(comment.userName) }}
+                </div>
+
+                <div
+                  class="bubble"
+                  *ngIf="
+                    comment.is_comment == 'text' ||
+                    comment.is_comment == 'audio' ||
+                    comment.is_comment == 'file'
+                  "
+                >
+                  <p *ngIf="comment.is_comment == 'text'">
+                    {{ comment.comment }}
+                  </p>
+                  <audio *ngIf="comment.is_comment == 'audio'" controls>
+                    <source [src]="comment.comment" type="audio/wav" />
+                  </audio>
+                  <a
+                    *ngIf="comment.is_comment == 'file'"
+                    href="{{ comment.comment }}"
+                    style="color: #212121"
+                    alt="File Comment"
+                    target="_blank"
+                    >{{ comment.filename }}</a
+                  >
+                </div>
+              </div>
+              <div class="comment other">
+                <div *ngIf="comment.user_id != localstorageuserId">
+                  <div class="user_short_name">
+                    {{ getInitials(comment.userName) }}
+                  </div>
+
+                  <div
+                    class="bubble"
+                    *ngIf="
+                      comment.is_comment == 'text' ||
+                      comment.is_comment == 'audio' ||
+                      comment.is_comment == 'file'
+                    "
+                  >
+                    <p *ngIf="comment.is_comment == 'text'">
+                      {{ comment.comment }}
+                    </p>
+                    <audio *ngIf="comment.is_comment == 'audio'" controls>
+                      <source [src]="comment.comment" type="audio/wav" />
+                    </audio>
+                    <a
+                      *ngIf="comment.is_comment == 'file'"
+                      href="{{ comment.comment }}"
+                      style="color: #212121"
+                      alt="File Comment"
+                      target="_blank"
+                      >{{ comment.filename }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <div class="textarea-container">
+            <textarea
+              type="text"
+              formControlName="comment"
+              placeholder="message"
+              (keyup)="onKeyPress($event)"
+            ></textarea>
+            <input type="hidden" formControleName="is_comment" value="text" />
+            <input type="hidden" formControleName="task_id" value="" />
+          </div>
+          <div data-bs-toggle="tooltip" data-bs-placement="top" title="Files">
+            <img
+              src="../../../assets/img/dashboard/file-icon.svg"
+              class=""
+              alt=""
+              height="22px"
+              (click)="hiddenfileinput.click()"
+            />
+            <input
+              type="file"
+              style="display: none"
+              (change)="uploadtaskcomment($event)"
+              #hiddenfileinput
+            />
+          </div>
+
+          <!-- audio setup -->
+
+          <div style="text-align: center">
+            <div
+              (click)="initiateRecording()"
+              class="p-0"
+              *ngIf="!recording"
+              style="
+                cursor: pointer;
+                background-color: transparent;
+                color: white;
+                border: none;
+              "
+            >
+              <img
+                src="../../../assets/img/dashboard/start-audio.svg"
+                alt=""
+                height="22px"
+              />
+            </div>
+            <div
+              (click)="stopRecording()"
+              class="p-0"
+              *ngIf="recording"
+              style="
+                cursor: pointer;
+                background-color: transparent;
+                color: white;
+                border: none;
+              "
+            >
+              <img
+                src="../../../assets/img/dashboard/stop-audio.svg"
+                alt=""
+                height="22px"
+              />
+            </div>
+          </div>
+
+          <!-- audio setup -->
+          <button class="send">
+            <i class="fa fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    <!-- chat design -->
+  </div>
+</div>
+
+<!-- table chat canvas stop-->
+<!-- time modal -->
+<div
+  class="offcanvas offcanvas-end table_chat"
+  tabindex="-1"
+  id="offcanvasTaskchatTime"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">{{ taskCommenttitle }}</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="chat">
+      {{ timerService.clock }}
+      <p>
+        <button type="button" (click)="startTimer()">Start</button>
+        <button type="button" (click)="pauseTimer()">Pause</button>
+        <button type="button" (click)="resumeTimer()">Resume</button>
+        <button (click)="stopTimer()">Stop</button>
+      </p>
+    </div>
+  </div>
+</div>
+<!-- time modal -->
+
+<div
+  class="modal fade"
+  id="timeModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">Timer</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          id="timeModalClose"
+        ></button>
+      </div>
+
+      <form [formGroup]="timeupdate">
+        <div class="modal-body">
+          <div class="text-center">
+            <div class="my-4">
+              <table class="table modal-table">
+                <thead>
+                  <tr>
+                    <td class="text-center" colspan="5">
+                      <h5 class="m-0">Check List</h5>
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let checkList of checklisttask; let i = index">
+                    <td *ngIf="!checkList.completed">
+                      <input
+                        type="checkbox"
+                        [checked]="selectedCheckbox === checkList.id"
+                        formControlName="completed"
+                        (click)="chekListsGet(checkList.id)"
+                      />
+                    </td>
+                    <td *ngIf="checkList.completed">completed</td>
+                    <td>
+                      <p class="add_checklist_inner text-start">
+                        {{ checkList.tasktypechecklist }}
+                      </p>
+                    </td>
+                    <td>
+                      <p class="add_checklist_inner text-start">
+                        {{ checkList.tasktyperemark }}
+                      </p>
+                    </td>
+
+                    <td>
+                      <div
+                        title="Files"
+                        *ngIf="checkList.is_document == 'Document Required'"
+                      >
+                        <img
+                          _ngcontent-ng-c3773026738=""
+                          src="../../../assets/img/dashboard/file-icon.png"
+                          alt=""
+                          (click)="hiddenfileinput.click()"
+                        /><input
+                          type="file"
+                          style="display: none"
+                          (change)="onFileChange($event, checkList.id)"
+                          #hiddenfileinput
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <p class="add_checklist_inner text-start">
+                        {{ checkList.targetTime }}
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="mb-3">
+              <input
+                type="checkbox"
+                formControlName="completed"
+                id="completeds"
+                (click)="onclick()"
+              />
+              <label for="completeds" class="ms-2">Mark as a complete</label>
+            </div>
+            <div class="mb-3" *ngIf="visible">
+              <textarea
+                class="form-control border-0 border-bottom rounded-0"
+                formControlName="completedNote"
+                placeholder="Desc"
+              ></textarea>
+            </div>
+
+            <nav class="projects_tabs">
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link active"
+                  id="autoClock-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#autoClock"
+                  type="button"
+                  role="tab"
+                  aria-controls="autoClock"
+                  aria-selected="true"
+                >
+                  Time
+                </button>
+                <button
+                  class="nav-link"
+                  id="manualClock-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#manualClock"
+                  type="button"
+                  role="tab"
+                  aria-controls="manualClock"
+                  aria-selected="false"
+                >
+                  Manual Time
+                </button>
+              </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="autoClock"
+                role="tabpanel"
+                aria-labelledby="autoClock-tab"
+              >
+                {{ timerService.clock }}
+                <div
+                  class="d-flex align-items-center gap-3 mt-3 justify-content-center"
+                >
+                  <svg
+                    id="Layer_1"
+                    data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 23.83 23.83"
+                    (click)="startTimer()"
+                    width="24px"
+                  >
+                    <path
+                      d="M22.9,7.28c-.6-1.42-1.46-2.69-2.55-3.79-1.09-1.09-2.37-1.95-3.79-2.55-1.47-.62-3.03-.94-4.64-.94s-3.17,.32-4.64,.94c-1.42,.6-2.69,1.46-3.79,2.55-1.09,1.09-1.95,2.37-2.55,3.79-.62,1.47-.94,3.03-.94,4.64s.32,3.17,.94,4.64c.6,1.42,1.46,2.69,2.55,3.79,1.09,1.09,2.37,1.95,3.79,2.55,1.47,.62,3.03,.94,4.64,.94h0c1.61,0,3.17-.31,4.64-.94,1.42-.6,2.69-1.46,3.79-2.55,1.09-1.09,1.95-2.37,2.55-3.79,.62-1.47,.94-3.03,.94-4.64s-.32-3.17-.94-4.64Zm-.84,8.92c-.55,1.31-1.35,2.49-2.36,3.5-1.01,1.01-2.19,1.8-3.5,2.36-1.36,.57-2.8,.86-4.28,.86s-2.93-.29-4.28-.86c-1.31-.55-2.49-1.35-3.5-2.36-1.01-1.01-1.8-2.19-2.36-3.5-.57-1.36-.86-2.8-.86-4.28s.29-2.93,.86-4.28c.55-1.31,1.35-2.49,2.36-3.5s2.19-1.8,3.5-2.36c1.36-.57,2.8-.86,4.28-.86s2.93,.29,4.28,.86c1.31,.55,2.49,1.35,3.5,2.36,1.01,1.01,1.8,2.19,2.36,3.5,.57,1.36,.86,2.8,.86,4.28s-.29,2.93-.86,4.28Z"
+                    />
+                    <path
+                      d="M17.03,10.88l-7.29-5.26c-.85-.61-2.02,0-2.02,1.04v10.52c0,1.04,1.18,1.65,2.02,1.04l7.29-5.26h0c.71-.51,.71-1.56,0-2.07Z"
+                    />
+                  </svg>
+
+                  <svg
+                    id="Layer_1"
+                    data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 23.78 23.78"
+                    (click)="pauseTimer()"
+                    width="24px"
+                  >
+                    <path
+                      d="M22.84,7.26c-.6-1.42-1.46-2.69-2.55-3.78-1.09-1.09-2.36-1.95-3.78-2.55-1.47-.62-3.02-.93-4.63-.93s-3.16,.31-4.63,.93c-1.42,.6-2.69,1.46-3.78,2.55-1.09,1.09-1.95,2.36-2.55,3.78-.62,1.47-.93,3.02-.93,4.63s.31,3.16,.93,4.63c.6,1.42,1.46,2.69,2.55,3.78,1.09,1.09,2.36,1.95,3.78,2.55,1.47,.62,3.02,.93,4.63,.93h0c1.6,0,3.16-.31,4.63-.93,1.42-.6,2.69-1.46,3.78-2.55,1.09-1.09,1.95-2.36,2.55-3.78,.62-1.47,.93-3.02,.93-4.63s-.31-3.16-.93-4.63Zm-.84,8.9c-.55,1.31-1.34,2.48-2.35,3.49-1.01,1.01-2.18,1.8-3.49,2.35-1.35,.57-2.79,.86-4.27,.86s-2.92-.29-4.27-.86c-1.31-.55-2.48-1.34-3.49-2.35-1.01-1.01-1.8-2.18-2.35-3.49-.57-1.35-.86-2.79-.86-4.27s.29-2.92,.86-4.27c.55-1.31,1.34-2.48,2.35-3.49,1.01-1.01,2.18-1.8,3.49-2.35,1.35-.57,2.79-.86,4.27-.86s2.92,.29,4.27,.86c1.31,.55,2.48,1.34,3.49,2.35,1.01,1.01,1.8,2.18,2.35,3.49,.57,1.35,.86,2.79,.86,4.27s-.29,2.92-.86,4.27Z"
+                    />
+                    <path
+                      d="M9.03,6.17c-.37,0-.66,.3-.66,.66v10.1c0,.37,.3,.66,.66,.66s.66-.3,.66-.66V6.84c0-.37-.3-.66-.66-.66Z"
+                    />
+                    <path
+                      d="M14.74,6.34c-.37,0-.66,.3-.66,.66v10.1c0,.37,.3,.66,.66,.66s.66-.3,.66-.66V7c0-.37-.3-.66-.66-.66Z"
+                    />
+                  </svg>
+
+                  <svg
+                    id="Layer_1"
+                    data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 23.72 23.72"
+                    width="24px"
+                    (click)="resumeTimer()"
+                  >
+                    <path
+                      d="M15.22,6.16c-.37,0-.66,.3-.66,.66v5.04c0-.3-.14-.6-.41-.79l-5.6-4.04c-.65-.47-1.55,0-1.55,.8V15.9c0,.8,.91,1.26,1.55,.8l5.6-4.04c.27-.19,.4-.49,.41-.79v5.04c0,.37,.3,.66,.66,.66s.66-.3,.66-.66V6.82c0-.37-.3-.66-.66-.66Z"
+                    />
+                    <path
+                      d="M22.79,7.24c-.6-1.41-1.45-2.68-2.54-3.77-1.09-1.09-2.36-1.94-3.77-2.54-1.46-.62-3.02-.93-4.62-.93s-3.15,.31-4.62,.93c-1.41,.6-2.68,1.45-3.77,2.54-1.09,1.09-1.94,2.36-2.54,3.77-.62,1.46-.93,3.02-.93,4.62s.31,3.15,.93,4.62c.6,1.41,1.45,2.68,2.54,3.77,1.09,1.09,2.36,1.94,3.77,2.54,1.46,.62,3.02,.93,4.62,.93h0c1.6,0,3.15-.31,4.62-.93,1.41-.6,2.68-1.45,3.77-2.54,1.09-1.09,1.94-2.36,2.54-3.77,.62-1.46,.93-3.02,.93-4.62s-.31-3.15-.93-4.62Zm-.83,8.88c-.55,1.3-1.34,2.48-2.35,3.48-1.01,1.01-2.18,1.8-3.48,2.35-1.35,.57-2.79,.86-4.26,.86s-2.91-.29-4.26-.86c-1.3-.55-2.48-1.34-3.48-2.35-1.01-1.01-1.8-2.18-2.35-3.48-.57-1.35-.86-2.79-.86-4.26s.29-2.91,.86-4.26c.55-1.3,1.34-2.48,2.35-3.48,1.01-1.01,2.18-1.8,3.48-2.35,1.35-.57,2.79-.86,4.26-.86s2.91,.29,4.26,.86c1.3,.55,2.48,1.34,3.48,2.35,1.01,1.01,1.8,2.18,2.35,3.48,.57,1.35,.86,2.79,.86,4.26s-.29,2.91-.86,4.26Z"
+                    />
+                  </svg>
+                  <svg
+                    id="Layer_1"
+                    data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 23.48 23.48"
+                    (click)="stopTimer()"
+                    width="24px"
+                  >
+                    <path
+                      d="M22.56,7.17c-.59-1.4-1.44-2.65-2.52-3.73-1.08-1.08-2.33-1.92-3.73-2.52-1.45-.61-2.99-.92-4.57-.92s-3.12,.31-4.57,.92c-1.4,.59-2.65,1.44-3.73,2.52-1.08,1.08-1.92,2.33-2.52,3.73-.61,1.45-.92,2.99-.92,4.57s.31,3.12,.92,4.57c.59,1.4,1.44,2.65,2.52,3.73,1.08,1.08,2.33,1.92,3.73,2.52,1.45,.61,2.99,.92,4.57,.92h0c1.58,0,3.12-.31,4.57-.92,1.4-.59,2.65-1.44,3.73-2.52,1.08-1.08,1.92-2.33,2.52-3.73,.61-1.45,.92-2.99,.92-4.57s-.31-3.12-.92-4.57Zm-.83,8.79c-.55,1.29-1.33,2.45-2.32,3.45-1,1-2.16,1.78-3.45,2.32-1.34,.57-2.76,.85-4.22,.85s-2.88-.29-4.22-.85c-1.29-.55-2.45-1.33-3.45-2.32-1-1-1.78-2.16-2.32-3.45-.57-1.34-.85-2.76-.85-4.22s.29-2.88,.85-4.22c.55-1.29,1.33-2.45,2.32-3.45,1-1,2.16-1.78,3.45-2.32,1.34-.57,2.76-.85,4.22-.85s2.88,.29,4.22,.85c1.29,.55,2.45,1.33,3.45,2.32,1,1,1.78,2.16,2.32,3.45,.57,1.34,.85,2.76,.85,4.22s-.29,2.88-.85,4.22Z"
+                    />
+                    <rect x="6.83" y="6.83" width="9.83" height="9.83" />
+                  </svg>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="manualClock"
+                role="tabpanel"
+                aria-labelledby="manualClock-tab"
+              >
+                <div class="form_field d-flex gap-3">
+                  <mat-form-field>
+                    <input
+                      matInput
+                      #input
+                      formControlName="timerhour"
+                      #timerhour
+                      id="timerhour"
+                      maxlength="3"
+                      placeholder="Hours"
+                    />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input
+                      matInput
+                      #input
+                      formControlName="timerminute"
+                      maxlength="3"
+                      placeholder="Minute"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button
+              type="submit"
+              (click)="submitForms(timerService.clock)"
+              class="add_task_btn"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="SubTaskModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Subtask
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="chat text-center">
+          <div
+            *ngFor="let subtaskItem of subTaskList; let i = index"
+            #listsubTask
+          >
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  data-bs-toggle="modal"
+                  data-bs-target="#completesubTaskModal"
+                  [disabled]="subtaskItem.completed === 1"
+                  [checked]="subtaskItem.completed === 1"
+                  (click)="deleteprojectsopendialoguesubtask(subtaskItem.id)"
+                  id="flexCheckDefault"
+                />
+
+                <p class="sub_task_inner m-0">{{ subtaskItem.title }}</p>
+              </div>
+              <div class="d-flex gap-3 align-items-center flex-md-wrap">
+                <img
+                  src="../../../assets/img/dashboard/flag-G.svg"
+                  *ngIf="subtaskItem.priority == 0"
+                  alt=""
+                />
+                <img
+                  src="../../../assets/img/dashboard/flag-R.svg"
+                  *ngIf="subtaskItem.priority == 1"
+                  alt=""
+                />
+                <img
+                  src="../../../assets/img/dashboard/flag-Y.svg"
+                  *ngIf="subtaskItem.priority == 2"
+                  alt=""
+                />
+                <span class="status_label">{{ subtaskItem.status }}</span>
+                <p class="date_format_show m-0">
+                  {{ subtaskItem.due_date | date : "shortDate" }}
+                </p>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="completesubTaskModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Complete Task
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_delete_project"
+        />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to mark this SubTask as completed?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="confirmDeletesubtask()">
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- time modal -->
+
+<!-- Modal -->
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="fileModals"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Files</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Dynamic content will be injected here by the TS file -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="fileModalsDoc"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Files</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="fileDoc">
+        <!-- Dynamic content will be injected here by the TS file -->
+      </div>
+    </div>
+  </div>
+</div>

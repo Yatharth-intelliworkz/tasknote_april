@@ -1,0 +1,347 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="project_discussion_wrapper">
+            <div class="project_discussion_inner">
+              <h2 class="task_table_title">{{memberlist.projectName}}</h2>
+              <div class="task_drop_error">
+              </div>
+            </div>
+            <p class="project_last_update_info">
+              Last updated on {{memberlist.updated}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <div class="mb-4">
+      <div class="card">
+        <div class="card-body">
+           <!-- <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab *ngFor="let task of memberlist.taskList" [label]="task.clientName">
+              <mat-accordion class="example-headers-align">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>{{ task.description }}</mat-panel-title>
+                  </mat-expansion-panel-header>
+
+                  <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="task.checkList" matSort>
+                      <ng-container matColumnDef="userName">
+                        <th mat-header-cell *matHeaderCellDef> User Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="remark">
+                        <th mat-header-cell *matHeaderCellDef> Remark </th>
+                        <td mat-cell *matCellDef="let element"> {{element.remark}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="hour_per_cost">
+                        <th mat-header-cell *matHeaderCellDef> Hour Per Cost </th>
+                        <td mat-cell *matCellDef="let element"> {{element.hour_per_cost}} </td>
+                      </ng-container>
+
+
+                      <ng-container matColumnDef="toatal_money">
+                        <th mat-header-cell *matHeaderCellDef> Total Money </th>
+                        <td mat-cell *matCellDef="let element"> {{element.toatal_money}} </td>
+                      </ng-container>
+
+
+
+                      <ng-container matColumnDef="user_hour">
+                        <th mat-header-cell *matHeaderCellDef> User Hour </th>
+                        <td mat-cell *matCellDef="let element"> {{element.user_hour}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="user_minute">
+                        <th mat-header-cell *matHeaderCellDef> User Minute </th>
+                        <td mat-cell *matCellDef="let element"> {{element.user_minute}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="track_time">
+                        <th mat-header-cell *matHeaderCellDef> Tracked Time </th>
+                        <td mat-cell *matCellDef="let element"> {{element.track_time}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <td mat-cell *matCellDef="let element"> <a href="javascript:void(0)"
+                            (click)="deletechecklist(element.id)"><i class="fa fa-trash"></i></a> | <input
+                            type="checkbox" title="Incomplete" [(ngModel)]="element.completed"
+                            (click)="markingofchecklit(element.completed,element.id)"> </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </mat-tab>
+          </mat-tab-group>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <div class="mb-3">
+              <div class="task_multiselect">
+                <ng-multiselect-dropdown id="two" name="city" placeholder="Select Client" [settings]="dropdownSettings1"
+                  [data]="team3" formControlName="client_id"  (onSelect)="onClientSelect($event)">
+                  <div style="
+                      padding: 1px 10px;
+                      margin-right: 10px;
+                      right: 2px;
+                      top: -2px;
+                    "></div>
+                  <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                    <div>{{ option }}</div>
+                  </ng-template>
+                  <mat-error>Clinet is required.</mat-error>
+                </ng-multiselect-dropdown>
+              </div>
+            </div>
+          </div> 
+
+            <ng-container *ngFor="let resultdata of resultdata;let i = index;" class="mb-3">
+              <ng-container *ngFor="let typeData of resultdata.typeData">
+                <div class="my-4">
+                  <table class="table modal-table">
+                    <tbody>
+                      <tr>
+                          <td class="">
+                              <h5 class="m-0">{{ typeData.tasktypeTitle }}</h5>
+                          </td>
+                          <td>₹ {{ typeData.cost }}
+                          </td>
+                          <td>{{ typeData.hours }} Hour
+                          </td>
+                          <td>{{ typeData.actual_time }} 
+                          </td>
+                      </tr>
+                      <tr *ngFor="let checkData of typeData.checkData">
+                          <td>
+                            {{ checkData.tasktypechecklist }}
+                          </td>
+                          <td *ngIf="checkData.files != 'No File'"><a href="{{ checkData.files }}" download="true">Document</a>
+                            <td *ngIf="checkData.files == 'No File'"><p></p>
+                          </td>
+                          <td>{{ checkData.tasktyperemark }}
+                          </td>
+                      </tr> 
+                    </tbody>
+                  </table>
+                </div>
+              </ng-container>
+          </ng-container>-->
+          <form [formGroup]="addprojectForm">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 co-md-12 col-sm-12">
+                <div class="row">
+                
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field appearance="fill">
+                          <input matInput formControlName="total_cost" [(ngModel)]="memberlist.projectDtail.total_cost" placeholder="Project Cost" readonly />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field appearance="fill">
+                          <mat-select placeholder="Service Segment" [(ngModel)]="memberlist.projectDtail.service_id" formControlName="servic_id">
+                            <mat-option *ngFor="let servicelistData of servicelistData" [value]="servicelistData.id"  [disabled]="true">
+                              {{ servicelistData.title }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>                        
+                      </div>
+                    </div>
+                  </div> 
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="task_multiselect">
+                        <!-- <ng-multiselect-dropdown id="projectManagerDropdown" [disabled]="true"  name="city" placeholder="Project Manager"
+                          [settings]="dropdownSettings1" [data]="team1" [(ngModel)]="memberlist.projectDtail.manager_id"
+                          formControlName="manager_id"></ng-multiselect-dropdown> -->
+
+                          <ng-select 
+                          [items]="team1" 
+                          bindLabel="item_text" 
+                          bindValue="item_id" 
+                          [(ngModel)]="managerName" 
+                          placeholder="Project Manager"
+                          formControlName="manager_id" 
+                          [multiple]="true"
+                          [disabled]="true">
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+   
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input matInput formControlName="members_id" [readonly]="true" [(ngModel)]="memberlist.projectDtail.membersName" placeholder="Reference By" class="text-capitalize" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input matInput formControlName="start_date" [readonly]="true"  [(ngModel)]="memberlist.projectDtail.start_date" [matDatepicker]="picker"
+                            placeholder="Select Start Date" />
+                          <mat-datepicker-toggle matIconSuffix  [disabled]="true" [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="mb-3">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input formControlName="end_date" matInput [matDatepicker]="picker1" [readonly]="true"
+                            placeholder="Select End Date" [readonly]="true"  [(ngModel)]="memberlist.projectDtail.end_date" />
+                          <mat-datepicker-toggle matIconSuffix  [disabled]="true" [for]="picker1"></mat-datepicker-toggle>
+                          <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                 
+                  
+                <div>
+                  <table class="table modal-table">
+                    <thead>
+                      <tr>
+                        <td class="text-center" colspan="5">
+                          <h5 class="m-0">Task Type List</h5>
+                        </td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let checklistItem of memberlist.typeListData; let i = index" [formGroupName]="i" formArrayName="tasktypedata">
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.tasktype }}</p>
+                        </td>
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.hours }}</p>
+                        </td>
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.cost }}</p>
+                        </td>
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.remark }}</p>
+                        </td>
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.tasktypeDescription }}</p>
+                        </td>
+                        <td>
+                          <i class="fa fa-eye" data-bs-toggle="modal"  alt="preview" style="cursor: pointer;" (click)="openModal(checklistItem.taskTypeId)"></i>
+                          
+                        </td>
+                      </tr>
+                    </tbody>
+  
+                  </table>
+  
+                </div>
+                 </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="task_table_title">
+            Details
+          </h2>
+          <div class="details_area">
+            <mat-form-field>
+              <textarea matInput>{{memberlist.projectDtail.description}}</textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- add  project modal start -->
+<div #checklistModal class="modal fade" id="checklistModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">Checklist</h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt="" class="popup_close_btn_delete_project" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="projectFormchecklist">
+          <table class="table modal-table">
+            <tbody>
+              <tr *ngFor="let tasktypechecklist of filteredChecklistArray; let j = index">
+                <td>
+                  <p class="add_checklist_inner">{{ tasktypechecklist.tasktypechecklist }}</p>
+                </td>
+                <td>
+                  <p class="add_checklist_inner">{{ tasktypechecklist.tasktyperemark }}</p>
+                </td>
+                <td>
+                  <p class="add_checklist_inner">{{ tasktypechecklist.is_document }}</p>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </form>
+       
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="modal fade" id="addMemberModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add/Remove Member
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn" />
+      </div>
+      <div class="modal-body">
+        <ng-multiselect-dropdown id="two" name="city" placeholder="Assign" [settings]="dropdownSettings2"
+          [data]="countries" [formControlName]="'selectedItems2'">
+          <ng-template #optionsTemplate let-item let-option="option" let-id="id" let-isSelected="isSelected">
+            <div style="
+                padding: 1px 10px;
+                margin-right: 10px;
+                right: 2px;
+                top: -2px;
+              "></div>
+          </ng-template>
+          <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+            <div>
+              {{ option }}
+            </div>
+          </ng-template>
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
+  </div>
+</div> -->

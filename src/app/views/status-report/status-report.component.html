@@ -1,0 +1,314 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="mb-4">
+        <div class="top_title_inner_flex">
+          <div class="d-flex align-items-center gap-3">
+            <a routerLink="/report">
+              <img src="../../../assets/img/dashboard/back-arrow.svg" alt="" width="30px" height="30px" /></a>
+
+            <p class="report_inner_title">Client Report</p>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <!-- <a class="add_task_btn" data-bs-toggle="modal" data-bs-target="#DiscussionModal">
+                  <span>
+                    <img src="../../../assets/img/dashboard/save-report.png" alt="save-report" width="22px"
+                      height="22px" /></span>
+                  Save Report</a> -->
+            <a class="add_task_btn" (click)="exportexcel()" data-bs-toggle="modal" *ngIf="Isdisplay == 1"
+              data-bs-target="#DiscussionModal">
+              <span>
+                <img src="../../../assets/img/dashboard/download-icon.png" alt="download" /></span>
+              Download</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- tabs  view -->
+
+      <div class="mb-4">
+        <form (submit)="generatereport()" role="form" [formGroup]="submitForm">
+          <div class="multiselect_main">
+            <div class="task_multiselect">
+              <!-- <ng-multiselect-dropdown id="two" name="city" placeholder="Client" [settings]="dropdownSettings2"
+                [data]="toppingList" formControlName="userID">
+                <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                  <div>{{ option }}</div>
+                </ng-template>
+              </ng-multiselect-dropdown> -->
+              <ng-select
+              [items]="toppingList"
+              bindLabel="item_text"
+              bindValue="item_id"
+              placeholder="Select Client"
+              formControlName="userID"
+              [multiple]="true"
+              class="client_list"
+            >
+            </ng-select>
+            </div>
+
+            <!-- <div class="task_multiselect">
+              <ng-multiselect-dropdown id="two" name="city" placeholder="Status" [settings]="dropdownSettings2"
+                [data]="toppingList1" formControlName="statusID">
+                <ng-template #optionSelectedTemplate let-option="option" let-id="id">
+                  <div>{{ option }}</div>
+                </ng-template>
+              </ng-multiselect-dropdown>
+            </div> -->
+
+            <mat-form-field>
+              <mat-date-range-input [formGroup]="range" [rangePicker]="picker" [ariaReadOnly]="true">
+                <input matStartDate formControlName="start" placeholder="Start Date">
+                <input matEndDate formControlName="due_date" placeholder="End Date">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+              <!-- <mat-error *ngIf="range.get('start')?.hasError('required')">Task Start Date is required.</mat-error>
+                <mat-error *ngIf="range.get('due_date')?.hasError('required')">Task Due Date is required.</mat-error> -->
+            </mat-form-field>
+
+            <button class="add_task_btn">Search</button>
+          </div>
+        </form>
+
+      </div>
+
+      <!-- <div class="report_view_pan mb-4">
+        <div class="card">
+          <div class="card-body">
+            <mat-accordion class="example-headers-align">
+              <mat-expansion-panel [expanded]="isPanelOpen">
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Charts </mat-panel-title>
+                </mat-expansion-panel-header>
+
+
+                <div>
+                  <canvas id="status" height="100px" style="height:100; width:100"> {{ chart }}</canvas>
+                </div>
+
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="report_view_pan mb-4">
+        <div class="card">
+          <div class="card-body">
+
+            <mat-accordion class="example-headers-align">
+              <mat-expansion-panel [expanded]="isPanelOpen">
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Status </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="row my-2">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="d-flex gap-3 align-items-center justify-content-end">
+                      <!-- <mat-form-field class="filter_search"> -->
+
+                      <input matInput hidden="true" (keyup)="applyFilter($event)" placeholder="Search...." #input />
+                      <!-- </mat-form-field> -->
+                      <!-- <a class="mb-0 customize_btn" (click)="openStaticBackdrop(content)"> <img
+                          src="../../../assets/img/dashboard/task_customize_icon.png" alt="" width="24px" /> Custom </a> -->
+                    </div>
+                  </div>
+                </div>
+
+
+                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" *ngIf="statusreport">
+                  <mat-tab label="{{ status.name }}" *ngFor="let status of statusreport">
+                    <ng-container *ngIf="status.taskList.length > 0">
+                      <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="status.taskList" matSort>
+                          <!-- ID Column -->
+                          <ng-container matColumnDef="priority">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                              Priority
+                            </th>
+                            <td mat-cell *matCellDef="let task"><span>{{ task.priority }}</span>
+                            </td>
+                          </ng-container>
+
+                          <!-- Task Name Column -->
+                          <ng-container matColumnDef="title">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_task_name">
+                              Task Name
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.description }}</td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="dueDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="report_table_data">
+                              Due Date
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.due_date }}</td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="completedDate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="report_table_data">
+                              Closed Date
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.completedDate !== '' ? task.completedDate : '-'
+                              }}</td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="report_table_data">
+                              Status
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.status }}</td>
+                          </ng-container>
+
+                          <!-- <ng-container matColumnDef="creator">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="report_table_data">
+                              Creator
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.creator }}</td>
+                          </ng-container> -->
+
+                          <!-- Create Date Column -->
+                          <ng-container matColumnDef="created_at">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="report_table_data">
+                              Create Date
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.created_at }}</td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="service">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="report_table_data">
+                              Service
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.service }}</td>
+                          </ng-container>
+
+                          <!-- <ng-container matColumnDef="client">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="report_table_data">
+                              Client
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.clientName }}</td>
+                          </ng-container> -->
+
+                          <ng-container matColumnDef="project">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="report_table_data">
+                              Project
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.projectName }}</td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="progress">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="report_table_data">
+                              Performance
+                            </th>
+                            <td mat-cell *matCellDef="let task">{{ task.progress !== '' ? task.progress : '-' }}</td>
+                          </ng-container>
+
+                          <!-- Other columns go here -->
+
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let task; columns: displayedColumns"></tr>
+
+                          <!-- Row shown when there is no matching data. -->
+                          <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">
+                              No data matching the filter "{{ input.value }}"
+                            </td>
+                          </tr>
+                        </table>
+
+                        <div class="text-end my-3">
+                          <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
+                        </div>
+                      </div>
+                    </ng-container>
+                  </mat-tab>
+                </mat-tab-group>
+
+
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
+
+      <!-- customize icon -->
+      <div class="customize_filter_wrapper">
+        <ng-template #content let-offcanvas>
+          <div class="offcanvas-header">
+            <h4 class="offcanvas-title customize_title">Customize Field</h4>
+            <button type="button" class="btn-close" aria-label="Close"
+              (click)="offcanvas.dismiss('Cross click')"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Close Date</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Due Date</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Status</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <!-- <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Creator</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div> -->
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Create Date</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Assignee</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Follower</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Service</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Client</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Project</span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Perfomance </span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+              <div class="example-box" cdkDrag>
+                <img src="../../../assets/img/dashboard/dots-menu.png" alt="">
+                <span>Progress </span>
+                <mat-slide-toggle></mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </section>
+</main>

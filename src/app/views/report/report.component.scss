@@ -1,0 +1,17 @@
+.report_list{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:20px;
+}
+
+.report_list a{
+    text-decoration: none;
+}
+.report_img{
+transition: all 0.3s ease-in-out;
+}
+
+
+.user_task_wrapper .card:hover .report_img{
+    border-radius: 50%;
+}

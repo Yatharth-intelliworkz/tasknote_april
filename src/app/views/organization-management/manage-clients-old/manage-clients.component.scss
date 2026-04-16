@@ -1,0 +1,99 @@
+
+.custom_edit_icon .dropdown-toggle {
+  background-color: white;
+  border: none;
+}
+
+.custom_edit_icon .dropdown-toggle::after {
+  display: none;
+}
+.custom_edit_icon .dropdown-menu.show {
+  transform: translate(0px, 50px) !important;
+}
+.manage_searchbar {
+  position: relative;
+}
+.searchbar_icon {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  background-color: white;
+}
+
+
+.table-responsive{
+  height: calc(100vh - 14.5em);
+  overflow: auto;
+}
+.task-table .card::-webkit-scrollbar, .table-responsive::-webkit-scrollbar{
+  display: none;
+}
+
+.task_table thead{
+  position:sticky;
+  top:0;
+  z-index: 9;
+}
+
+.task-table tbody tr a{
+  width: auto;
+}
+
+.task_table tr th,
+.task_table tr td {
+  font-size: 14px;
+  color: #707070;
+  font-weight: 400;
+  line-height: 19px;
+  vertical-align: middle;
+}
+
+.task_table tbody tr {
+  border: 1px solid #dddddd;
+  border-style: solid !important;
+  border-radius: 10px;
+}
+
+.client_short_alphabets {
+  background-color: #2cb3c8;
+  color: #fff;
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.task_table_title {
+  color: #1c1f66;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 24px;
+  margin: 0;
+  max-width: 170px;
+}
+
+.mat-file {
+  border: none;
+  border-bottom: 1px solid #0000006b;
+  border-radius: 0;
+  min-height: 56px;
+}
+.user_img {
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+@media only screen and (max-width: 560px) {
+  .add_task_btn {
+    display: inline-block;
+    min-width: 130px;
+    text-align: center;
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+

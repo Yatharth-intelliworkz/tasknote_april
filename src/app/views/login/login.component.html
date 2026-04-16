@@ -1,0 +1,123 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "timer" [fullScreen] = "true"></ngx-spinner>
+
+<main>
+  <section class="login_wrapper">
+    <div class="container-fluid login_bg_container">
+      <div class="row align-items-center">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 p-0 h-100">
+          <div class="form_video">
+            <div class="login_bg">
+              <video width="100%" height="100%" autoplay loop>
+                <source
+                  src="../../../assets/img/dashboard/login-video.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-xl-6 col-lg-6 col-md-6 col-sm-12 main_login position-relative z-3 h-100"
+        >
+          <div class="">
+            <img
+              src="../../../assets/img/dashboard/login-logo.svg"
+              class="main_logo"
+              alt="logo"
+            />
+
+            <h1 class="login_title">Welcome</h1>
+            <p class="login_content">
+              Please login to your account by filling this form:
+            </p>
+            <form class="login_form"  (ngSubmit)="login()">
+              <div class="login_form_wrapper">
+                <div class="form-floating login_form mb-3">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      type="email"
+                      matInput
+                      [formControl]="emailFormControl"
+                      [(ngModel)]="email" name="email"
+                      [errorStateMatcher]="matcher"
+                      placeholder="Enter Email"
+                    />
+                    <mat-error
+                      *ngIf="
+                        emailFormControl.hasError('email') &&
+                        !emailFormControl.hasError('required')
+                      "
+                    >
+                      Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                      Email is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="form-floating login_form">
+                  <mat-form-field class="password_field">
+                    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" placeholder="Enter Password" name="password" required />
+                    <a
+                      mat-icon-button
+                      matSuffix
+                      (click)="hide = !hide"
+                      [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide"
+                    >
+                      <mat-icon>{{
+                        hide ? "visibility_off" : "visibility"
+                      }}</mat-icon>
+                    </a>
+                    <mat-error *ngIf="passwordFormControl.hasError('required')">
+                      Password is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div
+                class="d-flex align-items-center justify-content-between mt-3"
+              >
+                <div class="form-check">
+                  <input
+                    class="form-check-input login_checkbox"
+                    type="checkbox"
+                    value=""
+                    id="flexCheckDefault"
+                  />
+                  <label
+                    class="form-check-label login_checkbox_label"
+                    for="flexCheckDefault"
+                  >
+                    Remember me
+                  </label>
+                </div>
+
+                <div>
+                  <a routerLink="/reset-password" routerLinkActive="router-link-active"  class="forgot_link"
+                    >Forgot password?</a
+                  >
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-4">
+                <button class="submit_btn mb-1">LOGIN</button>
+
+              </div>
+            </form>
+            <div>
+              <span class="login_route"> Don't have an account? </span
+              ><a
+                class="forgot_link"
+                href="https://tasknote.in/registeruser"
+                ><b> Sign Up</b>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+

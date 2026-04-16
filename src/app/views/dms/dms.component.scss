@@ -1,0 +1,153 @@
+
+.user_task_wrapper .nav-tabs,
+.nav-tabs .nav-link,
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:hover {
+  border: none;
+}
+
+.projects_tabs .nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  border: none;
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 10px;
+  border: 2px solid #1c1f66;
+  background-color: #1c1f66;
+}
+
+.projects_tabs .nav-tabs .nav-link,
+.discussion_tab .nav-tabs .nav-link:hover {
+  color: var(--lightgrey-666666);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  border: 2px solid var(--light-grey-DDDDDD);
+  border-radius: 10px;
+  margin-right: 20px;
+  padding: 10px 20px;
+}
+
+.projects_cards {
+  display: grid;
+}
+
+.projects_cards a{
+  text-decoration: none;
+} 
+.projects_cards .card-header {
+  background-color: #ff5656;
+  border-radius: 10px 10px 0 0;
+  padding: 15px;
+}
+.projects_cards .card-body {
+  border-radius: 0 0 10px 10px;
+}
+.project_name {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 30px;
+  color: white;
+  margin: 0;
+}
+.project_date {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: white;
+  margin: 0;
+}
+.project_table_data {
+  width: 100%;
+}
+.project_table_data tr {
+  border-bottom: 1px dashed #dddddd;
+  margin: 10px 0;
+}
+.project_table_data tr td {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  padding: 10px 0;
+}
+
+.project_files input[type="file"] {
+  width: 100%;
+  background-color: white;
+}
+.file-container{
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.file-item {
+  display: flex;
+  border: 1px solid #1c1f66;
+  width: 300px;
+  border-radius: 10px;
+}
+.file-preview {
+  width: 100px;
+}
+
+.file-image {
+  width: 100px;
+  height: 100px;
+}
+
+.file-name {
+  color: #1c1f66;
+  margin: 0;
+}
+button.remove-button {
+  border: none;
+  border-radius: 50%;
+  position: relative;
+  top: -16px;
+  height: 30px;
+  width: 30px;
+}
+
+
+.dms_file_dropdown {
+  min-width: 13rem;
+  padding: 15px;
+  transform: translate(6px, 51px) !important;
+  box-shadow: 0 3px 20px #39698838;
+  border: none;
+}
+.dms_file_dropdown a {
+  text-decoration: none;
+  border-bottom: 1px solid #dddddd;
+}
+
+.dms_file_dropdown a {
+  // padding: 12px 25px;
+}
+.dms_file_dropdown a li {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  padding: 12px 10px;
+  cursor: pointer;
+}
+.dms_file_dropdown a li:last-child {
+  border: none;
+}
+.dms_file_dropdown a:hover li {
+  color: white;
+  background-color: #1c1f66;
+  border-radius: 5px;
+}
+.dms_file_dropdown a:hover {
+  background-color: #1c1f66;
+  border-radius: 5px;
+  color: white;
+}

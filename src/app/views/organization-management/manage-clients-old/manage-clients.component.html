@@ -1,0 +1,457 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true"></ngx-spinner>
+<div class="row align-items-center mb-4">
+  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+    <div class="d-flex align-items-center">
+      <a [routerLink]="['/company-details', companyId]" class="me-3"><img
+          src="../../../assets/img/dashboard/back-arrow.svg" width="35px" height="35px" alt="" /></a>
+
+      <span class="task_table_title">Clients</span>
+    </div>
+  </div>
+  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+    <div class="d-flex align-items-center gap-3 justify-content-end">
+      <div class="manage_searchbar">
+        <input type="text" formControlName="searchQueryControl" (input)="filterItems($event)" class="form-control"
+          id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Search here..." />
+        <img src="../../../assets/img/dashboard/search-icon.png" alt="search" class="searchbar_icon" />
+      </div>
+      <div>
+        <a class="add_task_btn" data-bs-toggle="modal" data-bs-target="#addClientModal">
+          Add New Client
+        </a>
+      </div>
+      <div class="dropdown custom_edit_icon">
+        <button
+          class="dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img src="../../../assets/img/dashboard/task_dots_icon.png" alt="" />
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" (click)="triggerFileInputClick()">Bulk Import</a>
+          <input type="file" style="display: none;" #fileInput (change)="onFileChangeofimport($event)" value="Bulk Upload" /></li>
+          <li><a class="dropdown-item" (click)="generateexcelfile()">Bulk Export</a></li>
+          <li><a class="dropdown-item" href="https://app.tasknote.in/backend/public/images/project_clients.csv" download="download">Download Sample</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="user_task_wrapper task-table">
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table task_table">
+          <thead>
+            <tr>
+              <th>Client Name</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody class="dream-table" *ngFor="let clients of clientlist">
+            <tr>
+              <td>
+                {{ clients.name }} ({{
+                clients.company_name }})
+              </td>
+
+              <td class="text-end">
+                <div>
+                  <a data-bs-toggle="modal" (click)="editclients(clients.id)" data-bs-target="#editClientModal">
+                    <img src="../../../assets/img/dashboard/table-edit-icon.svg" alt="" class="me-4" />
+                  </a>
+                  <a data-bs-toggle="modal" data-bs-target="#deleteclientsModal"
+                    (click)="deleteClientopendialogue(clients.id)">
+                    <img src="../../../assets/img/dashboard/table-delete-icon.svg" alt="" />
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- create client modal start -->
+
+<div class="modal fade" id="addClientModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add New Client
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_client_add" />
+      </div>
+      <div class="modal-body">
+        <form role="form" #submitForm="ngForm" (ngSubmit)="insertclient(submitForm)">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 co-md-12 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel name="client_code" placeholder="Client Code" required />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel name="name" placeholder="Client Name" required />
+                        <mat-error *ngIf="submitForm.form.controls['name']?.hasError('required')">
+                          Client Name is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <mat-select placeholder="Select status" formControlName="is_active" required
+                          >
+                          <mat-option [value]="0">Active</mat-option>
+                          <mat-option [value]="1">InActive</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel name="type" placeholder="type" required />
+                        <mat-error *ngIf="submitForm.form.controls['type']?.hasError('required')">
+                          Client type is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel name="pan_no" placeholder="Pan" required />
+                        <mat-error *ngIf="submitForm.form.controls['pan_no']?.hasError('required')">
+                          Client Pan is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel name="gst_no" placeholder="GST" required />
+                        <mat-error *ngIf="submitForm.form.controls['gst_no']?.hasError('required')">
+                          Client GST is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3"  id="Mastersetuppermission">
+                    <div class="d-flex justify-content-between align-items-center gap-2">
+                      <div class="form_field">
+                        <mat-form-field>
+                          <mat-select ngModel placeholder="Reference Partner *" name="reference_by">
+                            <mat-option value="{{ clientlist.id }}" *ngFor="let clientlist of clientPartnerdataList">{{ clientlist.name
+                              }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel name="company_name" placeholder="Contact Group" required />
+                        <mat-error *ngIf="submitForm.form.controls['company_name']?.hasError('required')">
+                          Contact Group is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel name="contact_person_name" placeholder="Contact Person" required />
+                        <mat-error *ngIf="submitForm.form.controls['contact_person_name']?.hasError('required')">
+                          Contact Person is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel name="phone_no" placeholder="Contact Mobile Number" required />
+                        <mat-error *ngIf="submitForm.form.controls['phone_no']?.hasError('required')">
+                          Mobile Number is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Contact Email" ngModel name="email" required />
+                        <mat-error *ngIf="submitForm.form.controls['email']?.hasError('required')">
+                          Email is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input matInput #input ngModel name="address" placeholder="Contact Address" required />
+                      <mat-error *ngIf="submitForm.form.controls['address']?.hasError('required')">
+                        Address is required.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                
+                
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn" [disabled]="submitForm.form.invalid">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- create client modal end -->
+
+<!-- edit client modal start -->
+
+<div class="modal fade" id="editClientModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Client
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_edit" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editForm">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 co-md-12 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Client Code" [(ngModel)]="clientslistedit.client_code"
+                        formControlName="client_code" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input [(ngModel)]="clientslistedit.name" formControlName="name"
+                          placeholder="Client Name" />
+                        <div
+                          *ngIf="editForm.get('title')?.invalid && (editForm.get('title')?.dirty || editForm.get('title')?.touched)">
+                          <small class="text-danger">Title is required</small>
+                        </div>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                          <mat-select [value]="clientslistedit.is_active" formControlName="is_active" placeholder="Status">
+                          <mat-option [value]="0">Active</mat-option>
+                          <mat-option [value]="1">InActive</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel [(ngModel)]="clientslistedit.type" formControlName="type" placeholder="type" required />
+                        <mat-error *ngIf="submitForm.form.controls['type']?.hasError('required')">
+                          Client type is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel formControlName="pan_no" [(ngModel)]="clientslistedit.pan_no" placeholder="Pan" required />
+                        <mat-error *ngIf="submitForm.form.controls['pan_no']?.hasError('required')">
+                          Client Pan is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input ngModel formControlName="gst_no" [(ngModel)]="clientslistedit.gst_no" placeholder="GST" required />
+                        <mat-error *ngIf="submitForm.form.controls['gst_no']?.hasError('required')">
+                          Client GST is required.
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3"  id="Mastersetuppermission">
+                    <div class="d-flex justify-content-between align-items-center gap-2">
+                      <div class="form_field">
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="clientslistedit.refernce_by" formControlName="reference_by" placeholder="Reference Partner *">
+                              <mat-option [value]="clientlist.id" *ngFor="let clientlist of clientPartnerdataList">{{ clientlist.name
+                              }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input [(ngModel)]="clientslistedit.company_name" formControlName="company_name"
+                          placeholder="Contact Group" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input [(ngModel)]="clientslistedit.phone_no" formControlName="phone_no"
+                          placeholder="Mobile Number" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Email" [(ngModel)]="clientslistedit.email"
+                          formControlName="email" />
+                        <!-- [formControl]="email" -->
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input matInput #input [(ngModel)]="clientslistedit.contact_person_name" formControlName="contact_person_name"
+                        placeholder="Contact Person Name" />
+                    </mat-form-field>
+                  </div>
+                </div>
+                
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input matInput #input [(ngModel)]="clientslistedit.address" formControlName="address"
+                        placeholder="Address" />
+                      <input type="hidden" [(ngModel)]="clientslistedit.id" formControlName="clientId">
+                    </mat-form-field>
+                  </div>
+                </div>
+                
+                
+               
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn" (click)="updateclient()">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- edit client modal end -->
+
+
+<div class="modal fade" id="deleteclientsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Delete Client
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_delete_clients" />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to delete this client?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="confirmDelete()">Yes</button>
+            <!-- <button class="btn cancel_btn" (click)="dismissModal()">No</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

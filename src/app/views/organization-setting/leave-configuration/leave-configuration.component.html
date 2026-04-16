@@ -1,0 +1,805 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-2 align-items-center">
+              <img
+                src="../../../../assets/img/dashboard/client-logo.png"
+                alt="client-logo"
+                width="60px"
+              />
+              <h2 class="company_name">
+                Intelliworkz Business Solutions Pvt. Ltd.
+              </h2>
+            </div>
+            <a
+              routerLink="/dashboard"
+              routerLinkActive="router-link-active"
+              class="back_btn"
+            >
+              < Back to Task Management</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="task-table">
+            <nav class="projects_tabs d-flex justify-content-between mb-3">
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link active"
+                  id="Pin-Task-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Pin-Task"
+                  type="button"
+                  role="tab"
+                  aria-controls="Pin-Task"
+                  aria-selected="true"
+                >
+                  Leave Management
+                </button>
+                <button
+                  class="nav-link"
+                  id="Today-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Today"
+                  type="button"
+                  role="tab"
+                  aria-controls="Today"
+                  aria-selected="false"
+                >
+                  Sandwich Leaves
+                </button>
+                <button
+                  class="nav-link"
+                  id="Overdue-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Overdue"
+                  type="button"
+                  role="tab"
+                  aria-controls="Overdue"
+                  aria-selected="false"
+                >
+                  Employee Management
+                </button>
+                <button
+                  class="nav-link"
+                  id="Upcoming-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Upcoming"
+                  type="button"
+                  role="tab"
+                  aria-controls="Upcoming"
+                  aria-selected="false"
+                >
+                  Calendar
+                </button>
+                <button
+                  class="nav-link"
+                  id="Completed-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Completed"
+                  type="button"
+                  role="tab"
+                  aria-controls="Completed"
+                  aria-selected="false"
+                >
+                  Leave Approval
+                </button>
+                <button
+                  class="nav-link"
+                  id="Opening-Leave-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#Opening-Leave"
+                  type="button"
+                  role="tab"
+                  aria-controls="Opening-Leave"
+                  aria-selected="false"
+                >
+                  Opening Leave
+                </button>
+              </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="Pin-Task"
+                role="tabpanel"
+                aria-labelledby="Pin-Task-tab"
+              >
+                <div class="d-flex justify-content-end">
+                  <a
+                    class="add_task_btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#applyLeaveModal"
+                    >+ Add Leave</a
+                  >
+                </div>
+                <div class="table-responsive">
+                  <section class="user_task_wrapper my-4">
+                    <div class="leave_card">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <div class="d-flex gap-2 align-items-center">
+                              <img
+                                src="../../../assets/img/dashboard/leave-icon.png"
+                                class="img-fluid leave-icon"
+                                alt=""
+                              />
+                              <h6 class="user_task_title">Sick Leave</h6>
+                            </div>
+                            <div class="d-flex gap-2 action_icon">
+                              <img
+                                src="../../../../assets/img/dashboard/small-edit-icon.svg"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editLeaveModal"
+                                alt=""
+                              />
+                              <img
+                                src="../../../../assets/img/dashboard/small-delete-icon.svg"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteLeaveModal"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <p class="leave_name">Paid</p>
+                          </div>
+                          <hr />
+                          <h6 class="user_task_title">
+                            Total Sick Leave : <b style="color: black">10</b>
+                          </h6>
+                        </div>
+                      </div>
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <div class="d-flex gap-2 align-items-center">
+                              <img
+                                src="../../../assets/img/dashboard/leave-icon.png"
+                                class="img-fluid leave-icon"
+                                alt=""
+                              />
+                              <h6 class="user_task_title">Sick Leave</h6>
+                            </div>
+                            <div class="d-flex gap-2 action_icon">
+                              <img
+                                src="../../../../assets/img/dashboard/small-edit-icon.svg"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editLeaveModal"
+                                alt=""
+                              />
+                              <img
+                                src="../../../../assets/img/dashboard/small-delete-icon.svg"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteLeaveModal"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <p class="leave_name">Paid</p>
+                          </div>
+                          <hr />
+                          <h6 class="user_task_title">
+                            Total Sick Leave : <b style="color: black">10</b>
+                          </h6>
+                        </div>
+                      </div>
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <div
+                            class="d-flex justify-content-between align-items-center mb-2"
+                          >
+                            <div class="d-flex gap-2 align-items-center">
+                              <img
+                                src="../../../assets/img/dashboard/leave-icon.png"
+                                class="img-fluid leave-icon"
+                                alt=""
+                              />
+                              <h6 class="user_task_title">Sick Leave</h6>
+                            </div>
+                            <div class="d-flex gap-2 action_icon">
+                              <img
+                                src="../../../../assets/img/dashboard/small-edit-icon.svg"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editLeaveModal"
+                                alt=""
+                              />
+                              <img
+                                src="../../../../assets/img/dashboard/small-delete-icon.svg"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteLeaveModal"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <p class="leave_name">Paid</p>
+                          </div>
+                          <hr />
+                          <h6 class="user_task_title">
+                            Total Sick Leave : <b style="color: black">10</b>
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="Today"
+                role="tabpanel"
+                aria-labelledby="Today-tab"
+              >
+                <div class="table-responsive">
+                  <div class="card mt-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <p class="m-0">
+                            Contiune leave before and after Holiday or week off
+                          </p>
+                          <div class="form_field">
+                            <mat-form-field>
+                              <input
+                                matInput
+                                #input
+                                type="number"
+                                placeholder="Select Days"
+                                for="flexSwitchCheckChecked"
+                              />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="flexSwitchCheckChecked"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mt-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <p class="m-0" for="weekoff">
+                            In between leaves on Holidays or Week off
+                          </p>
+                        </div>
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="weekoff"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="Overdue"
+                role="tabpanel"
+                aria-labelledby="Overdue-tab"
+              >
+                <div class="table-responsive">3</div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="Upcoming"
+                role="tabpanel"
+                aria-labelledby="Upcoming-tab"
+              >
+                <div class="table-responsive">4</div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="Completed"
+                role="tabpanel"
+                aria-labelledby="Completed-tab"
+              >
+              <form>
+                <div class="table-responsive">
+                  <div class="card mt-3">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-6">
+                          <div>
+                            <p class="m-0">Who can Approve leave?</p>
+                            <section class="example-section" >
+                              <p><mat-checkbox>Owner</mat-checkbox></p>
+                              <p><mat-checkbox >Admin Rights</mat-checkbox></p>
+                              <p><mat-checkbox >Reporting to person</mat-checkbox></p>
+                              <p><mat-checkbox [(ngModel)]="othersChecked" >Others</mat-checkbox></p>
+                            </section>
+                          </div>
+                        </div>
+                        <div class="col-6" *ngIf="othersChecked && userList">
+                          <ng-select [items]="cars" 
+                              bindLabel="name" 
+                              bindValue="id" 
+                              placeholder="Select Approval User"
+                              [multiple]="true"
+                              >
+                          </ng-select>
+                        </div>
+                      </div>
+                     
+                    </div>
+                  </div>
+
+                  <div class="card mt-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <p class="m-0" for="weekoff">
+                            In how much days if the leave is not approved then
+                            automatically system will approve the leaves?
+                          </p>
+                          <div class="">
+                            <mat-form-field>
+                              <input
+                                matInput
+                                #input
+                                type="number"
+                                placeholder="Auto Approve Days"
+                              />
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            role="switch"
+                            id="weekoff"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button class="add_task_btn mt-3">Save</button>
+                </div>
+              </form>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="Opening-Leave"
+                role="tabpanel"
+                aria-labelledby="Opening-Leave-tab"
+              >
+                <div class="table-responsive">6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- apply leave modal -->
+
+<div
+  class="modal fade leaveModal"
+  id="applyLeaveModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="leaveForm" (ngSubmit)="submitForm()">
+        <div class="modal-header">
+          <h1 class="new_task_title fs-5" id="exampleModalLabel">
+            Apply Leave
+          </h1>
+          <img
+            src="../../../assets/img/dashboard/popup-close-btn.svg"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            alt=""
+            class="popup_close_btn_delete_project"
+          />
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    #input
+                    placeholder="Add Leave Type"
+                    formControlName="leave_type"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <!-- <div class="d-flex gap-3">
+                <label for="leave_mode">Leave Mode: *</label>
+            
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="leave_mode"
+                    formControlName="leave_mode"
+                    id="paid"
+                    value="Paid"
+                  />
+                  <label class="form-check-label" for="paid"> Paid </label>
+                </div>
+            
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="leave_mode"
+                    formControlName="leave_mode"
+                    id="unpaid"
+                    value="Unpaid"
+                  />
+                  <label class="form-check-label" for="unpaid"> Unpaid </label>
+                </div>
+              </div> -->
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <mat-select
+                    formControlName="leave_type"
+                    placeholder="Select a Leave Duration"
+                  >
+                    <mat-option value="MaternityLeave">Year</mat-option>
+                    <mat-option value="CasualLeave">Month</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="d-flex gap-3">
+                <label for="leave_type">Leave Type: *</label>
+
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="leave_type"
+                    formControlName="leave_type"
+                    id="fullDay"
+                    value="fullDay"
+                  />
+                  <label class="form-check-label" for="fullDay">
+                    Full Day
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="leave_type"
+                    formControlName="leave_type"
+                    id="firstHalf"
+                    value="firstHalf"
+                  />
+                  <label class="form-check-label" for="firstHalf">
+                    Half Day
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="number"
+                    #input
+                    placeholder="Total Leaves"
+                    formControlName="total_day"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="number"
+                    #input
+                    placeholder="Max Carry forward Leave per year"
+                    formControlName="carry_forward_leave"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-checkbox formControlName="iscarry_forward"
+                  >Is this a carry forwarded leave?</mat-checkbox
+                >
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+              <div class="form_field custom_textarea">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="number"
+                    #input
+                    placeholder="Backdate Leave Days"
+                    formControlName="backdate_days"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+              <div class="form_field custom_textarea">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="number"
+                    #input
+                    placeholder="Advance Leave Days"
+                    formControlName="advance_days"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="add_task_btn my-3">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- apply leave modal -->
+
+<!-- edit leave modal -->
+<!-- <div
+  class="modal fade leaveModal"
+  id="editLeaveModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form >
+        <div class="modal-header">
+          <h1 class="new_task_title fs-5" id="exampleModalLabel">
+            Edit Leave
+          </h1>
+          <img
+            src="../../../assets/img/dashboard/popup-close-btn.svg"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            alt=""
+            class="popup_close_btn_delete_project"
+          />
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    #input
+                    placeholder="Add Leave Type"
+                    formControlName="leave_type"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="d-flex gap-3">
+                <label for="leave_mode">Leave Mode: *</label>
+            
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="leave_mode"
+                    formControlName="leave_mode"
+                    id="paid"
+                    value="Paid"
+                  />
+                  <label class="form-check-label" for="paid"> Paid </label>
+                </div>
+            
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="leave_mode"
+                    formControlName="leave_mode"
+                    id="unpaid"
+                    value="Unpaid"
+                  />
+                  <label class="form-check-label" for="unpaid"> Unpaid </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <mat-select
+                    formControlName="leave_type"
+                    placeholder="Select a Leave Duration"
+                  >
+                    <mat-option value="MaternityLeave">Year</mat-option>
+                    <mat-option value="CasualLeave">Month</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="d-flex gap-3">
+                <label for="leave_type">Leave Type: *</label>
+
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="leave_type"
+                    formControlName="leave_type"
+                    id="fullDay"
+                    value="fullDay"
+                  />
+                  <label class="form-check-label" for="fullDay">
+                    Full Day
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="leave_type"
+                    formControlName="leave_type"
+                    id="firstHalf"
+                    value="firstHalf"
+                  />
+                  <label class="form-check-label" for="firstHalf">
+                    Half Day
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="number"
+                    #input
+                    placeholder="Total Leaves"
+                    formControlName="total_day"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="number"
+                    #input
+                    placeholder="Max Carry forward Leave per year"
+                    formControlName="carry_forward_leave"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-checkbox formControlName="iscarry_forward"
+                  >Is this a carry forwarded leave?</mat-checkbox
+                >
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+              <div class="form_field custom_textarea">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="number"
+                    #input
+                    placeholder="Backdate Leave Days"
+                    formControlName="backdate_days"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+              <div class="form_field custom_textarea">
+                <mat-form-field>
+                  <input
+                    matInput
+                    type="number"
+                    #input
+                    placeholder="Advance Leave Days"
+                    formControlName="advance_days"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="add_task_btn my-3">Submit</button>
+      </form>
+    </div>
+  </div>
+</div> -->
+<!-- edit leave modal -->
+
+<!-- delete leave modal -->
+
+<div
+  class="modal fade"
+  id="deleteLeaveModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Delete Leave
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn_delete_project"
+        />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to delete this Leave?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- delete leave modal -->

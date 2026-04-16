@@ -1,0 +1,56 @@
+<main>
+  <section class="user_task_wrapper mb-5">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+          <div class="card list_wraaper">
+            <div class="card-body ">
+              <div class="">
+                <mat-list role="list" *ngFor="let memberlistData of memberlistData; let i = index">
+                  <div class="d-flex align-items-center" [class.user_active_tab]="activedUser == memberlistData.id">
+                    <ngb-rating class="user_rating_icon"
+                      (click)="adduserfavourite(memberlistData.id, memberlistData.is_favorite == 0 ? 1 : 0)"
+                      [(rate)]="memberlistData.is_favorite" [max]="1"></ngb-rating>
+                    <mat-list-item role="listitem" (click)="showusresdetails(memberlistData.id)">
+                      <!-- Render a span with initials if profile is the default avatar image -->
+                      <span *ngIf="memberlistData.profile === domainName + 'public/images/user_avatar.png'"
+                        class="user_short_name" [style.background-color]="colors[i]">
+                        {{ getInitials(memberlistData.name) }}
+                      </span>
+
+                      <!-- Render an image if profile is not the default avatar image -->
+                      <img *ngIf="memberlistData.profile !== domainName + 'public/images/user_avatar.png'"
+                        [src]="memberlistData.profile" alt="" class="profile_photo" title="{{ memberlistData.name }}">
+                      {{memberlistData.name}}
+                    </mat-list-item>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+              aria-labelledby="v-pills-home-tab">
+              <app-user-list 
+              [memberdata]="memberdata" 
+              [columnDefs]="columnDefs"
+              [rowData]="rowData" 
+              [rowOverDueData]="rowOverDueData"
+  [rowUpcomingData]="rowUpcomingData"
+  [rowCompletedData]="rowCompletedData"
+              [defaultColDef]="defaultColDef"
+              [themeClass]="themeClass"
+              [pagination]="pagination"
+              [paginationPageSize]="paginationPageSize"
+              [paginationPageSizeSelector]="paginationPageSizeSelector">
+            </app-user-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

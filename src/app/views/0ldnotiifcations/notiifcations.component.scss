@@ -1,0 +1,54 @@
+.task_table_title {
+    color: #1c1f66;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    margin: 0;
+    max-width: 170px;
+  }
+.notification_card{
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 20px rgba(57, 105, 136, 0.17);
+    margin-bottom: 8px;
+}
+
+.company_name {
+    color: #1c1f66;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+  }
+.notify_inner_data {
+    color: #1c1f66;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    border: 1px solid #66666642;
+    margin: 0;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .notify_user_short_name{
+    // height: 30px;
+    // width: 30px;
+    background-color: #2cb3c8;
+    color: #fff;
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: bold;
+    padding: 10px 7px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+
+  @media only screen and (max-width: 560px) {
+    .notify_inner_data {
+        font-size: 10px;
+        padding: 3px;
+      }
+  }

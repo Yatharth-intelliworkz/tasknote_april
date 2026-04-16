@@ -1,0 +1,618 @@
+<main class="leave_wrapper">
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <nav class="projects_tabs">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="nav-home-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-home"
+                type="button"
+                role="tab"
+                aria-controls="nav-home"
+                aria-selected="true"
+              >
+                My Leave
+              </button>
+              <button
+                class="nav-link"
+                id="nav-profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-profile"
+                type="button"
+                role="tab"
+                aria-controls="nav-profile"
+                aria-selected="false"
+                *ngIf="isowner == 1"
+              >
+                Team Leave
+              </button>
+              <button
+                class="nav-link"
+                id="nav-contact-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-contact"
+                type="button"
+                role="tab"
+                aria-controls="nav-contact"
+                aria-selected="false"
+                *ngIf="isowner == 1"
+              >
+                Pending & Approved
+              </button>
+            </div>
+          </nav>
+          <div class="d-flex justify-content-between align-items-center gap-3">
+            <button
+              class="add_task_btn"
+              data-bs-toggle="modal"
+              data-bs-target="#applyLeaveModal"
+            >
+              + Apply Leave
+            </button>
+            <!-- <ng-select
+              [items]="team2"
+              bindLabel="item_text"
+              bindValue="item_id"
+              placeholder="Select Status"
+              formControlName="project_id"
+            >
+            </ng-select>
+            <div class="form_field">
+              <mat-form-field>
+                <mat-date-range-input
+                  [rangePicker]="picker"
+                  (click)="picker.open()"
+                >
+                  <input
+                    matStartDate
+                    formControlName="start"
+                    placeholder="Start Date"
+                    datePickerFormat="YYYY/MM/DD"
+                  />
+                  <input
+                    matEndDate
+                    formControlName="due_date"
+                    placeholder="Due Date"
+                    datePickerFormat="YYYY/MM/DD"
+                  />
+                </mat-date-range-input>
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade show active myleave_table"
+          id="nav-home"
+          role="tabpanel"
+          aria-labelledby="nav-home-tab"
+          tabindex="0"
+        >
+          <section class="user_task_wrapper my-4">
+            <div class="leave_card">
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="d-flex gap-2 align-items-center">
+                    <img
+                      src="../../../assets/img/dashboard/sickleave-img.png"
+                      class="img-fluid"
+                      alt=""
+                    />
+                    <h6 class="user_task_title">Taken Leaves: <b>01</b></h6>
+                  </div>
+                  <hr />
+                  <h5 class="user_task_count text-center">1</h5>
+                  <h6 class="user_task_title text-center">Total Sick Leave</h6>
+                </div>
+              </div>
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="d-flex gap-2 align-items-center">
+                    <img
+                      src="../../../assets/img/dashboard/unpaidleave-img.png"
+                      class="img-fluid"
+                      alt=""
+                    />
+                    <h6 class="user_task_title">Taken Leaves: <b>01</b></h6>
+                  </div>
+                  <hr />
+                  <h5 class="user_task_count text-center">1</h5>
+                  <h6 class="user_task_title text-center">
+                    Total Unpaid Leave
+                  </h6>
+                </div>
+              </div>
+              <div class="card h-100">
+                <div class="card-body">
+                  <div class="d-flex gap-2 align-items-center">
+                    <img
+                      src="../../../assets/img/dashboard/maternityleave-img.png"
+                      class="img-fluid"
+                      alt=""
+                    />
+                    <h6 class="user_task_title">Taken Leaves: <b>01</b></h6>
+                  </div>
+                  <hr />
+                  <h5 class="user_task_count text-center">1</h5>
+                  <h6 class="user_task_title text-center">
+                    Total Maternity Leave
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <ag-grid-angular
+                  style="width: 100%; height: 100%"
+                  [rowData]="myLeaveRowData"
+                  [columnDefs]="myLeavecolDefs"
+                  [defaultColDef]="defaultColDef"
+                  [class]="themeClass"
+                  [pagination]="pagination"
+                  [paginationPageSize]="paginationPageSize"
+                  [paginationPageSizeSelector]="paginationPageSizeSelector"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nav-profile"
+          role="tabpanel"
+          aria-labelledby="nav-profile-tab"
+          tabindex="0"
+        >
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <ag-grid-angular
+                  style="width: 100%; height: 100%"
+                  [rowData]="myLeaveRowData"
+                  [columnDefs]="myLeavecolDefs"
+                  [defaultColDef]="defaultColDef"
+                  [class]="themeClass"
+                  [pagination]="pagination"
+                  [paginationPageSize]="paginationPageSize"
+                  [paginationPageSizeSelector]="paginationPageSizeSelector"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nav-contact"
+          role="tabpanel"
+          aria-labelledby="nav-contact-tab"
+          tabindex="0"
+        >
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <ag-grid-angular
+                  style="width: 100%; height: 100%"
+                  [rowData]="requestRowData"
+                  [columnDefs]="requestcolDefs"
+                  [defaultColDef]="defaultColDef"
+                  [class]="themeClass"
+                  [pagination]="pagination"
+                  [paginationPageSize]="paginationPageSize"
+                  [paginationPageSizeSelector]="paginationPageSizeSelector"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- apply leave modal -->
+
+<div
+  class="modal fade leaveModal"
+  id="applyLeaveModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="leaveForm" (ngSubmit)="submitForm()">
+        <div class="modal-header">
+          <h1 class="new_task_title fs-5" id="exampleModalLabel">
+            Apply Leave
+          </h1>
+          <img
+            src="../../../assets/img/dashboard/popup-close-btn.svg"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            alt=""
+            class="popup_close_btn_delete_project"
+          />
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <!-- <ng-select
+                [items]="cars"
+                bindLabel="name"
+                bindValue="id"
+                placeholder="Please Select your Leave Type"
+                formControlName="leaveType"
+              >
+              </ng-select> -->
+              <div class="form_field">
+                <mat-form-field>
+                  <mat-select
+                    formControlName="leave_type"
+                    placeholder="Please Select your Leave Type"
+                  >
+                    <mat-option value="SickLeave">Sick leave</mat-option>
+                    <mat-option value="MaternityLeave"
+                      >Maternity leave</mat-option
+                    >
+                    <mat-option value="CasualLeave">Casual leave</mat-option>
+                    <mat-option value="PrivilegeLeave"
+                      >Privilege leave</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="d-flex gap-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="leave_mode"
+                    id="fullDay"
+                    value="fullDay"
+                  />
+                  <label class="form-check-label" for="fullDay">
+                    Full Day
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="leave_mode"
+                    id="firstHalf"
+                    value="firstHalf"
+                  />
+                  <label class="form-check-label" for="firstHalf">
+                    First-Half
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="leave_mode"
+                    id="secondHalf"
+                    value="secondHalf"
+                  />
+                  <label class="form-check-label" for="secondHalf">
+                    Second-Half
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="startpicker"
+                    placeholder="Start Date"
+                    (click)="startpicker.open()"
+                    formControlName="start_date"
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="startpicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #startpicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="endpicker"
+                    placeholder="End Date"
+                    (click)="endpicker.open()"
+                    formControlName="end_date"
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="endpicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #endpicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    #input
+                    placeholder="Total Days"
+                    formControlName="total_day"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+              <div class="form_field custom_textarea">
+                <mat-form-field>
+                  <textarea
+                    matInput
+                    placeholder="Please Enter your Reason Here...."
+                    style="resize: none"
+                    formControlName="reason_for_leave"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="d-flex gap-3">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value="work_from_home"
+                  id="flexCheckDefault"
+                  formControlName="work_from_home"
+                />
+                <label class="form-check-label" for="flexCheckDefault">
+                  Work from home
+                </label>
+              </div>
+
+              <div
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Files"
+              >
+                <img
+                  src="../../../assets/img/dashboard/file-icon.png"
+                  class="cursor-pointer"
+                  alt=""
+                  (click)="hiddenfileinput.click()"
+                />
+                <input
+                  type="file"
+                  style="display: none"
+                  #hiddenfileinput
+                  name="file"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="add_task_btn my-3">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- apply leave modal -->
+
+<!-- request leave modal -->
+
+<div
+  class="modal fade leaveModal"
+  id="requestLeaveModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  #requestLeaveModal
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <form [formGroup]="requestForm">
+        <div class="modal-header">
+          <h1 class="new_task_title fs-5" id="exampleModalLabel">
+            {{ userName }} Leave Request
+          </h1>
+          <img
+            src="../../../assets/img/dashboard/popup-close-btn.svg"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            alt=""
+            class="popup_close_btn_delete_project"
+          />
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <!-- <ng-select
+              [items]="cars"
+              bindLabel="name"
+              bindValue="id"
+              placeholder="Please Select your Leave Type"
+              formControlName="leaveType"
+            >
+            </ng-select> -->
+              <div class="form_field">
+                <!-- <mat-form-field>
+                  <mat-select
+                    formControlName="leave_type"
+                    name="leave_type"
+                    [value]="requestForm.leave_type"
+                    [(ngModel)]="requestForm.leave_type"
+                  >
+                    <mat-option value="SickLeave">Sick leave</mat-option> 
+                  </mat-select>
+                </mat-form-field> -->
+
+                <mat-form-field>
+                  <input
+                    matInput
+                    #input
+                    placeholder="Leave Type"
+                    formControlName="leave_type"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+              <div class="d-flex gap-3">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="leave_mode"
+                    id="fullDay"
+                    value="fullDay"
+                  />
+                  <label class="form-check-label" for="fullDay">
+                    Full Day
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="leave_mode"
+                    id="firstHalf"
+                    value="firstHalf"
+                  />
+                  <label class="form-check-label" for="firstHalf">
+                    First-Half
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    formControlName="leave_mode"
+                    id="secondHalf"
+                    value="secondHalf"
+                  />
+                  <label class="form-check-label" for="secondHalf">
+                    Second-Half
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="startpicker1"
+                    placeholder="Start Date"
+                    (click)="startpicker1.open()"
+                    formControlName="start_date"
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="startpicker1"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #startpicker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    [matDatepicker]="endpicker1"
+                    placeholder="End Date"
+                    (click)="endpicker1.open()"
+                    formControlName="end_date"
+                  />
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="endpicker1"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #endpicker1></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12 mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input
+                    matInput
+                    #input
+                    placeholder="Total Days"
+                    formControlName="total_day"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+              <div class="form_field custom_textarea">
+                <mat-form-field>
+                  <textarea
+                    matInput
+                    placeholder="Please Enter your Reason Here...."
+                    style="resize: none"
+                    formControlName="reason_for_leave"
+                  ></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div data-bs-toggle="tooltip" data-bs-placement="top" title="Files">
+              <img
+                src="../../../assets/img/dashboard/file-icon.png"
+                class="cursor-pointer"
+                alt=""
+                (click)="hiddenfileinput.click()"
+              />
+              <input
+                type="file"
+                style="display: none"
+                #hiddenfileinput
+                name="file"
+              />
+            </div>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="add_task_btn my-3"
+          data-bs-dismiss="modal"
+          (click)="approveLeave()"
+        >
+          Approve
+        </button>
+        <button
+          type="submit"
+          class="reject_btn my-3 ms-3"
+          data-bs-dismiss="modal"
+          (click)="rejectLeave()"
+        >
+          Reject
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- request leave modal -->

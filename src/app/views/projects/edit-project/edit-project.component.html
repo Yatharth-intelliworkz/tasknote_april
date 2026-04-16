@@ -1,0 +1,323 @@
+<section class="user_task_wrapper">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="addprojectForm" (ngSubmit)="addproject(addprojectForm.value)">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 co-md-12 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="name" placeholder="Project Name"
+                        [(ngModel)]="projectlistedit.name" />
+                       <input type="hidden" formControlName="projectID" [(ngModel)]="projectlistedit.id" />
+                        <mat-error *ngIf="addprojectForm.get('name')?.hasError('required')">
+                          Project Name is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field appearance="fill">
+                        <input matInput formControlName="total_cost" [(ngModel)]="projectlistedit.total_cost" placeholder="Project Cost" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field appearance="fill">
+                        <mat-select placeholder="Service Segment"  [(ngModel)]="projectlistedit.service_id" formControlName="servic_id">
+                          <mat-option *ngFor="let servicelistData of servicelistData" [value]="servicelistData.id">
+                            {{ servicelistData.title }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="task_multiselect">
+                      <!-- <ng-multiselect-dropdown id="projectManagerDropdown"  [(ngModel)]="projectlistedit.managers_id" name="city" placeholder="Project Manager"
+                        [settings]="dropdownSettings1" [data]="team1" [(ngModel)]="managerName"
+                        formControlName="manager_id"></ng-multiselect-dropdown> -->
+
+                        <ng-select 
+                        [items]="team1" 
+                        bindLabel="item_text" 
+                        bindValue="item_id" 
+                        [(ngModel)]="managerName" 
+                        placeholder="Project Manager"
+                        formControlName="manager_id" 
+                        [multiple]="true">
+                      </ng-select>
+                      
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="members_id"  [(ngModel)]="projectlistedit.membersName" placeholder="Reference By" class="text-capitalize" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="start_date"  [(ngModel)]="projectlistedit.start_date" [matDatepicker]="picker"
+                          placeholder="Select Start Date" />
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input formControlName="end_date" matInput [matDatepicker]="picker1"
+                          placeholder="Select End Date"  [(ngModel)]="projectlistedit.end_date" />
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field custom_textarea">
+                      <mat-form-field>
+                        <textarea matInput formControlName="description"  [(ngModel)]="projectlistedit.description" placeholder="Description"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table modal-table">
+                    <thead>
+                      <tr>
+                        <td class="text-center" colspan="5">
+                          <h5 class="m-0">Task Type List</h5>
+                        </td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="form_field">
+                            <mat-form-field>
+                              <mat-select placeholder="Task Type" formControlName="tasktype">
+                                <mat-option *ngFor="let task of tasktypelist" [value]="task.id">{{ task.title }}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form_field">
+                            <mat-form-field>
+                               <input
+                                matInput
+                                #input
+                                formControlName="hours"
+                                placeholder="Hour"
+                                type="number"
+                                inputmode="numeric"
+                                min="0"
+                                max="99"
+                                (input)="validateRange($event)"
+                                (keypress)="isNumberKey($event)"
+                              />
+                            </mat-form-field>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form_field">
+                            <mat-form-field>
+                                <input matInput #input formControlName="cost" placeholder="Cost" />
+                            </mat-form-field>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form_field">
+                            <mat-form-field>
+                              <input matInput #input formControlName="remark" placeholder="Remark" />
+                            </mat-form-field>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form_field">
+                            <mat-form-field>
+                              <input matInput #input formControlName="task_description" placeholder="Description" />
+                            </mat-form-field>
+                          </div>
+                        </td>
+                        <td>
+                          <a (click)="addChecklist('add')" id="hideaddchecklist">
+                            <img src="../../../assets/img/dashboard/add-icon.svg" alt="" class="task_plus_icon ms-3" />
+                          </a>
+                        </td>
+                      </tr>
+                      <!-- <tr *ngFor="let checklistItem of tasktypedata.controls; let i = index" [formGroupName]="i" formArrayName="tasktypedata">
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.tasktype }}</p>
+                        </td>
+                      </tr> -->
+                      <tr *ngFor="let checklistItem of tasktypedata.controls; let i = index" [formGroupName]="i" formArrayName="tasktypedata">
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.get('tasktype')?.value }}</p>
+                        </td>
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.get('hours')?.value }}</p>
+                        </td>
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.get('cost')?.value }}</p>
+                        </td>
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.get('remark')?.value }}</p>
+                        </td>
+                        <td>
+                          <p class="add_checklist_inner">{{ checklistItem.get('tasktypeDescription')?.value }}</p>
+                        </td>
+                         <!--<td>
+                          <mat-slide-toggle #slideToggle   [checked]="false"></mat-slide-toggle>
+                        </td> -->
+                        <td>
+                          <!-- <img src="../../../../assets/img/dashboard/preview-icon.png" > -->
+                          <i class="fa fa-eye" data-bs-toggle="modal"  alt="preview" style="cursor: pointer;" [style.color]="isTaskTypeAvailable(checklistItem.get('taskTypeId')?.value) ? 'green' : 'red'" (click)="openModal(checklistItem.get('taskTypeId')?.value)"></i>
+
+                        </td>
+                        <td>
+                          <a (click)="removeItem(i, 'tasktypedata')">
+                            <img src="../../../assets/img/dashboard/remove-icon.svg" alt="" class="task_plus_icon ms-3" />
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+
+                  </table>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+
+  <div #checklistModal class="modal fade" id="checklistModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title new_task_title" id="exampleModalLabel">Checklist</h5>
+          <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt="" class="popup_close_btn_delete_project" />
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="projectFormchecklist">
+            <table class="table modal-table">
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="tasktypechecklist" placeholder="Checklist" />
+                      </mat-form-field>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="tasktyperemark" placeholder="Remark" />
+                      </mat-form-field>
+                      <input matInput [(ngModel)]="currentChecklistIndex" formControlName="taskinchecklist" hidden />
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form_field">
+                      <mat-checkbox formControlName="is_documentupload">Upload Document</mat-checkbox>
+                    </div>
+                  </td>
+                  <td>
+                    <a (click)="addChecklistTaskType('add')">
+                      <img src="../../../assets/img/dashboard/add-icon.svg" alt="" class="task_plus_icon ms-3" />
+                    </a>
+                  </td>
+                </tr>
+                <tr *ngFor="let tasktypechecklist of filteredChecklistArray; let j = index">
+                  <td>
+                    <p class="add_checklist_inner">{{ tasktypechecklist.tasktypechecklist }}</p>
+                  </td>
+                  <td>
+                    <p class="add_checklist_inner">{{ tasktypechecklist.tasktyperemark }}</p>
+                  </td>
+                  <td>
+                    <p class="add_checklist_inner">{{ tasktypechecklist.is_document }}</p>
+                  </td>
+                  <td>
+                    <a (click)="removeItemsd(j, 'filteredChecklistArray')">
+                      <img src="../../../assets/img/dashboard/remove-icon.svg" alt="" class="task_plus_icon ms-3" />
+                    </a>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </form>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+              <button class="btn submit_btn" data-bs-dismiss="modal">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div #checklistModal class="modal fade" id="checklistView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title new_task_title" id="exampleModalLabel">Checklist</h5>
+          <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt="" class="popup_close_btn_delete_project" />
+        </div>
+        <div class="modal-body">
+            <table class="table modal-table">
+              <tbody>
+                <tr *ngFor="let tasktypechecklist of tasktypechecklistarrayDisplay; let j = index">
+                  <td>
+                    <p class="add_checklist_inner">{{ tasktypechecklist.tasktypechecklist }}</p>
+                  </td>
+                  <td>
+                    <p class="add_checklist_inner">{{ tasktypechecklist.tasktyperemark }}</p>
+                  </td>
+                  <td>
+                    <p class="add_checklist_inner">{{ tasktypechecklist.is_document }}</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>

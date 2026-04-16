@@ -1,0 +1,288 @@
+<div class="user_task_wrapper mb-4">
+  <div class="row">
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 pb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h2 class="task_table_title">Profile Details</h2>
+            <img src="../../../assets/img/dashboard/edit-icon.svg" alt="edit-icon" data-bs-toggle="modal"
+              data-bs-target="#profileModal" />
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+              <div class="mb-3 position-relative">
+                <div class="profile_short_name" *ngIf="noteslist?.profile == null">{{getInitials(noteslist.name)}}</div>
+                <div *ngIf="noteslist?.profile != null">
+                  <img src="{{ noteslist?.profile }}" alt="" class="profile_photo" >
+                  <a data-bs-toggle="modal"
+                  data-bs-target="#removeprofileModal"><img src="../../../assets/img/dashboard/delete-fill-icon.svg" width="14px" height="14px" alt="" class="profile_delete_img"></a>
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
+              <div class="mb-2">
+                <img src="../../../assets/img/dashboard/profile-user-icon.svg" alt="image" />
+                <span class="profile_name">{{ noteslist.name }}</span>
+              </div>
+              <div class="mb-2">
+                <img src="../../../assets/img/dashboard/profile-call-icon.svg" alt="image" />
+                <span class="profile_name">{{ noteslist.phone_no }} </span>
+              </div>
+              <div class="d-flex">
+                <img src="../../../assets/img/dashboard/profile-email-icon.svg" alt="image" />
+                <span class="profile_name">{{ noteslist.email }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 pb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h2 class="task_table_title">Billing Details</h2>
+            <img src="../../../assets/img/dashboard/edit-icon.svg" alt="edit-icon" data-bs-toggle="modal"
+              data-bs-target="#billingModal" />
+          </div>
+          <div>
+            <div class="mb-2">
+              <img src="../../../assets/img/dashboard/profile-user-icon.svg" alt="image" />
+              <span class="profile_name">{{ noteslist.company_name }}</span>
+            </div>
+
+            <div class="d-flex align-items-start mb-2">
+              <img src="../../../assets/img/dashboard/location-icon.svg" alt="image" class="mt-2" />
+              <span class="profile_name">{{ noteslist.address }}</span>
+            </div>
+            <div class="mb-2">
+              <img src="../../../assets/img/dashboard/profile-call-icon.svg" alt="image" />
+              <span class="profile_name">{{ noteslist.phone_no }} </span>
+            </div>
+            <div class="mb-2 d-flex">
+              <img src="../../../assets/img/dashboard/profile-email-icon.svg" alt="image" />
+              <span class="profile_name">{{ noteslist.email }} </span>
+            </div>
+            <div>
+              <img src="../../../assets/img/dashboard/profile-gst-icon.svg" alt="image" />
+              <span class="profile_name">GST No : {{ noteslist.gst_no }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 pb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class=" mb-4">
+            <h2 class="task_table_title">Password</h2>
+            <a routerLink="/change-password" routerLinkActive="router-link-active" class="btn submit_btn">Change
+              Password</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- profile edit popup -->
+
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Profile Details
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_profile" />
+      </div>
+      <div class="modal-body">
+        <form role="form" #submitForm="ngForm" (ngSubmit)="updateuser(submitForm.value)">
+          <div class="row">
+            <div class="col-xl-3 col-lg-3 co-md-3 col-sm-12">
+              <div class="avatar-upload">
+                <div class="avatar-edit">
+                  <input type="file" id="imageUpload" (change)="onFileChange($event)" accept=".png, .jpg, .jpeg" />
+                  <label for="imageUpload"><img src="../../../assets/img/dashboard/camera-img.svg" alt="" /></label>
+                </div>
+                <div class="avatar-preview">
+                  <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image" />
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-9 col-lg-9 co-md-9 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="First Name" name="name" [(ngModel)]="noteslist.name" />
+                      </mat-form-field>
+                    </div>
+                    <input type="hidden" name="id" [(ngModel)]="noteslist.id" />
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput name="phone_no" placeholder="Mobile Number" [(ngModel)]="noteslist.phone_no" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Email" required name="email" [(ngModel)]="noteslist.email" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <!-- <button
+              type="button"
+              class="btn signup_btn me-2"
+              data-bs-dismiss="modal"
+            >
+              No
+            </button> -->
+            <button class="submit_btn">Submit</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- profile edit popup -->
+
+<!-- billing edit popup -->
+
+<div class="modal fade" id="billingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Billing Details
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_billing" />
+      </div>
+      <div class="modal-body">
+        <form role="form" #submitFormbilling="ngForm" (ngSubmit)="updateuserbilling(submitFormbilling.value)">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 co-md-12 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Company Name" name="company_name"
+                          [(ngModel)]="noteslist.company_name" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Address" name="address" [(ngModel)]="noteslist.address" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Mobile Numbername" name="phone_no"
+                          [(ngModel)]="noteslist.phone_no" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput placeholder="Email" name="email" [(ngModel)]="noteslist.email" required />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input placeholder="GST " name="gst_no" [(ngModel)]="noteslist.gst_no" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <!-- <button
+              type="button"
+              class="btn signup_btn me-2"
+              data-bs-dismiss="modal"
+            >
+              No
+            </button> -->
+            <button class="btn submit_btn">Update</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Billing edit popup -->
+
+
+<!-- remove profile popup -->
+<div
+  class="modal fade"
+  id="removeprofileModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Remove Profile Picture
+        </h5>
+        <img
+        src="../../../assets/img/dashboard/popup-close-btn.svg"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        alt=""
+        class="popup_close_btn_remove_profile"
+        />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to remove profile picture?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="removeprofilepic()">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- remove profile popup -->

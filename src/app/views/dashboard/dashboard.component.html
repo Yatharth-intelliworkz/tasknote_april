@@ -1,0 +1,669 @@
+<main class="position-relative">
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+
+      <div class="alert alert-warning alert-dismissible fade show d-flex justify-content-between" role="alert" *ngIf="usersubscriptiondata">
+         {{usersubscriptiondata}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+      </div>
+
+      <div class="all_tasking_list">
+        <a [routerLink]="['/tasks']" routerLinkActive="router-link-active" class="text-decoration-none">
+          <div class="card h-100">
+            <div class="card-body">
+              <img src="../../../assets/img/dashboard/task-icon.png" class="mb-4" alt="" />
+              <h6 class="user_task_title">Total Task</h6>
+              <h5 class="user_task_count">{{ dashboardDatalists?.totalAllTasks ?? '0' }}</h5>
+            </div>
+          </div>
+        </a>
+        <a [routerLink]="['/tasks']" routerLinkActive="router-link-active" class="text-decoration-none">
+          <div class="card h-100">
+            <div class="card-body">
+              <img src="../../../assets/img/dashboard/assign-icon.png" class="mb-4" alt="" />
+              <h6 class="user_task_title">Assigned To Me</h6>
+              <h5 class="user_task_count">{{ dashboardDatalists?.totalAssignedToMeTasks ?? '0' }}</h5>
+            </div>
+          </div>
+        </a>
+        <a [routerLink]="['/tasks']" routerLinkActive="router-link-active" class="text-decoration-none">
+          <div class="card h-100">
+            <div class="card-body">
+              <img src="../../../assets/img/dashboard/due-icon.png" class="mb-4" alt="" />
+              <h6 class="user_task_title">Due Today</h6>
+              <h5 class="user_task_count">{{dashboardDatalists?.totalDueTodayTasks ?? '0'}}</h5>
+            </div>
+          </div>
+        </a>
+        <a [routerLink]="['/tasks']" routerLinkActive="router-link-active" class="text-decoration-none">
+          <div class="card h-100">
+            <div class="card-body">
+              <img src="../../../assets/img/dashboard/duetask.png" class="mb-4" alt="" />
+              <h6 class="user_task_title">Past Due Task</h6>
+              <h5 class="user_task_count">{{dashboardDatalists?.totalPastDueTasks ?? '0'}}</h5>
+            </div>
+          </div>
+        </a>
+        <a [routerLink]="['/tasks']" routerLinkActive="router-link-active" class="text-decoration-none">
+          <div class="card h-100">
+            <div class="card-body">
+              <img src="../../../assets/img/dashboard/add-task-icon.png" class="mb-4" alt="" />
+              <h6 class="user_task_title">New Task</h6>
+              <h5 class="user_task_count">{{dashboardDatalists?.totalNewTasks ?? '0'}}</h5>
+            </div>
+          </div>
+        </a>
+        <a [routerLink]="['/tasks']" routerLinkActive="router-link-active" class="text-decoration-none">
+          <div class="card h-100">
+            <div class="card-body">
+              <img src="../../../assets/img/dashboard/close-icon.png" class="mb-4" alt="" />
+              <h6 class="user_task_title">Closed Task</h6>
+              <h5 class="user_task_count">{{dashboardDatalists?.totalClosedTasks ?? '0'}}</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- app.component.html -->
+
+  <section class="user_task_wrapper my-lg-4 my-sm-1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12 comman_space">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="comman_task_title">Statistics</h2>
+              <canvas id="statistics"></canvas>
+
+              <div *ngIf="dashboardDatalists?.statisticsData?.length <= 0">
+                <p class="no_data_content">Graph will appear once task is assigned to you
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 comman_space">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="mb-lg-4 mb-sm-2">
+                <h2 class="comman_task_title">Notes</h2>
+              </div>
+              <ngx-slick-carousel class="carousel note_slider" #slickModal="slick-carousel" [config]="note_slideConfig">
+                <div ngxSlickItem class="slide" *ngFor="let notes of dashboardDatalist?.noteList">
+                  <div class="projects_inner_slider note_after_shadow">
+                    <div class="d-flex justify-content-between">
+                       <h2 class="note_title">{{ notes.title }} </h2>
+                       <p>{{ notes.created_at}}</p>
+                    </div>
+
+                    <p class="note_content" [innerHTML]="notes.description"></p>
+                  </div>
+                </div>
+              </ngx-slick-carousel>
+
+              <div class="dashboard-task-table" *ngIf="dashboardDatalist?.noteList?.length <= 0">
+                <p class="no_data_content"> Notes will appear here</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </section>
+
+  <section class="user_task_wrapper my-lg-4 my-sm-1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 comman_space">
+          <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h2 class="comman_task_title">Employee </h2>
+                </div>
+              <div class="table-responsive emply-table" *ngIf="usertypedata?.totalEmployeeData?.length > 0">
+                <table class="table task-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Total Task</th>
+                      <th scope="col">Closed Task</th>
+                      <th scope="col">Completion Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let PartnerData of usertypedata?.totalEmployeeData;let i = index;">
+                      <tr>
+                        <td>
+
+                            {{PartnerData.name}}
+
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center gap-3">
+                            {{PartnerData.allTaskCount}}
+                          </div>
+                        </td>
+                        <td>{{PartnerData.closeTaskCount}}</td>
+                        <td>{{ PartnerData.allTaskCount ? (PartnerData.closeTaskCount / PartnerData.allTaskCount * 100).toFixed(2) : 0 }} %
+                        </td>
+                     </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+
+              <div *ngIf="usertypedata?.totalEmployeeData?.length <= 0">
+                <p class="no_data_content">No Data Found!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 comman_space">
+          <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h2 class="comman_task_title">Manager</h2>
+                </div>
+              <div class="table-responsive emply-table" *ngIf="usertypedata?.totalManagerData?.length > 0">
+                <table class="table task-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Total Task</th>
+                      <th scope="col">Closed Task</th>
+                      <th scope="col">Completion Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let ManagerData of usertypedata?.totalManagerData;let i = index;">
+                      <tr *ngIf="i < 10">
+                        <td *ngIf="i < 10">
+                            {{ManagerData.name}}
+                        </td>
+                        <td *ngIf="i < 10">
+                          <div class="d-flex align-items-center gap-3">
+                            {{ManagerData.allTaskCount}}
+                          </div>
+                        </td>
+                        <td *ngIf="i < 10">{{ManagerData.closeTaskCount}}</td>
+                        <td>{{ ManagerData.allTaskCount ? (ManagerData.closeTaskCount / ManagerData.allTaskCount * 100).toFixed(2) : 0 }} %</td>
+                     </tr>
+                    </ng-container>
+                    <ng-container *ngFor="let ManagerData of usertypedata?.totalPartnerData;let i = index;">
+                      <tr *ngIf="i < 10">
+                        <td *ngIf="i < 10">
+                            {{ManagerData.name}}
+                        </td>
+                        <td *ngIf="i < 10">
+                          <div class="d-flex align-items-center gap-3">
+                            {{ManagerData.allTaskCount}}
+                          </div>
+                        </td>
+                        <td *ngIf="i < 10">{{ManagerData.closeTaskCount}}</td>
+                        <td>{{ ManagerData.allTaskCount ? (ManagerData.closeTaskCount / ManagerData.allTaskCount * 100).toFixed(2) : 0 }} %</td>
+                     </tr>
+                    </ng-container>
+
+                  </tbody>
+                </table>
+              </div>
+
+              <div *ngIf="usertypedata?.totalManagerData?.length <= 0">
+                <p class="no_data_content">No Data Found!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="user_task_wrapper my-lg-4 my-sm-1">
+        <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 comman_space">
+          <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h2 class="comman_task_title">Partner </h2>
+                </div>
+              <div class="table-responsive emply-table" *ngIf="usertypedata?.totalEmployeeData?.length > 0">
+                <table class="table task-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Total Task</th>
+                      <th scope="col">Closed Task</th>
+                      <th scope="col">Completion Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let PartnerData of usertypedata?.totalPartnerData;let i = index;">
+                      <tr>
+                        <td>
+
+                            {{PartnerData.name}}
+
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center gap-3">
+                            {{PartnerData.allTaskCount}}
+                          </div>
+                        </td>
+                        <td>{{PartnerData.closeTaskCount}}</td>
+                        <td>{{ PartnerData.allTaskCount ? (PartnerData.closeTaskCount / PartnerData.allTaskCount * 100).toFixed(2) : 0 }} %
+                        </td>
+                     </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+
+              <div *ngIf="usertypedata?.totalPartnerData?.length <= 0">
+                <p class="no_data_content">No Data Found!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="user_task_wrapper my-lg-4 my-sm-1">
+        <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 comman_space">
+          <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                  <h2 class="comman_task_title">Responsible Persons Task List </h2>
+                </div>
+              <div class="table-responsive emply-table" *ngIf="responsibletasklist?.length > 0">
+                <table class="table task-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Project Name</th>
+                      <th scope="col">Task Name</th>
+                      <th scope="col">Client Name</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Checklist</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let responsibletasklist of responsibletasklist;let i = index;">
+                      <tr>
+                        <td>
+
+                            {{responsibletasklist.clientName}}
+
+                        </td>
+                        <td>
+                          <div class="d-flex align-items-center gap-3">
+                            {{responsibletasklist.description}}
+                          </div>
+                        </td>
+                        <td>{{responsibletasklist.projectName}}</td>
+                        <td *ngIf="responsibletasklist.completed == 0"><span>Incomplete</span></td>
+                        <td *ngIf="responsibletasklist.completed == 1"><span>Completed</span></td>
+                        <td><img src="../../../assets/img/dashboard/timer.svg" alt="Timer" data-bs-toggle="modal" data-bs-target="#timeModal" (click)="getchecklist(responsibletasklist?.checkListData)" style="cursor: pointer;"></td>
+                     </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+
+              <div *ngIf="usertypedata?.totalPartnerData?.length <= 0">
+                <p class="no_data_content">No Data Found!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="user_task_wrapper my-lg-4 my-sm-1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 comman_space">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="mb-lg-4 mb-sm-2">
+                <h2 class="comman_task_title">Projects</h2>
+              </div>
+              <ngx-slick-carousel class="carousel note_slider" #slickModal="slick-carousel" [config]="project_slider">
+                <div ngxSlickItem class="slide" *ngFor="let projects of dashboardDatalist?.projectList">
+                  <a *ngIf="dashboardDataPermission.projectAdd == 1; else fallbackLink"
+                  routerLink="/projects"  class="text-decoration-none">
+                    <div class="projects_inner_slider">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="projects_name">{{ projects.name.toUpperCase() }}</h2>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <p class="projects_date">{{ projects.endDate }}</p>
+                        </div>
+                      </div>
+
+                      <div class="my-2">
+                        <p class="project_complete_task">
+                          Task Completed : {{ projects.completTask }}/{{ projects.totalTask }}
+                        </p>
+                        <mat-progress-bar mode="determinate" [value]="projects.completTask * 100 / projects.totalTask"
+                          class="my-3"></mat-progress-bar>
+
+                        <div>
+                          <span class="user_short_name">{{ getInitials(projects.createdName) }}</span>
+                        </div>
+
+                        <div class="d-flex gap-3 mt-2">
+                          <p class="m-0 projects_date">Project Cost : <b>{{ projects.projectCost }}</b></p>
+                          <!-- <p class="m-0 projects_date ">Task Cost : <b>{{ projects.taskCost }}</b></p> -->
+                          <p class="m-0 projects_date ">Remaining Cost : <b>{{ projects.totalHourCost }}</b></p>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                  <ng-template #fallbackLink>
+                    <a href="javascript:void(0)"
+                       class="text-decoration-none">
+                       <div class="projects_inner_slider">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <h2 class="projects_name">{{ projects.name.toUpperCase() }}</h2>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <p class="projects_date">{{ projects.endDate }}</p>
+                          </div>
+                        </div>
+
+                        <div class="my-2">
+                          <p class="project_complete_task">
+                            Task Completed : {{ projects.completTask }}/{{ projects.totalTask }}
+                          </p>
+                          <mat-progress-bar mode="determinate" [value]="projects.completTask * 100 / projects.totalTask"
+                            class="my-3"></mat-progress-bar>
+
+                          <div>
+                            <span class="user_short_name">{{ getInitials(projects.createdName) }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </ng-template>
+                </div>
+              </ngx-slick-carousel>
+
+              <div class="dashboard-task-table" *ngIf="dashboardDatalist?.projectList?.length <= 0">
+                <p class="no_data_content pt-3">You have no on-going projects</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 comman_space">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="mb-lg-4 mb-sm-2">
+                <h2 class="comman_task_title">Comment</h2>
+              </div>
+
+              <div class="discussion_tab">
+                <div class="tab-content mt-4" id="myTabContent">
+                  <div class="tab-pane fade show active" id="General" role="tabpanel" aria-labelledby="General-tab">
+                    <div *ngFor="let comments of dashboardDatalist?.latestCommentsList">
+                      <a href="./view-task/{{comments.id}}" class="text-decoration-none">
+                        <div class="d-flex gap-3 discussion_inner">
+                          <div>
+                            <div class="d-flex justify-content-between align-items-center">
+                              <h4 class="discussion_task">
+                                {{ comments.title }}
+                              </h4>
+                            </div>
+                            <p class="discussion_topic" *ngFor="let commentslists of comments.commnetList">
+                              {{ commentslists.comment }}
+                            </p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="dashboard-task-table" *ngIf="dashboardDatalist?.latestCommentsList?.length <= 0">
+                <p class="no_data_content pt-3">No comment yet</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 comman_space">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="mb-lg-4 mb-sm-2">
+                <h2 class="comman_task_title">Activity</h2>
+              </div>
+
+              <ngx-slick-carousel class="carousel note_slider" #slickModal="slick-carousel" [config]="note_slideConfig">
+                <ng-container *ngIf="notificationlist && notificationlist.length > 0">
+                  <div ngxSlickItem class="slide" *ngFor="let notification of notificationlist.slice(0, 5); let i = index;">
+                  <div class="projects_inner_slider note_after_shadow">
+                    <div class="d-flex justify-content-between">
+                      <h2 class="note_title">{{ notification.is_setModule | titlecase }} </h2>
+                      <p>{{ notification.date}} <br> {{ notification.time }}</p>
+                    </div>
+                    <p class="note_content" [innerHTML]="notification.massage"></p>
+                  </div>
+                </div>
+                </ng-container>
+
+              </ngx-slick-carousel>
+
+
+              <div class="dashboard-task-table" *ngIf="notificationlist?.length <= 0">
+                <p class="no_data_content pt-3"> Activity will appear here</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="task_floating_icon">
+    <div class="">
+      <input type="checkbox" id="toggle" />
+      <label class="button" for="toggle"
+     *ngIf="dashboardDataPermission?.taskAdd == 1 ||
+            dashboardDataPermission?.projectAdd == 1 ||
+            dashboardDataPermission?.noteAdd == 1 ||
+            dashboardDataPermission?.organizationAdd == 1">
+</label>
+      <nav class="nav">
+        <ul>
+          <a routerLink="/create-task" *ngIf="dashboardDataPermission?.taskAdd == 1">
+            <div class="create_inner_float">
+              <img src="../../../assets/img/dashboard/create_task_icon.png" alt="" />
+              <div class="create_inner_float_content">
+                <p class="m-0">Create Task</p>
+                <img src="../../../assets/img/dashboard/create_arrow_icon.png" alt="" />
+              </div>
+            </div>
+          </a>
+          <a  [routerLink]="['/add-project']"
+            *ngIf="dashboardDataPermission?.projectAdd == 1">
+            <div class="create_inner_float">
+              <img src="../../../assets/img/dashboard/create_project_icon.png" alt="" />
+              <div class="create_inner_float_content">
+                <p class="m-0">Create Project</p>
+                <img src="../../../assets/img/dashboard/create_arrow_icon.png" alt="" />
+              </div>
+            </div>
+          </a>
+
+          <a data-bs-toggle="modal" data-bs-target="#NoteModal" *ngIf="dashboardDataPermission?.noteAdd == 1">
+            <div class="create_inner_float">
+              <img src="../../../assets/img/dashboard/create_note_icon.png" alt="" />
+              <div class="create_inner_float_content">
+                <p class="m-0">Create Note</p>
+                <img src="../../../assets/img/dashboard/create_arrow_icon.png" alt="" />
+              </div>
+            </div>
+          </a>
+          <a data-bs-toggle="modal" data-bs-target="#addClientModal" [routerLink]="['/manage-clients/1']"
+
+            *ngIf="dashboardDataPermission?.organizationAdd == 1">
+            <div class="create_inner_float">
+              <img src="../../../assets/img/dashboard/create_note_icon.png" alt="" />
+              <div class="create_inner_float_content">
+                <p class="m-0">Create Client</p>
+                <img src="../../../assets/img/dashboard/create_arrow_icon.png" alt="" />
+              </div>
+            </div>
+          </a>
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+</main>
+<!-- add note modal start -->
+
+<div class="modal fade" id="NoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add Note
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_add" />
+      </div>
+      <div class="modal-body">
+        <form role="form" #submitForm="ngForm" (ngSubmit)="insertusernotes(submitForm.value)">
+
+          <div class="task_multiselect">
+            <ng-multiselect-dropdown
+              id="two"
+              name="city"
+              placeholder="Select Task"
+              [settings]="dropdownSettings5"
+              [data]="team4"
+              name="task"
+              [(ngModel)]="information.task"
+            >
+              <ng-template
+                #optionSelectedTemplate
+                let-option="option"
+                let-id="id"
+              >
+                <div>{{ option.item_text }}</div>
+              </ng-template>
+            </ng-multiselect-dropdown>
+          </div>
+
+          <div class="mb-3">
+            <div class="form_field">
+              <mat-form-field>
+                <input matInput type="text" class="form-control" name="title" id="addNoteTitle"
+                  placeholder="Enter title" required [(ngModel)]="information.title" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="quillEditor" class="form-label">Note Content</label>
+            <div class="editor-container">
+              <quill-editor name="description" [(ngModel)]="information.description"
+                (contentChanged)="onContentChange($event)"></quill-editor>
+            </div>
+          </div>
+          <div ngbDropdown class="d-inline-block remind_box">
+
+            <div class="opn_rmd" >
+                <mat-slide-toggle class="my-2" name="is_expiry" [(ngModel)]="information.is_expiry" (click)="reminderOpen = !reminderOpen">Is Expire</mat-slide-toggle>
+                <div *ngIf="reminderOpen" (clickOutside)="reminder()">
+                    <div class="right_box">
+                      <div class="rgt_bor my-2">
+                          <div class="mb-3">
+                            <div class="form_field">
+                              <mat-form-field>
+                                <input matInput name="expiry_date" [(ngModel)]="information.expiry_date" [matDatepicker]="picker"
+                                  placeholder="Select Date" />
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+              <button type="submit" class="submit_btn">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- add note modal end -->
+
+<!-- time modal -->
+
+<div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          CheckList List
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="timeModalClose"></button>
+      </div>
+
+      <form >
+        <div class="modal-body">
+          <div class="text-center">
+
+            <div class="my-4">
+              <table class="table modal-table">
+                <thead>
+                  <tr>
+                    <td class="text-center" colspan="5">
+                      <h5 class="m-0">CheckList</h5>
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let checkList of checklisttask;let i = index;">
+                    <td *ngIf="checkList.completed">
+                      Completed
+                    </td>
+                    <td *ngIf="!checkList.completed">
+                      Incompleted
+                    </td>
+                    <td>
+                      <p class="add_checklist_inner  text-start">{{checkList.checklist_name}}</p>
+                    </td>
+                     <td>
+                      <p class="add_checklist_inner  text-start">{{checkList.targetTime}} </p>
+                    </td>
+                    <td>
+                      <p class="add_checklist_inner  text-start">{{checkList.userTime}}</p>
+                    </td>
+                    <td>
+                      <p class="add_checklist_inner  text-start" *ngIf="checkList.checklist_document == 'Document Required'"><a href="{{checkList.file}}" download="true" target="_blank">Attachment</a></p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> 
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

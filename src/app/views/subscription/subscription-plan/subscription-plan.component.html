@@ -1,0 +1,233 @@
+<section class="user_task_wrapper my-lg-4 my-sm-1">
+  <div class="container-fluid">
+    <div
+      class="d-flex align-items-center justify-content-between p-4 my-3 rounded border border-light flex-wrap"
+    >
+      <div>
+        <h2 class="free_trail_title">Start 15 days Free Trial</h2>
+        <p class="free_trail_content">
+          Try first and decide later no credit card required
+        </p>
+      </div>
+      <div>
+        <!-- <a routerLink="/subscription-free-plan" class="add_task_btn"
+          >Click here for Free Trial</a
+        > -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 comman_space">
+        <div class="card h-100 text-center">
+          <div class="card-body">
+            <div class="">
+              <h2 class="plan_title mt-4">Quarterly</h2>
+              <p class="plan_time">3 Months Plan</p>
+              <span class="plan_line"></span>
+              <span class="plan_line"></span>
+            </div>
+            <div class="mt-4 mb-5">
+              <h2 class="plan_price">&#8377; 200</h2>
+              <p class="plan_month mb-3">Per User/Per Month</p>
+              <p class="plan_month">Per user, per month billed quarterly</p>
+            </div>
+
+            <div>
+              <p class="plan_feaure_title mb-3">Features Includes</p>
+              <ul class="plan_list">
+                <li>
+                  <span
+                    ><img
+                      src="../../../../assets/img/dashboard/plan-list-icon.svg"
+                      alt="" /></span
+                  >No Pressure to pay all at once.
+                </li>
+                <li>
+                  <span
+                    ><img
+                      src="../../../../assets/img/dashboard/plan-list-icon.svg"
+                      alt="" /></span
+                  >Get 5 GB storage per user.
+                </li>
+                <li>
+                  <span
+                    ><img
+                      src="../../../../assets/img/dashboard/plan-list-icon.svg"
+                      alt="" /></span
+                  >Validity of 3 Months.
+                </li>
+              </ul>
+            </div>
+            <a class="add_task_btn" data-bs-toggle="modal"  data-bs-target="#subscribeModal" >Subscribe Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 comman_space">
+        <div class="card h-100 text-center">
+          <div
+            class="card-body recomended_plan_inner"
+            style="background-color: #1c1f66; color: white"
+          >
+            <h2 class="plan_title mt-4 text-white">Annually</h2>
+            <p class="plan_time text-white">Yearly Plan</p>
+            <span class="plan_line"></span>
+            <span class="plan_line"></span>
+
+            <div class="mt-4 mb-5">
+              <h2 class="plan_price text-white">&#8377; 120</h2>
+              <p class="plan_month mb-3 text-white">Per User/Per Month</p>
+              <p class="plan_month text-white">
+                Per user, per month billed annually
+              </p>
+            </div>
+
+            <div>
+              <p class="plan_feaure_title text-white mb-3">Features Includes</p>
+              <ul class="plan_list">
+                <li>
+                  <span
+                    ><img
+                      src="../../../../assets/img/dashboard/plan-list-white-icon.svg"
+                      alt="" /></span
+                  >Get a Competitive pricing plan.
+                </li>
+                <li>
+                  <span
+                    ><img
+                      src="../../../../assets/img/dashboard/plan-list-white-icon.svg"
+                      alt="" /></span
+                  >Get 5 GB Storage Per User.
+                </li>
+                <li>
+                  <span
+                    ><img
+                      src="../../../../assets/img/dashboard/plan-list-white-icon.svg"
+                      alt="" /></span
+                  >Validity for 1 Year.
+                </li>
+              </ul>
+            </div>
+            <a class="add_task_btn border-white border" data-bs-toggle="modal" data-bs-target="#subscribeModalyearly" (click)="openModal()">Subscribe Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 comman_space">
+        <div class="card h-100 text-center">
+          <div class="card-body recomended_plan_inner">
+            <h2 class="plan_title mt-4">Half-Yearly</h2>
+            <p class="plan_time">6 Months Plan</p>
+            <span class="plan_line"></span>
+            <span class="plan_line"></span>
+
+            <div class="mt-4 mb-5">
+              <h2 class="plan_price">&#8377; 150</h2>
+              <p class="plan_month mb-3">Per User/Per Month</p>
+              <p class="plan_time">Per user, per month billed half-yearly</p>
+            </div>
+
+            <div>
+              <p class="plan_feaure_title mb-3">Features Includes</p>
+              <ul class="plan_list">
+                <li>
+                  <span
+                    ><img
+                      src="../../../../assets/img/dashboard/plan-list-icon.svg"
+                      alt="" /></span
+                  >No Pressure to pay all at once.
+                </li>
+                <li>
+                  <span
+                    ><img
+                      src="../../../../assets/img/dashboard/plan-list-icon.svg"
+                      alt="" /></span
+                  >Get 5 GB storage per user.
+                </li>
+                <li>
+                  <span
+                    ><img
+                      src="../../../../assets/img/dashboard/plan-list-icon.svg"
+                      alt="" /></span
+                  >Validity of 6 Months.
+                </li>
+              </ul>
+            </div>
+            <a class="add_task_btn" data-bs-toggle="modal" data-bs-target="#subscribeModalhalfyearly" (click)="openModal()">Subscribe Now</a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div  class="modal fade" id="subscribeModal" tabindex="-1" aria-labelledby="exampleModalLabel" >
+      <div class="modal-dialog" >
+        <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="new_task_title">Subscription Details</h4>
+          <button class="close-btn" data-bs-dismiss="modal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>No. of Employees:</strong> {{ calculationData?.no_of_employees }}</p>
+          <p><strong>Start Date:</strong> {{ calculationData?.endDate }}</p>
+          <p><strong>End Date:</strong> {{ threeMonthsLater }}</p>
+          <p><strong>Total Days:</strong> 90 </p>
+          <p><strong>Cost per Day:</strong> {{ 200 / 30 * 80 | currency: 'INR' }}</p>
+          <p><strong>Total Cost:</strong> {{ calculationData.no_of_employees * 200 * 3 | currency : 'INR'}}</p>
+        </div>
+        <div class="modal-footer">
+          <button class="add_task_btn"  (click)="makePayment(calculationData.no_of_employees * 200 * 3)">Confirm</button>
+          <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div  class="modal fade" id="subscribeModalyearly" tabindex="-1" aria-labelledby="exampleModalLabel" >
+      <div class="modal-dialog" >
+        <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="new_task_title">Subscription Details</h4>
+          <button class="close-btn" data-bs-dismiss="modal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>No. of Employees:</strong> {{ calculationData?.no_of_employees }}</p>
+          <p><strong>Start Date:</strong> {{ calculationData?.endDate }}</p>
+          <p><strong>End Date:</strong> {{ oneYearLater }}</p>
+          <p><strong>Total Days:</strong> 365 </p>
+          <p><strong>Cost per Day:</strong> {{ 120 / 30 * 80 | currency: 'INR' }}</p>
+          <p><strong>Total Cost:</strong> {{ calculationData.no_of_employees * 120 * 12| currency : 'INR'}}</p>
+        </div>
+        <div class="modal-footer">
+          <button class="add_task_btn"   (click)="makePayment(calculationData.no_of_employees * 120 * 12)">Confirm</button>
+          <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div  class="modal fade" id="subscribeModalhalfyearly" tabindex="-1" aria-labelledby="exampleModalLabel" >
+      <div class="modal-dialog" >
+        <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="new_task_title">Subscription Details</h4>
+          <button class="close-btn" data-bs-dismiss="modal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>No. of Employees:</strong> {{ calculationData?.no_of_employees }}</p>
+          <p><strong>Start Date:</strong> {{ calculationData?.endDate }}</p>
+          <p><strong>End Date:</strong> {{ sixMonthsLater }}</p>
+          <p><strong>Total Days:</strong> 180 </p>
+          <p><strong>Cost per Day:</strong> {{ 150 / 30 * 80 | currency: 'INR' }}</p>
+          <p><strong>Total Cost:</strong> {{ calculationData.no_of_employees * 150 * 6 | currency : 'INR'}}</p>
+        </div>
+        <div class="modal-footer">
+          <button class="add_task_btn"  (click)="makePayment(calculationData.no_of_employees * 150 * 6)">Confirm</button>
+          <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="text-center mt-5">
+      <img
+        src="../../../../assets/img/dashboard/subscription-bottom-img.svg"
+        alt=""
+        class="img-fluid"
+      />
+    </div>
+  </div>
+</section>

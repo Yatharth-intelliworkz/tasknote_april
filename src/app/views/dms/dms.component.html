@@ -1,0 +1,420 @@
+<main>
+  <section class="user_task_wrapper">
+    <div class="container-fluid">
+      <div class="mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <nav class="projects_tabs">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <button
+                    class="nav-link active"
+                    id="nav-My-DMS-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-My-DMS"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-My-DMS"
+                    aria-selected="true"
+                  >
+                    My DMS
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-Shared-with-Me-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-Shared-with-Me"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-Shared-with-Me"
+                    aria-selected="false"
+                  >
+                    Shared with Me
+                  </button>
+                  <button
+                    class="nav-link"
+                    id="nav-My-Team-DMS-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-My-Team-DMS"
+                    type="button"
+                    role="tab"
+                    aria-controls="nav-My-Team-DMS"
+                    aria-selected="false"
+                  >
+                    My Team DMS
+                  </button>
+                </div>
+              </nav>
+
+              <div class="dropdown">
+                <div
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <a class="add_task_btn"> Add</a>
+                </div>
+                <ul
+                  class="dropdown-menu dms_file_dropdown"
+                  aria-labelledby="dropdownMenuButton1"
+                >
+                  <a data-bs-toggle="modal" data-bs-target="#addFfiles">
+                    <li>Files</li></a
+                  >
+                  <a data-bs-toggle="modal" data-bs-target="#addFolder">
+                    <li>Folder</li></a
+                  >
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- tabs  view -->
+
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="nav-My-DMS"
+          role="tabpanel"
+          aria-labelledby="nav-My-DMS-tab"
+        >
+          <div class="projects_cards">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <div
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <div class="d-flex gap-3 align-items-center">
+                        <h2 class="project_name">Moments</h2>
+                      </div>
+                      <div class="d-flex gap-3">
+                        <a
+                          data-bs-toggle="modal"
+                          data-bs-target="#share-with-people"
+                        >
+                          <img
+                            src="../../../assets/img/dashboard/project-edit-icon.svg"
+                            alt=""
+                        /></a>
+                      </div>
+                    </div>
+                  </div>
+                  <a routerLink="/dms-list">
+                    <div class="card-body table-responsive">
+                      <table class="project_table_data">
+                        <tbody>
+                          <tr>
+                            <td>Owner:</td>
+                            <td>Arvind Rajput</td>
+                          </tr>
+                          <tr>
+                            <td>Last Modified:</td>
+                            <td>Arvind Rajput, Aug 15, 2023</td>
+                          </tr>
+                          <tr>
+                            <td>Fill Size:</td>
+                            <td>-</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="tab-pane fade"
+          id="nav-Shared-with-Me"
+          role="tabpanel"
+          aria-labelledby="nav-Shared-with-Me-tab"
+        >
+          <div class="projects_cards">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <div
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <div class="d-flex gap-3 align-items-center">
+                        <h2 class="project_name">Moments</h2>
+                      </div>
+                      <div class="d-flex gap-3">
+                        <a href="javascript:void(0)">
+                          <img
+                            src="../../../assets/img/dashboard/project-edit-icon.svg"
+                            alt=""
+                        /></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive">
+                    <table class="project_table_data">
+                      <tbody>
+                        <tr>
+                          <td>Owner:</td>
+                          <td>Arvind Rajput</td>
+                        </tr>
+                        <tr>
+                          <td>Last Modified:</td>
+                          <td>Arvind Rajput, Aug 15, 2023</td>
+                        </tr>
+                        <tr>
+                          <td>Fill Size:</td>
+                          <td>-</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nav-My-Team-DMS"
+          role="tabpanel"
+          aria-labelledby="nav-My-Team-DMS-tab"
+        >
+          <div class="projects_cards">
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <div
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <div class="d-flex gap-3 align-items-center">
+                        <h2 class="project_name">Moments</h2>
+                      </div>
+                      <div class="d-flex gap-3">
+                        <a href="javascript:void(0)">
+                          <img
+                            src="../../../assets/img/dashboard/project-edit-icon.svg"
+                            alt=""
+                        /></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body table-responsive">
+                    <table class="project_table_data">
+                      <tbody>
+                        <tr>
+                          <td>Owner:</td>
+                          <td>Arvind Rajput</td>
+                        </tr>
+                        <tr>
+                          <td>Last Modified:</td>
+                          <td>Arvind Rajput, Aug 15, 2023</td>
+                        </tr>
+                        <tr>
+                          <td>Fill Size:</td>
+                          <td>-</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- add files modal start -->
+
+<div
+  class="modal fade"
+  id="addFfiles"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add File
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn"
+        />
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputdiscussion" class="form-label"
+              >Select attachmens *</label
+            >
+            <input
+              type="file"
+              id="fileInput"
+              multiple
+              (change)="onFilesSelected($event)"
+              accept="image/*"
+              class="form-control project_files"
+            />
+          </div>
+
+          <div class="file-container">
+            <div *ngFor="let file of selectedFiles" class="file-item">
+              <div class="file-preview">
+                <img
+                  [src]="getPreviewUrl(file)"
+                  alt="{{ file.name }}"
+                  class="file-image"
+                />
+              </div>
+              <div class="file-details d-flex">
+                <p class="file-name">{{ file.name }}</p>
+                <button class="remove-button" (click)="removeFile(file)">
+                  x
+                </button>
+              </div>
+            </div>
+          </div>
+          <button class="btn submit_btn">Done</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- add files modal end -->
+
+<!-- add folder modal start -->
+
+<div
+  class="modal fade"
+  id="share-with-people"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Folder
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn"
+        />
+      </div>
+      <div class="modal-body">
+        <form >
+            <div class="mb-3">
+              <div class="form_field">
+                <mat-form-field>
+                  <input matInput #input placeholder="Title" />
+                </mat-form-field>
+              </div>
+            </div>
+          <button class="btn submit_btn">Done</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- add folder modal end -->
+
+<!--  share with people modal start -->
+
+<div
+  class="modal fade"
+  id="addFolder"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add Folder
+        </h5>
+        <img
+          src="../../../assets/img/dashboard/popup-close-btn.svg"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          alt=""
+          class="popup_close_btn"
+        />
+      </div>
+      <div class="modal-body">
+        <form >
+          <div class="mb-3">
+            <div class="form_field">
+              <mat-form-field>
+                <input matInput #input placeholder="Title" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="task_multiselect">
+              <ng-multiselect-dropdown
+                id="two"
+                name="city"
+                placeholder="Assign"
+                [settings]="dropdownSettings2"
+                [data]="countries"
+                [formControlName]="'selectedItems2'"
+              >
+                <ng-template
+                  #optionsTemplate
+                  let-item
+                  let-option="option"
+                  let-id="id"
+                  let-isSelected="isSelected"
+                >
+                  <div
+                    style="
+                      padding: 1px 10px;
+                      margin-right: 10px;
+                      right: 2px;
+                      top: -2px;
+                    "
+                  ></div>
+                </ng-template>
+                <ng-template
+                  #optionSelectedTemplate
+                  let-option="option"
+                  let-id="id"
+                >
+                  <div>
+                    {{ option }}
+                  </div>
+                </ng-template>
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+
+          <button class="btn submit_btn">Done</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- share with  modal end -->

@@ -1,0 +1,75 @@
+<section class="user_task_wrapper my-lg-4 my-sm-1">
+  <div class="container-fluid">
+    <div
+      class="d-flex align-items-center justify-content-between p-4 my-3 rounded border border-light flex-wrap"
+    >
+      <div>
+        <h2 class="free_trail_title">Free Plan</h2>
+        <p class="free_trail_content">
+          Includes up to 20 users and 5GB individual data.
+        </p>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <div>
+          <h2 class="free_trail_title">&#8377; 150</h2>
+          <p class="free_trail_content">Next renewal 9 Feb, 2024</p>
+        </div>
+        <div>
+          <a routerLink="/subscription-free-plan" class="add_task_btn"
+            >Explore Plans</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 my-3 rounded border border-light">
+      <div class="d-flex align-items-center justify-content-between">
+          <p class="free_trail_content">Billing History</p>
+        <div>
+          <a routerLink="/subscription-free-plan" class="add_task_btn"
+            >Download All</a
+          >
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table task-table">
+          <thead>
+            <tr>
+              <th>Invoice</th>
+              <th>Amount</th>
+              <th>Billing Date</th>
+              <th>Plan</th>
+              <th>Status</th>
+              <th>Download</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="d-flex gap-2 align-items-center">
+                  <img src="../../../../assets/img/dashboard/invoice-pdf.svg" alt="">
+                  <p class="invoice_name">Invoice #001 - 26 Jan 2024.pdf</p>
+                </div>
+              </td>
+              <td>&#8377; 0.00</td>
+              <td>Feb 9, 2024</td>
+              <td>Free Trial</td>
+              <td >
+                <p class="p-2 d-inline-block rounded-pill m-0" style="background-color: #E2F8D7;">Successful</p>
+              </td>
+              <td>
+                <a href="#" class="text-decoration-none">
+                <div class="d-flex gap-2 align-items-center">
+                  <img src="../../../../assets/img/dashboard/pdf-download.svg" alt="">
+                  <p class="invoice_name">Download</p>
+                </div>
+              </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

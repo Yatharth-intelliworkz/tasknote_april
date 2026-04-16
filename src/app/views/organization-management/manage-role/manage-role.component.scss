@@ -1,0 +1,86 @@
+
+  
+.role_wrapper{
+    border: 1px solid #dddddd;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+  .manage_searchbar {
+    position: relative;
+  }
+  .searchbar_icon {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    background-color: white;
+  }
+  
+  .task_table_title {
+    color: #1C1F66;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    margin: 0;
+    max-width: 170px;
+  }
+.role_table {
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+  }
+  
+  .role_table tr th{
+    color: #111111;
+    font-size: 14px;
+    font-weight: 400;
+    vertical-align: middle;
+  }
+  .role_table tr td{
+    color: #111111;
+    font-size: 14px;
+    font-weight: 400;
+    vertical-align: middle;
+  }
+  
+  .role_table tbody{
+    border: 1px solid #dddddd;
+  }
+  
+  .role_table .role_type {
+    font-size: 18px !important;
+    line-height: 24px !important;
+    font-weight: 600 !important;
+    color: #111111 !important;
+  }
+  
+   .role_table thead tr{
+     background-color: #F6F6F6;
+   }
+   .role_table thead tr{
+    border-color: transparent;
+    border-radius: 10px;
+    height: 55px;
+  }
+  
+  .role_table tr td {
+    border-bottom: 1px dashed #dddddd;
+  }
+  
+  .role_table tbody .assign-role-inner td{
+    border: none;
+  }
+
+
+  
+
+
+  @media only screen and (max-width: 560px) {
+
+    .add_task_btn{
+      display: inline-block;
+      min-width: 130px;
+      text-align: center;
+      font-size: 12px;
+      padding: 10px;
+    }
+  }

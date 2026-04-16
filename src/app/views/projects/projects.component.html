@@ -1,0 +1,626 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" *ngIf="loading" size="medium" color="#fff" type="timer"
+  [fullScreen]="true"></ngx-spinner>
+<section class="user_task_wrapper">
+  <div class="container-fluid">
+    <div class="mb-3">
+          <div class="d-lg-flex justify-content-between align-items-center d-sm-block">
+            <nav class="projects_tabs">
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="created-projects-tab" data-bs-toggle="tab"
+                  data-bs-target="#created-projects" type="button" role="tab" aria-controls="created-projects"
+                  aria-selected="true">
+                  Project Created
+                </button>
+                <!-- <button class="nav-link" id="assign-projects-tab" data-bs-toggle="tab" data-bs-target="#assign-projects"
+                  type="button" role="tab" aria-controls="assign-projects" aria-selected="false">
+                  Project Assigned
+                </button> -->
+              </div>
+            </nav>
+
+            <div class="d-flex justify-content-between align-items-center gap-3 comman_space">
+
+              <a class="add_task_btn" [routerLink]="['/add-project']"
+              *ngIf="projectslistData?.add == 1" 
+               (click)="clearprojectform()">
+                Add New Project</a>
+            </div>
+          </div>
+    </div>
+
+   
+
+
+    <!-- tabs  view -->
+
+    <div class="tab-content mb-3" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="created-projects" role="tabpanel"
+        aria-labelledby="created-projects-tab">
+        <div class="filter_search mb-2">
+          <input type="text" formControlName="searchQueryControl" (input)="filterItems($event)"
+            placeholder="Search projects...">
+        </div>
+        <div class="projects_cards">
+          <div class="project_wrapper">
+            <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12" *ngFor="let projects of projectslist"> -->
+            <div class=" " *ngFor="let projects of projectslistcreated">
+              <div class="card h-100">
+                <div class="card-header">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex gap-3">
+                      <!-- <h2 class="project_name">{{ projects.name }}</h2> -->
+                      <h2 class="project_name">{{ projects.name.toUpperCase() }}</h2>
+                      <div>
+                        <p class="project_date">Last Update On</p>
+                        <p class="project_date">{{ projects.lastUpDate }}</p>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                      <div>
+                        <ngb-rating class="rating_icon" [(rate)]="projects.is_favorite" [max]="1" (click)="
+                            onStarClick(
+                              projects.id,
+                              projects.is_favorite == 0 ? 1 : 0
+                            )
+                          "></ngb-rating>
+                      </div>
+                      <a [routerLink]="['/edit-project', projects.id]">
+                        <img src="../../../assets/img/dashboard/project-edit-icon.svg" alt="edit-img" width="17px"
+                          height="17px" (click)="editproject(projects.id)" /></a>
+                      <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleteprojectModal"
+                        (click)="deleteprojectsopendialogue(projects.id)"><img
+                          src="../../../assets/img/dashboard/project-delete-icon.svg" alt="delete-img" width="17px"
+                          height="17px" /></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body table-responsive">
+                  <a routerLink="/projects-detail/{{ projects.id }}" class="text-decoration-none">
+                    <table class="project_table_data">
+                      <tbody>
+                        <!-- <tr>
+                          <td>Project Author:</td>
+                          <td>{{ projects.clientName }}</td>
+                        </tr> -->
+                        <tr>
+                          <td>Project Start Date:</td>
+                          <td>{{ projects.startDate }}</td>
+                        </tr>
+                        <tr>
+                          <td>Project End Date:</td>
+                          <td>{{ projects.endDate }}</td>
+                        </tr>
+                        <tr>
+                          <td>Project Description:</td>
+                          <td class="project_descrtiption">
+                            {{ projects.description }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="task-table" *ngIf="projectslistcreated?.length === 0">
+          <div class="user_task_wrapper">
+            <div class="card">
+              <div>
+                <p class="no_data_content">New project will appear here</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!-- <div class="tab-pane fade" id="assign-projects" role="tabpanel" aria-labelledby="assign-projects-tab">
+        <div class="filter_search text-end">
+          <input type="text" formControlName="searchQueryControl" (input)="filterItemsAssign($event)"
+            placeholder="Search projects...">
+        </div>
+        <div class="projects_cards">
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3" *ngFor="let projectsassign of projectslistassigned">
+              <div class="card h-100">
+                <div class="card-header">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex gap-3">
+                      <h2 class="project_name">{{ projectsassign.name.toUpperCase() }} </h2>
+                      <div>
+                        <p class="project_date">Last Update On</p>
+                        <p class="project_date">{{ projectsassign.lastUpDate }}</p>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                      <div>
+                        <ngb-rating class="rating_icon" [(rate)]="projectsassign.is_favorite" [max]="1" (click)="
+                          onStarClick(
+                            projectsassign.id,
+                            projectsassign.is_favorite == 0 ? 1 : 0
+                          )
+                        "></ngb-rating>
+                      </div>
+                      <a href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#editProjectModal" *ngIf="projectslistData.edit == 1">
+                        <img src="../../../assets/img/dashboard/project-edit-icon.svg" alt="" width="17"
+                          height="17"  (click)="editproject(projectsassign.id)" /></a>
+                      <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleteprojectModal"
+                        (click)="deleteprojectsopendialogue(projectsassign.id)"
+                        *ngIf="projectslistData.delete == 1"><img
+                          src="../../../assets/img/dashboard/project-delete-icon.svg" alt="" width="17"
+                          height="17" /></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body table-responsive">
+                  <a routerLink="/projects-detail/{{ projectsassign.id }}" class="text-decoration-none">
+                    <table class="project_table_data">
+                      <tbody>
+                        <tr>
+                          <td>Project Author:</td>
+                          <td>{{ projectsassign.clientName }}</td>
+                        </tr> 
+                        <tr>
+                          <td>Project Start Date:</td>
+                          <td>{{ projectsassign.startDate }}</td>
+                        </tr>
+                        <tr>
+                          <td>Project End Date:</td>
+                          <td>{{ projectsassign.endDate }}</td>
+                        </tr>
+                        <tr>
+                          <td>Project Description:</td>
+                          <td class="project_descrtiption">{{ projectsassign.description }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="task-table" *ngIf="projectslistassigned?.length === 0">
+          <div class="user_task_wrapper">
+            <div class="card">
+              <div>
+                <p class="no_data_content">You have 0 project assigned</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<!-- add  project modal start -->
+
+<div class="modal fade" id="CreateProjectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Add New Project
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_project_add" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addprojectForm" (ngSubmit)="addproject(addprojectForm.value)">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 co-md-12 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field >
+                        <input matInput formControlName="name" placeholder="Project Name"
+                          class="text-capitalize" />
+                        <mat-error *ngIf="addprojectForm.get('name')?.hasError('required')">
+                          Project Name is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field appearance="fill">
+                       <input matInput formControlName="total_cost" 
+                          placeholder="Project Cost" />
+                        </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field appearance="fill">
+                        <mat-select placeholder="Service Segment" formControlName="servic_id">
+                          <mat-option *ngFor="let servicelistData of servicelistData" [value]="servicelistData.id">
+                            {{ servicelistData.title }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="task_multiselect">
+                      <ng-multiselect-dropdown id="projectManagerDropdown" name="city" placeholder="Project Manager"
+                        [settings]="dropdownSettings1" [data]="team1" [(ngModel)]="managerName"
+                        formControlName="manager_id" ></ng-multiselect-dropdown>
+                        <!-- (onSelect)="onManagerSelect($event)" -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="task_multiselect">
+                      <ng-multiselect-dropdown id="membersDropdown" name="city" placeholder="Reference By"
+                        [settings]="dropdownSettings2" [data]="team3"  formControlName="members_id"
+                        [(ngModel)]="membersName">
+                        <!-- ... Your templates here ... -->
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="start_date" [matDatepicker]="picker"
+                          placeholder="Select Start Date" />
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input formControlName="end_date" matInput [matDatepicker]="picker1"
+                          placeholder="Select End Date" />
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field custom_textarea">
+                      <mat-form-field>
+                        <textarea matInput formControlName="description" placeholder="Description"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <table class="table modal-table">
+                    <thead>
+                      <tr>
+                        <td class="text-center" colspan="5"><h5 class="m-0"> Task Type List</h5></td>
+                      </tr>
+                    </thead>
+                  <tbody>
+                  <tr>
+                    <td>
+                      <div class="form_field">
+                      <mat-form-field>
+                        <mat-select  placeholder="Task Type" formControlName="tasktype">
+                              <mat-option [value]="tasktypelist.id" *ngFor="let tasktypelist of tasktypelist">{{tasktypelist.title}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    </td>
+                    <td>
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input matInput #input formControlName="remark" placeholder="Remark" />
+                        </mat-form-field>
+                      </div>
+                    </td> 
+                    <td>
+                      <div class="form_field">
+                      <mat-form-field>
+                        <mat-select  placeholder="HH" formControlName="hours">
+                              <mat-option [value]="1">1</mat-option>
+                              <mat-option [value]="2">2</mat-option>
+                              <mat-option [value]="3">3</mat-option>
+                              <mat-option [value]="4">4</mat-option>
+                              <mat-option [value]="5">5</mat-option>
+                              <mat-option [value]="6">6</mat-option>
+                              <mat-option [value]="7">7</mat-option>
+                              <mat-option [value]="8">8</mat-option>
+                              <mat-option [value]="9">9</mat-option>
+                              <mat-option [value]="10">10</mat-option>
+                              <mat-option [value]="11">11</mat-option>
+                              <mat-option [value]="12">12</mat-option>
+                              <mat-option [value]="13">13</mat-option>
+                              <mat-option [value]="14">14</mat-option>
+                              <mat-option [value]="15">15</mat-option>
+                              <mat-option [value]="16">16</mat-option>
+                              <mat-option [value]="17">17</mat-option>
+                              <mat-option [value]="18">18</mat-option>
+                              <mat-option [value]="19">19</mat-option>
+                              <mat-option [value]="20">20</mat-option>
+                              <mat-option [value]="21">21</mat-option>
+                              <mat-option [value]="22">22</mat-option>
+                              <mat-option [value]="23">23</mat-option>
+                              <mat-option [value]="24">24</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    </td>
+                    <td>
+                      <a (click)="addchecklist('add')">
+                        <img src="../../../assets/img/dashboard/add-icon.svg" alt=""
+                          class="task_plus_icon ms-3" />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr *ngFor="let checklistItem of checklistarray; let i = index">
+                    <td><p class="add_checklist_inner" contenteditable="true">{{ checklistItem.tasktype }}</p></td>
+                    <td> <p class="add_checklist_inner" contenteditable="true">{{ checklistItem.remark }}</p></td>
+                    <td><p class="add_checklist_inner" contenteditable="true">{{ checklistItem.hours }}</p></td>
+                    <!-- <td><p class="add_checklist_inner" contenteditable="true">{{ checklistItem.minutes }}</p></td> -->
+                    <td><a (click)="removechecklist(i)">
+                      <img src="../../../assets/img/dashboard/remove-icon.svg" alt="" class="task_plus_icon ms-3"  />
+                    </a></td>
+                  </tr>
+                </tbody>
+                </table>
+                </div>
+
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button class="btn submit_btn">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editProjectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Edit Project
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_edit" />
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="projectForm">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 co-md-12 col-sm-12">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="name" placeholder="Project Name"
+                          [(ngModel)]="projectlistedit.name" />
+                        <input type="hidden" formControlName="projectID" [(ngModel)]="projectlistedit.id" />
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field appearance="fill">
+                       <input matInput formControlName="total_cost" [value]="projectlistedit.total_cost"
+                          placeholder="Project Cost" />
+                        </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field appearance="fill">
+                        <mat-select placeholder="Service Segment" formControlName="servic_id" [(ngModel)]="projectlistedit.service_id">
+                          <mat-option *ngFor="let servicelistData of servicelistData" [value]="servicelistData.id">
+                            {{ servicelistData.title }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="task_multiselect">
+                      <ng-multiselect-dropdown id="projectManagerDropdown" name="city" placeholder="Project Manager"
+                        [settings]="dropdownSettings1" [data]="team1" [(ngModel)]="managerName"
+                        formControlName="manager_id" >
+                        <!-- (onSelect)="onManagerSelect($event)" -->
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="task_multiselect">
+                      <ng-multiselect-dropdown id="membersDropdown" name="city" placeholder="Reference By"
+                        [settings]="dropdownSettings2" [data]="team3"   formControlName="members_id"
+                        [(ngModel)]="membersName">
+                      </ng-multiselect-dropdown>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput formControlName="start_date" [matDatepicker]="pickeredit"
+                          placeholder="Select Start Date" [(ngModel)]="projectlistedit.start_date" />
+                        <mat-datepicker-toggle matIconSuffix [for]="pickeredit"></mat-datepicker-toggle>
+                        <mat-datepicker #pickeredit></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input formControlName="end_date" matInput [matDatepicker]="picker1edit"
+                          placeholder="Select End Date" [(ngModel)]="projectlistedit.end_date" />
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1edit"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1edit></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <textarea matInput formControlName="description" placeholder="Description"
+                          [(ngModel)]="projectlistedit.description"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table modal-table">
+                    <thead>
+                      <tr>
+                        <td class="text-center" colspan="5"><h5 class="m-0"> Check List</h5></td>
+                      </tr>
+                    </thead>
+                  <tbody>
+                  <tr>
+                    <td>
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input matInput #input formControlName="remark" placeholder="Remark" />
+                        </mat-form-field>
+                      </div>
+                    </td> 
+                    <!-- <td>
+                      <div class="form_field">
+                        <mat-form-field>
+                          <input matInput #input formControlName="descriptionch" placeholder="Description" />
+                        </mat-form-field>
+                      </div>
+                    </td> -->
+                    <td>
+                      <div class="form_field">
+                      <mat-form-field>
+                        <mat-select matInput placeholder="HH" formControlName="hours">
+                              <mat-option [value]="1">1</mat-option>
+                              <mat-option [value]="2">2</mat-option>
+                              <mat-option [value]="3">3</mat-option>
+                              <mat-option [value]="4">4</mat-option>
+                              <mat-option [value]="5">5</mat-option>
+                              <mat-option [value]="6">6</mat-option>
+                              <mat-option [value]="7">7</mat-option>
+                              <mat-option [value]="8">8</mat-option>
+                              <mat-option [value]="9">9</mat-option>
+                              <mat-option [value]="10">10</mat-option>
+                              <mat-option [value]="11">11</mat-option>
+                              <mat-option [value]="12">12</mat-option>
+                              <mat-option [value]="13">13</mat-option>
+                              <mat-option [value]="14">14</mat-option>
+                              <mat-option [value]="15">15</mat-option>
+                              <mat-option [value]="16">16</mat-option>
+                              <mat-option [value]="17">17</mat-option>
+                              <mat-option [value]="18">18</mat-option>
+                              <mat-option [value]="19">19</mat-option>
+                              <mat-option [value]="20">20</mat-option>
+                              <mat-option [value]="21">21</mat-option>
+                              <mat-option [value]="22">22</mat-option>
+                              <mat-option [value]="23">23</mat-option>
+                              <mat-option [value]="24">24</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      </div>
+                    </td>
+                    
+                    <td>
+                      <a (click)="addchecklist('edit')">
+                        <img src="../../../assets/img/dashboard/add-icon.svg" alt=""
+                          class="task_plus_icon ms-3" />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr *ngFor="let checklistItem of checklistarray; let i = index">
+                    <td> <p class="add_checklist_inner" contenteditable="true">{{ checklistItem.remark }}</p></td>
+                    <!-- <td><p class="add_checklist_inner" contenteditable="false">{{ checklistItem.ckluser_id }}</p></td> -->
+                    <td><p class="add_checklist_inner" contenteditable="true">{{ checklistItem.hours }}</p></td>
+                    <!-- <td><p class="add_checklist_inner" contenteditable="true">{{ checklistItem.minutes }}</p></td> -->
+                    <td><a (click)="removechecklist(i)">
+                      <img src="../../../assets/img/dashboard/remove-icon.svg" alt="" class="task_plus_icon ms-3"  />
+                    </a></td>
+                  </tr>
+                </tbody>
+                </table>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12"></div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12"></div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12"></div>
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                    <button (click)="updateproject()" class="btn submit_btn">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- add  project modal end -->
+
+
+<div class="modal fade" id="deleteprojectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new_task_title" id="exampleModalLabel">
+          Delete Project
+        </h5>
+        <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+          class="popup_close_btn_delete_project" />
+      </div>
+      <div class="modal-body">
+        <h2 class="task_complete_title">
+          Are you sure you want to delete this project?
+        </h2>
+        <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <button class="btn submit_btn" (click)="confirmDelete()">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

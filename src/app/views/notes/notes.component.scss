@@ -1,0 +1,137 @@
+
+.custom_edit_icon .dropdown-toggle {
+  background-color: white;
+  border: none;
+}
+
+.custom_edit_icon .dropdown-toggle::after {
+  display: none;
+}
+.custom_edit_icon .dropdown-menu.show {
+  transform: translate(0px, 50px) !important;
+}
+
+.user_task_wrapper .nav-tabs,
+.nav-tabs .nav-link,
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:hover {
+  border: none;
+}
+
+
+.projects_cards {
+  display: grid;
+}
+
+.projects_cards img{
+  cursor: pointer;
+}
+
+
+.note_wrapper {
+  display: grid;
+  display: -ms-grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.projects_cards .card-header {
+  border-radius: 20px 20px 0 0;
+  padding: 15px;
+}
+.projects_cards .card-body {
+  border-radius: 0 0 10px 10px;
+}
+.project_name {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 19px;
+  color: #333;
+  margin: 0;
+  max-width: 500px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.project_date {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: white;
+  margin: 0;
+}
+.add_note_title {
+  border: 2px solid #dddddd;
+  background-color: white;
+}
+
+
+.note_description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  margin: 0;
+  height: 150px;
+  overflow-y: scroll;
+}
+.note_description::-webkit-scrollbar{
+  display: none;
+  scrollbar-width: 0;
+}
+.task_table_title {
+  color: #1c1f66;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+
+.projects_cards .card-footer{
+  border: none;
+  background-color: transparent;
+}
+
+.note_custom_color {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+
+}
+.note_custom_color span{
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.task-table .card {
+  height: calc(100vh - 15em);
+}
+
+@media only screen and (max-width: 1535px) {
+  .project_name {
+    max-width: 170px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .project_name {
+    max-width: 100px;
+  }
+  .note_wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+@media only screen and (max-width: 560px) {
+  .project_name {
+    max-width: 150px;
+  }
+  .note_wrapper {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+}

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="794" height="142.08" viewBox="0 0 794 142.08">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="127.438" height="127.438" fill="none"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="0.133" y1="-0.08" x2="0.867" y2="-0.76" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#11c6ff"/>
+      <stop offset="0.54" stop-color="#1279d9"/>
+      <stop offset="1" stop-color="#1c1f66"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_162" data-name="Group 162" transform="translate(-625 -1002.888)">
+    <line id="Line_10" data-name="Line 10" y2="63" transform="translate(1051 1048)" fill="none" stroke="#333" stroke-width="1"/>
+    <g id="Group_161" data-name="Group 161">
+      <g id="Group_160" data-name="Group 160">
+        <g id="Group_159" data-name="Group 159">
+          <path id="Path_296" data-name="Path 296" d="M274.94,912.664V927.3c34.86,0,63.717-32.17,63.717-78.362L274.94,912.664h0Z" transform="translate(496.597 217.667)" fill="#050630"/>
+          <g id="Repeat_Grid_1" data-name="Repeat Grid 1" transform="translate(707.819 1002.888)" clip-path="url(#clip-path)">
+            <g transform="translate(-646.819 -847.888)">
+              <path id="Path_297" data-name="Path 297" d="M296.782,870.782a63.718,63.718,0,1,0-90.111,0A63.717,63.717,0,0,0,296.782,870.782Z" transform="translate(458.811 85.881)" fill="url(#linear-gradient)"/>
+            </g>
+          </g>
+          <path id="Path_298" data-name="Path 298" d="M241.082,897.36a1.836,1.836,0,1,0,1.84,1.84A1.839,1.839,0,0,0,241.082,897.36Z" transform="translate(506.128 204.738)" fill="#fff"/>
+          <path id="Path_299" data-name="Path 299" d="M227.712,910.74a1.832,1.832,0,1,0,1.832,1.832A1.833,1.833,0,0,0,227.712,910.74Z" transform="translate(509.698 201.165)" fill="#fff"/>
+          <path id="Path_300" data-name="Path 300" d="M241.082,910.74a1.832,1.832,0,1,0,1.84,1.832A1.833,1.833,0,0,0,241.082,910.74Z" transform="translate(506.128 201.165)" fill="#fff"/>
+          <path id="Path_301" data-name="Path 301" d="M254.45,910.74a1.832,1.832,0,1,0,1.84,1.832,1.835,1.835,0,0,0-1.84-1.832Z" transform="translate(502.56 201.165)" fill="#fff"/>
+          <path id="Path_302" data-name="Path 302" d="M214.35,924.11a1.832,1.832,0,1,0,1.832,1.832A1.839,1.839,0,0,0,214.35,924.11Z" transform="translate(513.268 197.595)" fill="#050630"/>
+          <path id="Path_303" data-name="Path 303" d="M227.712,924.11a1.832,1.832,0,1,0,1.832,1.832A1.833,1.833,0,0,0,227.712,924.11Z" transform="translate(509.698 197.595)" fill="#050630"/>
+          <path id="Path_304" data-name="Path 304" d="M241.082,924.11a1.832,1.832,0,1,0,1.84,1.832A1.833,1.833,0,0,0,241.082,924.11Z" transform="translate(506.128 197.595)" fill="#fff"/>
+          <path id="Path_305" data-name="Path 305" d="M254.45,924.11a1.832,1.832,0,1,0,1.84,1.832,1.835,1.835,0,0,0-1.84-1.832Z" transform="translate(502.56 197.595)" fill="#fff"/>
+          <path id="Path_306" data-name="Path 306" d="M267.82,924.11a1.832,1.832,0,1,0,1.832,1.832A1.839,1.839,0,0,0,267.82,924.11Z" transform="translate(498.99 197.595)" fill="#fff"/>
+          <path id="Path_307" data-name="Path 307" d="M227.712,937.48a1.836,1.836,0,1,0,1.832,1.832A1.833,1.833,0,0,0,227.712,937.48Z" transform="translate(509.698 194.024)" fill="#050630"/>
+          <path id="Path_308" data-name="Path 308" d="M241.082,937.48a1.836,1.836,0,1,0,1.84,1.832A1.833,1.833,0,0,0,241.082,937.48Z" transform="translate(506.128 194.024)" fill="#050630"/>
+          <path id="Path_309" data-name="Path 309" d="M254.45,937.48a1.836,1.836,0,1,0,1.84,1.832,1.835,1.835,0,0,0-1.84-1.832Z" transform="translate(502.56 194.024)" fill="#050630"/>
+          <path id="Path_310" data-name="Path 310" d="M241.082,950.84a1.832,1.832,0,1,0,1.84,1.84A1.835,1.835,0,0,0,241.082,950.84Z" transform="translate(506.128 190.457)" fill="#050630"/>
+          <path id="Path_311" data-name="Path 311" d="M218.487,833.157V827.1h11.3v34.2h-6.758V833.157H218.48Zm17.789,10.6q0-8.114,2.91-12.71,2.958-4.6,9.756-4.6t9.712,4.6q2.958,4.6,2.954,12.71c0,5.409-.982,9.712-2.954,12.812q-2.9,4.64-9.712,4.64t-9.756-4.64Q236.284,851.917,236.276,843.755Zm18.859,0a30.093,30.093,0,0,0-.469-5.812,7.613,7.613,0,0,0-1.781-3.892,4.948,4.948,0,0,0-3.943-1.5,5.1,5.1,0,0,0-3.987,1.5,8.053,8.053,0,0,0-1.781,3.892,33.836,33.836,0,0,0-.425,5.812,36.134,36.134,0,0,0,.425,6.01,7.67,7.67,0,0,0,1.781,3.892,6.2,6.2,0,0,0,7.975,0,7.611,7.611,0,0,0,1.781-3.892,36.307,36.307,0,0,0,.425-6.01Zm10.716-8.253a7.035,7.035,0,0,1,7.462-7.6,7.094,7.094,0,0,1,7.462,7.6,7.461,7.461,0,0,1-2.111,5.629,7.347,7.347,0,0,1-5.351,2.016,7.04,7.04,0,0,1-7.462-7.645Zm30.118-7.036L277.535,861.3h-6.377l18.39-32.837h6.428Zm-22.707,3.379q-2.584,0-2.58,3.658c0,2.441.858,3.709,2.58,3.709a2.376,2.376,0,0,0,1.972-.894,4.656,4.656,0,0,0,.7-2.815Q275.937,831.841,273.262,831.845Zm13.179,22.378a7.345,7.345,0,0,1,2.067-5.585,7.5,7.5,0,0,1,5.395-2.016,7.167,7.167,0,0,1,5.3,2.016,7.345,7.345,0,0,1,2.067,5.585,7.5,7.5,0,0,1-2.067,5.629,7.179,7.179,0,0,1-5.3,2.016,7.04,7.04,0,0,1-7.462-7.645Zm7.41-3.665q-2.672,0-2.675,3.665c0,2.441.894,3.7,2.675,3.7s2.624-1.231,2.624-3.7S295.6,850.557,293.851,850.557Z" transform="translate(511.674 223.673)" fill="#fff"/>
+        </g>
+      </g>
+      <text id="Enjoy_a" data-name="Enjoy a" transform="translate(626 1073)" fill="#333" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="20" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Enjoy a</tspan></text>
+      <text id="discount_for_25_or_more_users." data-name="discount for
+25 or more users." transform="translate(856 1073)" fill="#333" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="20" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">discount for</tspan><tspan x="0" y="26">25 or more users.</tspan></text>
+    </g>
+    <text id="Contact_our_representative_for_a_personalized_quote_for_50_users." data-name="Contact our representative for
+a personalized quote for 50+ users." transform="translate(1106 1073)" fill="#333" stroke="rgba(0,0,0,0)" stroke-width="1" font-size="20" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Contact our representative for</tspan><tspan x="0" y="26">a personalized quote for </tspan><tspan y="26" fill="#1c1f66">50+ users</tspan><tspan y="26">.</tspan></text>
+  </g>
+</svg>

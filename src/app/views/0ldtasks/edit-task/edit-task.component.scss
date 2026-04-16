@@ -1,0 +1,326 @@
+.reqired_task_redio {
+  margin-top: 36px;
+}
+
+.reqired_task_redio .form-check-input:focus {
+  box-shadow: none;
+  outline: none;
+}
+.reqired_task_redio label {
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 5px;
+  margin-left: 4px;
+  color: #111111;
+}
+.reqired_task_redio .form-check-input {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  border: 1px solid #bbbbbb;
+}
+
+.create_task_tab .nav-tabs {
+  border: none;
+}
+.create_task_tab .nav-tabs .nav-link {
+  color: var(--lightgrey-666666);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  border: 2px solid var(--light-grey-DDDDDD);
+  border-radius: 10px;
+  margin-right: 20px;
+  padding: 10px 20px;
+}
+.create_task_tab .nav-tabs .nav-link.active {
+  border: none;
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 10px;
+  border: 2px solid #1c1f66;
+  background-color: #1c1f66;
+}
+.nav-tabs .nav-item.show .nav-link {
+  border: none;
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  border-radius: 10px;
+  border: 2px solid #1c1f66;
+  background-color: #1c1f66;
+}
+
+.task_plus_icon {
+  cursor: pointer;
+}
+
+.create_task_tab .nav-tabs .nav-link:hover {
+  isolation: isolate;
+}
+.created_title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #666666;
+  margin: 0;
+}
+
+.task_user_img {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.mark_btn {
+  color: #1c1f66;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  border: 1px solid #1c1f66;
+  border-radius: 10px;
+  text-decoration: none;
+  padding: 10px 18px;
+}
+
+.priority_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.priority_label {
+  background-color: #e2faff;
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  border-radius: 10px;
+}
+.status_label {
+  background-color: #ffe2e2;
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  border-radius: 10px;
+}
+
+.sub_task_inner {
+  max-width: 400px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  margin: 0;
+}
+.add_checklist_inner {
+  max-width: 400px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  margin: 0;
+}
+.date_format_show {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  margin: 0;
+}
+.custom_search_icon {
+  border: 1px solid #dddddd;
+  border-right: none;
+  background-color: white;
+}
+.custom_search_input {
+  border: 1px solid #dddddd;
+  border-left: none;
+}
+.attach_file_user {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  margin: 0;
+}
+.attach_file_time {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  margin: 0;
+}
+.attached_file_count {
+  background-color: #f2fbff;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 10px;
+}
+.attach_file_name {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  margin: 0;
+}
+.file_attech_img {
+  background-color: #f2fbff;
+  padding: 10px;
+  border-radius: 100%;
+}
+
+.assign_select .selected-item {
+  background: #1c1f66;
+}
+.subtask_date_icon {
+  position: relative;
+}
+
+.checklist_date {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+}
+
+.subtask_date_inner {
+  position: absolute;
+  max-width: 300px;
+  width: 300px;
+  inset: 8px auto auto 0px;
+  margin: 0px;
+  transform: translate(-250px, 28px);
+  z-index: 99;
+}
+
+.subtask_comman_dropdown .dropdown-menu {
+  inset: 7px auto auto 0px !important;
+}
+
+// reminder css
+.remind_box {
+  position: relative;
+}
+.opn_rmd {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  display: inline-block;
+  width: 600px;
+  max-width: 600px;
+  padding: 15px;
+  z-index: 1;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 3px 30px 4px rgba(57, 105, 136, 0.0862745098);
+}
+
+.reminder_inner {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.reminder_calender{
+  width: 50%;
+}
+.right_box{
+  width: 50%;
+}
+
+.priority_wrapper button {
+  border: none;
+  background-color: transparent;
+  color: #707070;
+}
+ 
+.assign_role {
+  min-width: 300px;
+  max-width: calc(100% - 550px);
+  width: calc(100% - 550px);
+}
+.role_table {
+  border-collapse: separate;
+  border-spacing: 1px 10px;
+}
+
+.role_table tr th {
+  color: #111111;
+  font-size: 14px;
+  font-weight: 400;
+  vertical-align: middle;
+}
+.role_table tr td {
+  color: #111111;
+  font-size: 14px;
+  font-weight: 400;
+  vertical-align: middle;
+}
+
+.role_table tbody {
+  border: 1px solid #dddddd;
+}
+
+.role_table .role_type {
+  font-size: 18px !important;
+  line-height: 24px !important;
+  font-weight: 600 !important;
+  color: #111111 !important;
+}
+
+.role_table thead tr {
+  border-color: transparent;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  height: 55px;
+}
+
+.role_table tr td {
+  border-bottom: 1px dashed #dddddd;
+}
+
+.role_table tbody .assign-role-inner td {
+  border: none;
+}
+
+// reminder css
+
+@media only screen and (max-width: 1535px) {
+  .create_task_tab .nav-tabs .nav-link.active {
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 12px;
+  }
+  .create_task_tab .nav-tabs .nav-link {
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 12px;
+  }
+  .create_task_tab .nav-tabs .nav-link {
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 12px;
+  }
+  .submit_btn {
+    padding: 6px 18px;
+  }
+  .reqired_task_redio .form-check-input {
+    width: 20px;
+    height: 20px;
+  }
+  .add_checklist_inner{
+    max-width: 300px;
+  }
+  .sub_task_inner{
+    max-width: 200px;
+  }
+}

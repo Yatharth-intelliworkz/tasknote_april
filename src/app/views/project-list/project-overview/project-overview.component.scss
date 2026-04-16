@@ -1,0 +1,140 @@
+.project_discussion_wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+}
+.project_discussion_inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project_last_update_info {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #1c1f66;
+  margin: 0;
+}
+.project_discussion_inner
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  border: none;
+}
+
+.member_wrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+.member_img {
+  width: 77px;
+  height: 77px;
+  border-radius: 100%;
+  margin-bottom: 10px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.member_inner {
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.member_name {
+  font-size: 14px;
+  font-weight: 400;
+  color: #111111;
+  line-height: 19px;
+}
+.member_position {
+  font-size: 12px;
+  font-weight: 400;
+  color: #666666;
+  line-height: 16px;
+}
+
+.creator_member_role {
+  font-size: 14px;
+  font-weight: 400;
+  color: #111111;
+  line-height: 19px;
+  background-color: #d9f6d8;
+  border-radius: 5px;
+  text-align: center;
+  padding: 7px 10px;
+}
+.member_role {
+  font-size: 14px;
+  font-weight: 400;
+  color: #111111;
+  line-height: 19px;
+  background-color: #e1f2ff;
+  border-radius: 5px;
+  text-align: center;
+  padding: 7px 10px;
+}
+
+.user_short_name{
+  border-radius: 100%;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: white;
+  background-color: rgba(0, 128, 0, 0.438);
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  text-transform: uppercase;
+}
+
+.group_short_name {
+  background-color: #16b975;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #fff;
+  height: 70px;
+  width: 70px;
+  display: flex;
+  line-height: 30px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.project_table_data tr {
+  border-bottom: 1px dashed #dddddd;
+  margin: 10px 0;
+}
+.project_table_data tr td {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: #111111;
+  padding: 10px 0;
+}
+
+.modal-table, .modal-table tr td{
+  border: 1px solid #dddddd;
+  vertical-align: baseline;
+}
+p.project_info {
+  width: 200px;
+  font-size: medium;
+  font-weight: 500;
+}
+@media only screen and (max-width: 1535px) {
+  .project_last_update_info{
+    max-width: 130px;
+  }
+}

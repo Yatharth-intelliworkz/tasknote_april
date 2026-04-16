@@ -1,0 +1,59 @@
+.add_task_btn {
+  text-wrap: nowrap;
+  padding: 12px 14px;
+}
+
+.form_field .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.myleave_table .table-responsive {
+  height: calc(100vh - 15em);
+  overflow: auto;
+}
+.table-responsive {
+  height: calc(100vh - 15.5em);
+  overflow: auto;
+}
+.reject_btn {
+  color: #1c1f66;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 10px;
+  border: 1px solid #1c1f66;
+  padding: 12px 14px;
+  background-color: transparent;
+}
+.leave_card{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+.leave_card img{
+  width: 50px;
+}
+
+@media only screen and (max-width:1500px){
+  .leave_card{
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media only screen and (max-width:1200px){
+  .leave_card{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media only screen and (max-width:769px){
+  .leave_card{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width:578px){
+  .leave_card{
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

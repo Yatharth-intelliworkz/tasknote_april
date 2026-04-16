@@ -1,0 +1,167 @@
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.3)" size="medium" color="#fff" type="timer" [fullScreen]="true"></ngx-spinner>
+  <main>
+    <section class="user_task_wrapper">
+      <div class="row align-items-center mb-4">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+          <div>
+            <a [routerLink]="['/company-details', companyId]" class="me-3"><img
+                src="../../../assets/img/dashboard/back-arrow.svg" width="35px" height="35px" alt="" /></a>
+
+            <span class="task_table_title">Service Segment</span>
+          </div>
+        </div>
+        <div class="fade show" *ngIf="loading" style="text-align: center; padding-top: calc(100vh / 2); height: 100vh">
+          <i class="spinner-grow spinner-grow-sm"></i>
+          <span class="m-1">Loading...</span>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+          <div class="d-flex align-items-center gap-3 justify-content-end">
+            <div class="manage_searchbar">
+              <input type="text" formControlName="searchQueryControl" (input)="filterItems($event)" class="form-control"
+                id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Search here..." />
+              <img src="../../../assets/img/dashboard/search-icon.png" alt="search" class="searchbar_icon" />
+            </div>
+            <div>
+              <a *ngIf="userpermission?.add !== 0" class="add_task_btn" data-bs-toggle="modal"
+                data-bs-target="#addServiceModal">
+                Add Service Segment
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="task-table">
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table role_table">
+              <tbody class="dream-table">
+                <tr *ngFor="let servicelist of servicelist">
+                  <td>{{servicelist.title}}</td>
+                  <td class="text-end">
+                    <div>
+                      <a *ngIf="userpermission?.edit !== 0" href="javascript:void(0)" data-bs-toggle="modal"
+                        data-bs-target="#editmanageServiceModal" (click)="serviceedit(servicelist.id)">
+                        <img src="../../../assets/img/dashboard/table-edit-icon.svg" alt="" class="me-4" />
+                      </a>
+                      <a data-bs-toggle="modal" data-bs-target="#deleteserviceModal"
+                        (click)="deleteservicesopendialogue(servicelist.id)">
+                        <img *ngIf="userpermission?.delete !== 0"
+                          src="../../../assets/img/dashboard/table-delete-icon.svg" alt="" />
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- add Manage Service Modal -->
+  <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title new_task_title" id="exampleModalLabel">
+            Add Service Segment
+          </h5>
+          <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+            class="popup_close_btn" />
+        </div>
+        <div class="modal-body">
+          <form role="form" #submitForm="ngForm" (ngSubmit)="insertservice(submitForm.value)">
+
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="mb-3">
+                  <div class="form_field">
+                    <mat-form-field>
+                      <input matInput #input type="text" class="form-control" ngModel id="addNoteTitle" name="title"
+                        placeholder="Enter Service Segment">
+                      <input type="hidden" [(ngModel)]="companyId" name="companyId">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <button class="submit_btn">Submit</button>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- add Edit Manage Service Modal -->
+
+  <!-- Edit Manage Service Modal -->
+  <div class="modal fade" id="editmanageServiceModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Service Segment</h5>
+          <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close"
+            class="popup_close_btn_edit" alt="" />
+        </div>
+        <div class="modal-body">
+          <div class="form_field">
+            <form [formGroup]="editForm" (ngSubmit)="updateservice()">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                  <div class="mb-3">
+                    <div class="form_field">
+                      <mat-form-field>
+                        <input matInput #input placeholder="Service Name" class="form-control" formControlName="title"
+                          [(ngModel)]="noteslistedit.title" placeholder="Enter Service Segment" />
+                        <input type="hidden" class="form-control" id="serviceID" formControlName="serviceID"
+                          [(ngModel)]="noteslistedit.id">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                  <button class="submit_btn" (click)="updateservice()">Submit</button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Edit Manage Service Modal -->
+
+
+  <div class="modal fade" id="deleteserviceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title new_task_title" id="exampleModalLabel">
+            Delete Service
+          </h5>
+          <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
+            class="popup_close_btn_delete_service" />
+        </div>
+        <div class="modal-body">
+          <h2 class="task_complete_title">
+            Are you sure you want to delete this service?
+          </h2>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+              <button class="btn submit_btn" (click)="confirmDelete()">Yes</button>
+              <!-- <button class="btn cancel_btn" (click)="dismissModal()">No</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
