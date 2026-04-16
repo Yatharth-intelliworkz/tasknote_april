@@ -378,7 +378,9 @@ export class ViewTaskComponent {
     this.commonService.checkLoggedIn();
     this.selectPriority('../../../assets/img/dashboard/flag-R.svg');
     this.minDate = new Date();
+    this.minDate.setHours(0, 0, 0, 0);
     this.minDates = new Date();
+    this.minDates.setHours(0, 0, 0, 0);
 
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
@@ -629,7 +631,8 @@ export class ViewTaskComponent {
         .subscribe(
           (response: any) => {
             if (response) {
-              this.editbutton = response.edit;
+              // UI permission gating removed: allow all roles to edit tasks.
+              this.editbutton = 1;
               this.taskData = response.data;
           
               this.getchecklist(this.taskData.type_id);
@@ -1439,12 +1442,33 @@ export class ViewTaskComponent {
 
     // Convert dates to UTC format if they are defined
     if (this.range.value.start) {
+      const startDate = new Date(this.range.value.start);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (startDate < today) {
+        this.toastr.error('Task start date cannot be in the past');
+        return;
+      }
       information.start = this.toUTC(this.range.value.start);
     }
     if (this.range.value.due_date) {
+      const dueDate = new Date(this.range.value.due_date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (dueDate < today) {
+        this.toastr.error('Task due date cannot be in the past');
+        return;
+      }
       information.due_date = this.toUTC(this.range.value.due_date);
     }
     if (this.range.value.periodic_date) {
+      const periodicDate = new Date(this.range.value.periodic_date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (periodicDate < today) {
+        this.toastr.error('Task periodic date cannot be in the past');
+        return;
+      }
       information.periodic_date = this.toUTC(this.range.value.periodic_date);
     }
 

@@ -278,6 +278,10 @@ export class CreteNewTaskComponent implements OnInit {
   ngOnInit(): void {
     // this.commentDelete();
     this.todayDate = this.getFormattedDate(new Date());
+    // Used for date-picker min constraints (no past date selection).
+    this.minDate = new Date();
+    this.minDate.setHours(0, 0, 0, 0);
+    this.maxDate = new Date(this.minDate);
     this.permission();
     this.ClientList();
     this.responsiblePersonList();
@@ -775,6 +779,15 @@ export class CreteNewTaskComponent implements OnInit {
       return;
     }
 
+    // Do not allow past dates for subtask due date.
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = this.selected ? new Date(this.selected) : null;
+    if (selectedDate && selectedDate < today) {
+      this.toastr.error('Subtask due date cannot be in the past');
+      return;
+    }
+
     const newSubtask = {
       sub_title: arrayofsubtask?.value.sub_title,
       sub_due_date: this.datePipe.transform(this.selected, 'yyyy-MM-dd'),
@@ -804,6 +817,16 @@ export class CreteNewTaskComponent implements OnInit {
       this.toastr.error('Please add checklist name');
       return;
     }
+
+    // Do not allow past dates for checklist date.
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = this.selected ? new Date(this.selected) : null;
+    if (selectedDate && selectedDate < today) {
+      this.toastr.error('Checklist date cannot be in the past');
+      return;
+    }
+
     const newchecklist = {
       checkList_title: checklist?.value.checkList_title,
       checkList_date: this.datePipe.transform(this.selected, 'yyyy-MM-dd'),
@@ -817,15 +840,44 @@ export class CreteNewTaskComponent implements OnInit {
 
 
     if (this.range.value.start) {
+      const startDate = new Date(this.range.value.start);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (startDate < today) {
+        this.toastr.error('Task start date cannot be in the past');
+        return;
+      }
       information.start = this.toUTC(this.range.value.start);
     }
 
     if (this.range.value.due_date) {
+      const dueDate = new Date(this.range.value.due_date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (dueDate < today) {
+        this.toastr.error('Task due date cannot be in the past');
+        return;
+      }
       information.due_date = this.toUTC(this.range.value.due_date);
     }
 
     information.is_cocuments = this.checkboxStates;
 
+
+    if (this.periodic_date?.value) {
+      const periodicValue = this.periodic_date.value;
+      const periodicDate = moment.isMoment(periodicValue)
+        ? periodicValue.toDate()
+        : new Date(periodicValue);
+      periodicDate.setHours(0, 0, 0, 0);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (periodicDate < today) {
+        this.toastr.error('Task periodic date cannot be in the past');
+        return;
+      }
+    }
 
     information.periodic_date = this.periodic_date.value;
 
@@ -1158,10 +1210,8 @@ export class CreteNewTaskComponent implements OnInit {
   }
 
   permission() {
-    const permissions = JSON.parse(localStorage.getItem('permissions') || '{}');
-    if (permissions.taskPermission.add == 0) {
-      this.route.navigate(['/tasks']);
-    }
+    // UI permission gating removed: allow all roles to create tasks.
+    // (If you need true security, enforce it server-side as well.)
   }
 
   loadProjectsList() {

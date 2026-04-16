@@ -2334,8 +2334,9 @@ export class TasksComponent {
         .subscribe(
           (response: any) => {
             this.taskListData = response?.data;
-            this.addbutton = response.add;
-            this.editbutton = response.edit;
+            // UI permission gating removed: allow all roles to manage tasks.
+            this.addbutton = 1;
+            this.editbutton = 1;
             this.toggleOpened();
             this.toastr.success('filter data retrived');
             this.spinner.hide();
@@ -2544,8 +2545,9 @@ export class TasksComponent {
           this.todayListRowData = this.taskListData.todayTaskData;
           this.overDueListRowData = this.taskListData.overDueTaskData;
           this.upcomingListRowData = this.taskListData.upcomingTaskData;
-          this.addbutton = response.add;
-          this.editbutton = response.edit;
+          // UI permission gating removed: allow all roles to manage tasks.
+          this.addbutton = 1;
+          this.editbutton = 1;
           this.spinner.hide();
         
         },
