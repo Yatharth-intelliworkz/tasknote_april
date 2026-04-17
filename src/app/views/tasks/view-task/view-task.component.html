@@ -399,13 +399,11 @@
                               matStartDate
                               formControlName="start"
                               placeholder="Task Start Date"
-                              [min]="minDate"
                             />
                             <input
                               matEndDate
                               formControlName="due_date"
                               placeholder="Task End Date"
-                              [min]="minDate"
                             />
                           </mat-date-range-input>
                           <mat-datepicker-toggle
@@ -488,8 +486,8 @@
                         formControlName="periodic_date"
                         [disabled]="isHidden"
                         [matDatepicker]="pickers"
-                        [min]="minDate"
                         placeholder="Task Periodic Date"
+                        [matDatepickerFilter]="dateFilter"
                       />
                       <mat-datepicker-toggle
                         matIconSuffix

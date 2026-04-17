@@ -292,22 +292,23 @@
                           <mat-form-field class="example-form-field">
                             <mat-label>Range</mat-label>
                             <mat-date-range-input
-                              [formGroup]="campaignOne"
-                              [rangePicker]="campaignOnePicker"
-                              [comparisonStart]="campaignTwo?.value?.rangestart"
-                              [comparisonEnd]="campaignTwo.value?.rangeend"
-                            >
-                              <input
-                                matStartDate
-                                placeholder="Start date"
-                                formControlName="rangestart"
-                              />
-                              <input
-                                matEndDate
-                                placeholder="End date"
-                                formControlName="rangeend"
-                              />
-                            </mat-date-range-input>
+                                [formGroup]="campaignOne"
+                                [rangePicker]="campaignOnePicker"
+                                [comparisonStart]="campaignTwo?.value?.rangestart"
+                                [comparisonEnd]="campaignTwo.value?.rangeend"
+                                [dateFilter]="dateFilter"
+                              >
+                                <input
+                                  matStartDate
+                                  placeholder="Start date"
+                                  formControlName="rangestart"
+                                />
+                                <input
+                                  matEndDate
+                                  placeholder="End date"
+                                  formControlName="rangeend"
+                                />
+                              </mat-date-range-input>
                             <!-- <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint> -->
                             <mat-datepicker-toggle
                               matIconSuffix
@@ -329,6 +330,7 @@
                             <mat-card class="demo-inline-calendar-card">
                               <mat-calendar
                                 [(selected)]="befordate"
+                                [dateFilter]="dateFilter"
                               ></mat-calendar>
                               <input
                                 type="hidden"
@@ -349,6 +351,7 @@
                             <mat-card class="demo-inline-calendar-card">
                               <mat-calendar
                                 [(selected)]="ondate"
+                                [dateFilter]="dateFilter"
                               ></mat-calendar>
                               <input
                                 type="hidden"
@@ -369,6 +372,7 @@
                             <mat-card class="demo-inline-calendar-card">
                               <mat-calendar
                                 [(selected)]="afterdate"
+                                [dateFilter]="dateFilter"
                               ></mat-calendar>
                               <input
                                 type="hidden"

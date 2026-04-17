@@ -229,20 +229,19 @@
                             <mat-date-range-input
                               [formGroup]="range"
                               [rangePicker]="picker"
+                              [dateFilter]="dateFilter"
                             >
                               <input
                                 matStartDate
                                 formControlName="start"
                                 placeholder="Start Date"
                                 datePickerFormat="YYYY/MM/DD"
-                                [min]="minDate"
                               />
                               <input
                                 matEndDate
                                 formControlName="due_date"
                                 placeholder="Due Date"
                                 datePickerFormat="YYYY/MM/DD"
-                                [min]="minDate"
                               />
                             </mat-date-range-input>
                             <mat-datepicker-toggle
@@ -312,7 +311,7 @@
                           [matDatepicker]="dp"
                           [formControl]="periodic_date"
                           formControlName="periodic_date"
-                          [min]="minDate"
+                          [matDatepickerFilter]="dateFilter"
                         />
                         <mat-datepicker-toggle
                           matIconSuffix
@@ -564,7 +563,7 @@
                                 </a>
                                 <div>
                                   <mat-menu #subtaskDate="matMenu" xPosition="before" class="subtask_date_inner">
-                                    <mat-calendar [(selected)]="selected" [minDate]="minDate"></mat-calendar>
+                                    <mat-calendar [(selected)]="selected" [dateFilter]="dateFilter"></mat-calendar>
                                   </mat-menu>
 
                                 </div>
@@ -1066,7 +1065,7 @@
                           xPosition="before"
                           class="subtask_date_inner"
                         >
-                          <mat-calendar [(selected)]="selected" [minDate]="minDate"></mat-calendar>
+                          <mat-calendar [(selected)]="selected"></mat-calendar>
                         </mat-menu>
                       </div>
                     </div>

@@ -144,6 +144,12 @@ interface StatusItem {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CreteNewTaskComponent implements OnInit {
+    // Date filter to disable past dates
+    dateFilter = (d: Date | null): boolean => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return d ? d >= today : false;
+    };
   // nikunj changes 28-12 subtask & checklist
   @ViewChild('subTaskdata', { static: true }) subTaskdata!: ElementRef;
   @ViewChild('listsubTask', { static: true }) listsubTask!: ElementRef;
@@ -779,14 +785,7 @@ export class CreteNewTaskComponent implements OnInit {
       return;
     }
 
-    // Do not allow past dates for subtask due date.
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const selectedDate = this.selected ? new Date(this.selected) : null;
-    if (selectedDate && selectedDate < today) {
-      this.toastr.error('Subtask due date cannot be in the past');
-      return;
-    }
+    // Removed past date validation for subtask due date.
 
     const newSubtask = {
       sub_title: arrayofsubtask?.value.sub_title,
@@ -818,14 +817,7 @@ export class CreteNewTaskComponent implements OnInit {
       return;
     }
 
-    // Do not allow past dates for checklist date.
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const selectedDate = this.selected ? new Date(this.selected) : null;
-    if (selectedDate && selectedDate < today) {
-      this.toastr.error('Checklist date cannot be in the past');
-      return;
-    }
+    // Removed past date validation for checklist date.
 
     const newchecklist = {
       checkList_title: checklist?.value.checkList_title,
@@ -838,45 +830,16 @@ export class CreteNewTaskComponent implements OnInit {
 
   onSubmit(information: any) {
 
-
+    // Removed all past date validation and error messages for start, due, and periodic dates.
     if (this.range.value.start) {
-      const startDate = new Date(this.range.value.start);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (startDate < today) {
-        this.toastr.error('Task start date cannot be in the past');
-        return;
-      }
       information.start = this.toUTC(this.range.value.start);
     }
-
     if (this.range.value.due_date) {
-      const dueDate = new Date(this.range.value.due_date);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (dueDate < today) {
-        this.toastr.error('Task due date cannot be in the past');
-        return;
-      }
       information.due_date = this.toUTC(this.range.value.due_date);
     }
-
     information.is_cocuments = this.checkboxStates;
-
-
     if (this.periodic_date?.value) {
-      const periodicValue = this.periodic_date.value;
-      const periodicDate = moment.isMoment(periodicValue)
-        ? periodicValue.toDate()
-        : new Date(periodicValue);
-      periodicDate.setHours(0, 0, 0, 0);
-
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (periodicDate < today) {
-        this.toastr.error('Task periodic date cannot be in the past');
-        return;
-      }
+      // No validation for past periodic date
     }
 
     information.periodic_date = this.periodic_date.value;

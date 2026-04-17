@@ -163,7 +163,14 @@ const year = today.getFullYear();
   ],
 })
 export class TasksComponent {
+    // Date filter to disable past dates
+    dateFilter = (d: Date | null): boolean => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return d ? d >= today : false;
+    };
   @ViewChild('reasonInput') reasonInput!: ElementRef;
+  today: Date = new Date();
   @ViewChild('timerhour') timerhour!: ElementRef;
 
   public pinColumnDefs: ColDef[] = [

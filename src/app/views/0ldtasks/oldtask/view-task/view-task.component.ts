@@ -216,6 +216,13 @@ export class ViewTaskComponent {
   projectRemainingPrice: any;
   remainingtotalCost: any;
 
+  // Date filter to disable past dates
+  dateFilter = (d: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return d ? d >= today : false;
+  };
+
   selectPriority(priority: any): void {
     this.sub_priority = priority;
     if (priority == 2) {

@@ -216,6 +216,13 @@ export class ViewTaskComponent {
   projectRemainingPrice: any;
   remainingtotalCost: any;
 
+  // Date filter to disable past dates
+  dateFilter = (d: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return d ? d >= today : false;
+  };
+
   selectPriority(priority: any): void {
     this.sub_priority = priority;
     if (priority == 2) {
@@ -1442,33 +1449,12 @@ export class ViewTaskComponent {
 
     // Convert dates to UTC format if they are defined
     if (this.range.value.start) {
-      const startDate = new Date(this.range.value.start);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (startDate < today) {
-        this.toastr.error('Task start date cannot be in the past');
-        return;
-      }
       information.start = this.toUTC(this.range.value.start);
     }
     if (this.range.value.due_date) {
-      const dueDate = new Date(this.range.value.due_date);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (dueDate < today) {
-        this.toastr.error('Task due date cannot be in the past');
-        return;
-      }
       information.due_date = this.toUTC(this.range.value.due_date);
     }
     if (this.range.value.periodic_date) {
-      const periodicDate = new Date(this.range.value.periodic_date);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (periodicDate < today) {
-        this.toastr.error('Task periodic date cannot be in the past');
-        return;
-      }
       information.periodic_date = this.toUTC(this.range.value.periodic_date);
     }
 
