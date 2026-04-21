@@ -413,7 +413,7 @@ export class DashboardComponent implements OnInit {
     const token = localStorage.getItem('tasklogintoken');
 
     if (information.title === '' || information.description === '') {
-      this.toastr.error('Please fill title & description');
+      this.toastr.error('Please fill Title & Description');
       return;
     }
 

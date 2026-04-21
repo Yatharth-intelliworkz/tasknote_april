@@ -234,7 +234,10 @@
                     <div class="form_field">
                       <mat-form-field appearance="fill">
                        <input matInput formControlName="total_cost" 
-                          placeholder="Project Cost" />
+                          placeholder="Project Cost*" />
+                        <mat-error *ngIf="addprojectForm.get('total_cost')?.hasError('required')">
+                          Project Cost is required
+                        </mat-error>
                         </mat-form-field>
                     </div>
                   </div>
@@ -243,11 +246,14 @@
                   <div class="mb-3">
                     <div class="form_field">
                       <mat-form-field appearance="fill">
-                        <mat-select placeholder="Service Segment" formControlName="servic_id">
+                        <mat-select placeholder="Service Segment*" formControlName="servic_id">
                           <mat-option *ngFor="let servicelistData of servicelistData" [value]="servicelistData.id">
                             {{ servicelistData.title }}
                           </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="addprojectForm.get('servic_id')?.hasError('required')">
+                          Service Segment is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -255,10 +261,13 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                   <div class="mb-3">
                     <div class="task_multiselect">
-                      <ng-multiselect-dropdown id="projectManagerDropdown" name="city" placeholder="Project Manager"
+                      <ng-multiselect-dropdown id="projectManagerDropdown" name="city" placeholder="Project Manager*"
                         [settings]="dropdownSettings1" [data]="team1" [(ngModel)]="managerName"
                         formControlName="manager_id" ></ng-multiselect-dropdown>
                         <!-- (onSelect)="onManagerSelect($event)" -->
+                      <div *ngIf="addprojectForm.get('manager_id')?.hasError('required') && addprojectForm.get('manager_id')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                        Project Manager is required
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -266,11 +275,14 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                   <div class="mb-3">
                     <div class="task_multiselect">
-                      <ng-multiselect-dropdown id="membersDropdown" name="city" placeholder="Reference By"
+                      <ng-multiselect-dropdown id="membersDropdown" name="city" placeholder="Reference By*"
                         [settings]="dropdownSettings2" [data]="team3"  formControlName="members_id"
                         [(ngModel)]="membersName">
                         <!-- ... Your templates here ... -->
                       </ng-multiselect-dropdown>
+                      <div *ngIf="addprojectForm.get('members_id')?.hasError('required') && addprojectForm.get('members_id')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                        Reference By is required
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -280,9 +292,12 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input matInput formControlName="start_date" [matDatepicker]="picker"
-                          placeholder="Select Start Date" />
+                          placeholder="Select Start Date*" />
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="addprojectForm.get('start_date')?.hasError('required')">
+                          Start Date is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -292,9 +307,12 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input formControlName="end_date" matInput [matDatepicker]="picker1"
-                          placeholder="Select End Date" />
+                          placeholder="Select End Date*" />
                         <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="addprojectForm.get('end_date')?.hasError('required')">
+                          End Date is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -303,7 +321,10 @@
                   <div class="mb-3">
                     <div class="form_field custom_textarea">
                       <mat-form-field>
-                        <textarea matInput formControlName="description" placeholder="Description"></textarea>
+                        <textarea matInput formControlName="description" placeholder="Description*"></textarea>
+                        <mat-error *ngIf="addprojectForm.get('description')?.hasError('required')">
+                          Description is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -320,10 +341,13 @@
                     <td>
                       <div class="form_field">
                       <mat-form-field>
-                        <mat-select  placeholder="Task Type" formControlName="tasktype">
+                        <mat-select  placeholder="Task Type*" formControlName="tasktype">
                               <mat-option [value]="tasktypelist.id" *ngFor="let tasktypelist of tasktypelist">{{tasktypelist.title}}</mat-option>
                         </mat-select>
                       </mat-form-field>
+                      <div *ngIf="addprojectForm.get('tasktype')?.hasError('required') && addprojectForm.get('tasktype')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                        Task Type is required
+                      </div>
                     </div>
                     </td>
                     <td>
@@ -336,7 +360,7 @@
                     <td>
                       <div class="form_field">
                       <mat-form-field>
-                        <mat-select  placeholder="HH" formControlName="hours">
+                        <mat-select  placeholder="HH*" formControlName="hours">
                               <mat-option [value]="1">1</mat-option>
                               <mat-option [value]="2">2</mat-option>
                               <mat-option [value]="3">3</mat-option>
@@ -363,6 +387,9 @@
                               <mat-option [value]="24">24</mat-option>
                         </mat-select>
                       </mat-form-field>
+                      <div *ngIf="addprojectForm.get('hours')?.hasError('required') && addprojectForm.get('hours')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                        Hours is required
+                      </div>
                     </div>
                     </td>
                     <td>

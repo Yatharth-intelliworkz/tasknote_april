@@ -170,11 +170,11 @@ export class ProjectsComponent implements OnInit {
       end_date: [null, Validators.required],
       description: [null, Validators.required],
       projectID: '',
-      servic_id: '',
-      total_cost: '',
+      servic_id: [null, Validators.required],
+      total_cost: [null, Validators.required],
       remark: [''],
       tasktype: [null, Validators.required],
-      hours: [''],
+      hours: [null, Validators.required],
 
     });
 
@@ -186,11 +186,11 @@ export class ProjectsComponent implements OnInit {
       end_date: [null, Validators.required],
       description: [null, Validators.required],
       projectID: '',
-      servic_id: '',
-      total_cost: '',
+      servic_id: [null, Validators.required],
+      total_cost: [null, Validators.required],
       remark: [''],
       tasktype: [null, Validators.required],
-      hours: [''],
+      hours: [null, Validators.required],
 
     });
 
@@ -449,11 +449,13 @@ export class ProjectsComponent implements OnInit {
   }
 
   addproject(information: any) {
-
-    // if (this.addprojectForm.invalid) {
-    //   this.toastr.error('Please fill in all required fields');
-    //   return;
-    // }
+    if (this.addprojectForm.invalid) {
+      // Mark all fields as touched to display error messages
+      Object.keys(this.addprojectForm.controls).forEach(key => {
+        this.addprojectForm.get(key)?.markAsTouched();
+      });
+      return;
+    }
     this.spinner.show();
 
 

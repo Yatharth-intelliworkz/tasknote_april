@@ -23,7 +23,10 @@
                   <div class="mb-3">
                     <div class="form_field">
                       <mat-form-field appearance="fill">
-                        <input matInput formControlName="total_cost" [(ngModel)]="projectlistedit.total_cost" placeholder="Project Cost" />
+                        <input matInput formControlName="total_cost" [(ngModel)]="projectlistedit.total_cost" placeholder="Project Cost*" />
+                        <mat-error *ngIf="addprojectForm.get('total_cost')?.hasError('required')">
+                          Project Cost is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -32,11 +35,14 @@
                   <div class="mb-3">
                     <div class="form_field">
                       <mat-form-field appearance="fill">
-                        <mat-select placeholder="Service Segment"  [(ngModel)]="projectlistedit.service_id" formControlName="servic_id">
+                        <mat-select placeholder="Service Segment*"  [(ngModel)]="projectlistedit.service_id" formControlName="servic_id">
                           <mat-option *ngFor="let servicelistData of servicelistData" [value]="servicelistData.id">
                             {{ servicelistData.title }}
                           </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="addprojectForm.get('servic_id')?.hasError('required')">
+                          Service Segment is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -53,11 +59,13 @@
                         bindLabel="item_text" 
                         bindValue="item_id" 
                         [(ngModel)]="managerName" 
-                        placeholder="Project Manager"
+                        placeholder="Project Manager*"
                         formControlName="manager_id" 
                         [multiple]="true">
                       </ng-select>
-                      
+                      <div *ngIf="addprojectForm.get('manager_id')?.hasError('required') && addprojectForm.get('manager_id')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                        Project Manager is required
+                      </div>
 
                     </div>
                   </div>
@@ -67,7 +75,10 @@
                   <div class="mb-3">
                     <div class="form_field">
                       <mat-form-field>
-                        <input matInput formControlName="members_id"  [(ngModel)]="projectlistedit.membersName" placeholder="Reference By" class="text-capitalize" />
+                        <input matInput formControlName="members_id"  [(ngModel)]="projectlistedit.membersName" placeholder="Reference By*" class="text-capitalize" />
+                        <mat-error *ngIf="addprojectForm.get('members_id')?.hasError('required')">
+                          Reference By is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -78,9 +89,12 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input matInput formControlName="start_date"  [(ngModel)]="projectlistedit.start_date" [matDatepicker]="picker"
-                          placeholder="Select Start Date" />
+                          placeholder="Select Start Date*" />
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="addprojectForm.get('start_date')?.hasError('required')">
+                          Start Date is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -90,9 +104,12 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input formControlName="end_date" matInput [matDatepicker]="picker1"
-                          placeholder="Select End Date"  [(ngModel)]="projectlistedit.end_date" />
+                          placeholder="Select End Date*"  [(ngModel)]="projectlistedit.end_date" />
                         <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="addprojectForm.get('end_date')?.hasError('required')">
+                          End Date is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -101,7 +118,10 @@
                   <div class="mb-3">
                     <div class="form_field custom_textarea">
                       <mat-form-field>
-                        <textarea matInput formControlName="description"  [(ngModel)]="projectlistedit.description" placeholder="Description"></textarea>
+                        <textarea matInput formControlName="description"  [(ngModel)]="projectlistedit.description" placeholder="Description*"></textarea>
+                        <mat-error *ngIf="addprojectForm.get('description')?.hasError('required')">
+                          Description is required
+                        </mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -120,10 +140,13 @@
                         <td>
                           <div class="form_field">
                             <mat-form-field>
-                              <mat-select placeholder="Task Type" formControlName="tasktype">
+                              <mat-select placeholder="Task Type*" formControlName="tasktype">
                                 <mat-option *ngFor="let task of tasktypelist" [value]="task.id">{{ task.title }}</mat-option>
                               </mat-select>
                             </mat-form-field>
+                            <div *ngIf="addprojectForm.get('tasktype')?.hasError('required') && addprojectForm.get('tasktype')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                              Task Type is required
+                            </div>
                           </div>
                         </td>
                         <td>
@@ -133,7 +156,7 @@
                                 matInput
                                 #input
                                 formControlName="hours"
-                                placeholder="Hour"
+                                placeholder="Hour*"
                                 type="number"
                                 inputmode="numeric"
                                 min="0"
@@ -142,13 +165,19 @@
                                 (keypress)="isNumberKey($event)"
                               />
                             </mat-form-field>
+                            <div *ngIf="addprojectForm.get('hours')?.hasError('required') && addprojectForm.get('hours')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                              Hours is required
+                            </div>
                           </div>
                         </td>
                         <td>
                           <div class="form_field">
                             <mat-form-field>
-                                <input matInput #input formControlName="cost" placeholder="Cost" />
+                                <input matInput #input formControlName="cost" placeholder="Cost*" />
                             </mat-form-field>
+                            <div *ngIf="addprojectForm.get('cost')?.hasError('required') && addprojectForm.get('cost')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                              Cost is required
+                            </div>
                           </div>
                         </td>
                         <td>

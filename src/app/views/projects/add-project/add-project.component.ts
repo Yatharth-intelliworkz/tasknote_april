@@ -103,13 +103,13 @@ export class AddProjectComponent {
       end_date: [null, Validators.required],
       description: [null, Validators.required],
       projectID: '',
-      servic_id: '',
-      total_cost: '',
+      servic_id: [null, Validators.required],
+      total_cost: [null, Validators.required],
       tasktypedata: this.fb.array([]),
       remark: [''],
       tasktype: [null, Validators.required],
       hours: [null, Validators.required],
-      cost: [''],
+      cost: [null, Validators.required],
       tasktypechecklistarray: [''],
       tasktypechecklistarraystore: [''],
       tasktypechecklistarrayDisplay: [''],
@@ -180,7 +180,10 @@ export class AddProjectComponent {
   addproject(information: any) {
     this.spinner.show();
     if (this.addprojectForm.invalid) {
-      this.toastr.error('Fill required fields.');
+      // Mark all fields as touched to display error messages
+      Object.keys(this.addprojectForm.controls).forEach(key => {
+        this.addprojectForm.get(key)?.markAsTouched();
+      });
       this.spinner.hide();
       return;
     }

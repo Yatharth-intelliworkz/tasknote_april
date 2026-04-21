@@ -753,7 +753,6 @@ export class TasksComponent {
         img.alt = '';
         img.style.cursor = 'pointer';
         img.style.width = '29px';
-        // Check if status is 'Closed'
        
           img.setAttribute('data-bs-toggle', 'modal');
           img.setAttribute('data-bs-target', '#delayTaskModal');
@@ -1049,16 +1048,32 @@ export class TasksComponent {
       width: 100,
       cellRenderer: (params: any) => {
         const taskId = params.data.task_id;
-        const status = params.data.status;
+        const dueDate = params.data.due_date ? new Date(params.data.due_date) : null;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const isPastDate = dueDate && dueDate < today;
 
         // Create an image element dynamically
         const img = document.createElement('img');
         img.src = '../../../assets/img/dashboard/delay-icon.svg';
         img.alt = '';
-        img.style.cursor = 'pointer';
         img.style.width = '29px';
-        // Check if status is 'Closed'
-       
+        
+        // Disable delay for past dates
+        if (isPastDate) {
+          img.style.cursor = 'not-allowed';
+          img.style.opacity = '0.5';
+          img.addEventListener('click', () => {
+            this.toastr.error('Cannot add delay for past due tasks.', 'Error', {
+              timeOut: 2000,
+              extendedTimeOut: 1000,
+              closeButton: true,
+              progressBar: true,
+              tapToDismiss: true,
+            });
+          });
+        } else {
+          img.style.cursor = 'pointer';
           img.setAttribute('data-bs-toggle', 'modal');
           img.setAttribute('data-bs-target', '#delayTaskModal');
 
@@ -1066,7 +1081,7 @@ export class TasksComponent {
           img.addEventListener('click', () => {
             this.openModalDelay(taskId);
           });
-       
+        }
 
         return img;
       },
@@ -1354,29 +1369,40 @@ export class TasksComponent {
       width: 100,
       cellRenderer: (params: any) => {
         const taskId = params.data.task_id;
-        const status = params.data.status;
+        const dueDate = params.data.due_date ? new Date(params.data.due_date) : null;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const isPastDate = dueDate && dueDate < today;
 
         // Create an image element dynamically
         const img = document.createElement('img');
         img.src = '../../../assets/img/dashboard/delay-icon.svg';
         img.alt = '';
-        img.style.cursor = 'pointer';
         img.style.width = '29px';
-        // Check if status is 'Closed'
-       
+        
+        // Disable delay for past dates
+        if (isPastDate) {
+          img.style.cursor = 'not-allowed';
+          img.style.opacity = '0.5';
+          img.addEventListener('click', () => {
+            this.toastr.error('Cannot add delay for past due tasks.', 'Error', {
+              timeOut: 2000,
+              extendedTimeOut: 1000,
+              closeButton: true,
+              progressBar: true,
+              tapToDismiss: true,
+            });
+          });
+        } else {
+          img.style.cursor = 'pointer';
           img.setAttribute('data-bs-toggle', 'modal');
           img.setAttribute('data-bs-target', '#delayTaskModal');
 
           // Add event listener to trigger modal programmatically
           img.addEventListener('click', () => {
             this.openModalDelay(taskId);
-            const reasonInput = document.getElementById('reason') as HTMLElement;
-             if (reasonInput) {
-              
-               reasonInput.click();
-             }
           });
-       
+        }
 
         return img;
       },
