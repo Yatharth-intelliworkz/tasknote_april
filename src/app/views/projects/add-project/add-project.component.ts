@@ -90,6 +90,9 @@ export class AddProjectComponent {
   currentChecklistIndex: number | null = null;
   isView: any;
   filteredChecklistArray: any[] = [];
+  showTaskTypeError = false;
+  showHoursError = false;
+  showCostError = false;
 
   constructor(private elementRef: ElementRef, private toastr: ToastrService, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private commonService: CommonService, private renderer: Renderer2, private router: Router
   ) {
@@ -107,9 +110,9 @@ export class AddProjectComponent {
       total_cost: [null, Validators.required],
       tasktypedata: this.fb.array([]),
       remark: [''],
-      tasktype: [null, Validators.required],
-      hours: [null, Validators.required],
-      cost: [null, Validators.required],
+      tasktype: [null],
+      hours: [null],
+      cost: [null],
       tasktypechecklistarray: [''],
       tasktypechecklistarraystore: [''],
       tasktypechecklistarrayDisplay: [''],
@@ -187,9 +190,41 @@ export class AddProjectComponent {
       this.spinner.hide();
       return;
     }
+
+    if (!this.tryAddDraftTaskTypeRow()) {
+      this.spinner.hide();
+      return;
+    }
+
+    const hasDraftTaskTypeRow = !!(
+      this.addprojectForm.get('tasktype')?.value ||
+      this.addprojectForm.get('hours')?.value ||
+      this.addprojectForm.get('cost')?.value ||
+      this.addprojectForm.get('remark')?.value ||
+      this.addprojectForm.get('task_description')?.value
+    );
+
+    if (this.tasktypedata.length === 0) {
+      this.showTaskTypeError = true;
+      this.showHoursError = false;
+      this.showCostError = false;
+      this.toastr.error(
+        hasDraftTaskTypeRow
+          ? 'Please click + to add Task Type in list before submit.'
+          : 'Please add at least one Task Type in list.'
+      );
+      this.spinner.hide();
+      return;
+    }
+
     const formData = new FormData();
     const companyID = localStorage.getItem('usercompanyId');
     const selectedmanager = this.addprojectForm.get('manager_id')?.value;
+    const normalizedManagerIds = Array.isArray(selectedmanager)
+      ? selectedmanager
+      : selectedmanager
+        ? [selectedmanager]
+        : [];
     if (companyID) {
       formData.append('companyId', companyID);
     }
@@ -207,12 +242,19 @@ export class AddProjectComponent {
 
 
     formData.set('total_cost', this.addprojectForm.get('total_cost')?.value);
+    const managerItems = normalizedManagerIds.map((id: any) => ({ item_id: id }));
 
     // formData.set('members_id', this.addprojectForm.get('members_id')?.value);
 
     Object.keys(information).forEach((key) => {
+      if (key === 'manager_id' || key === 'managers_id' || key === 'tasktypedata') {
+        return;
+      }
       formData.append(key, information[key]);
     });
+    formData.set('manager_id', normalizedManagerIds.join(','));
+    formData.set('managers_id', JSON.stringify(managerItems));
+    formData.set('is_sender', '1');
     const token = localStorage.getItem('tasklogintoken');
     if (token) {
       const headers = new HttpHeaders()
@@ -246,6 +288,62 @@ export class AddProjectComponent {
           }
         );
     }
+  }
+
+  private tryAddDraftTaskTypeRow(): boolean {
+    const taskTypeId = this.addprojectForm.get('tasktype')?.value;
+    const hours = this.addprojectForm.get('hours')?.value;
+    const cost = this.addprojectForm.get('cost')?.value;
+    const remark = this.addprojectForm.get('remark')?.value;
+    const taskDescription = this.addprojectForm.get('task_description')?.value;
+
+    const hasDraftTaskTypeRow = !!(taskTypeId || hours || cost || remark || taskDescription);
+    if (!hasDraftTaskTypeRow) {
+      return true;
+    }
+
+    this.showTaskTypeError = false;
+    this.showHoursError = false;
+    this.showCostError = false;
+
+    if (!taskTypeId) {
+      this.showTaskTypeError = true;
+      return false;
+    }
+    if (!hours) {
+      this.showHoursError = true;
+      return false;
+    }
+    if (!cost) {
+      this.showCostError = true;
+      return false;
+    }
+
+    const duplicate = this.tasktypedata.value.find((item: any) => item.taskTypeId === taskTypeId);
+    if (duplicate) {
+      return true;
+    }
+
+    const tasktypeName = this.tasktypelist.find((task: TaskType) => task.id === taskTypeId)?.title || '';
+    this.tasktypedata.push(this.fb.group({
+      remark: [remark],
+      hours: [hours],
+      tasktype: [tasktypeName],
+      cost: [cost],
+      taskTypeId: [taskTypeId],
+      taskdescription: [taskDescription],
+    }));
+
+    this.addprojectForm.get('remark')?.setValue('');
+    this.addprojectForm.get('tasktype')?.setValue('');
+    this.addprojectForm.get('hours')?.setValue('');
+    this.addprojectForm.get('cost')?.setValue('');
+    this.addprojectForm.get('task_description')?.setValue('');
+    this.showTaskTypeError = false;
+    this.showHoursError = false;
+    this.showCostError = false;
+
+    return true;
   }
 
   serviceList() {
@@ -286,16 +384,22 @@ export class AddProjectComponent {
   }
 
   addChecklist(type: any) {
-
+    this.showTaskTypeError = false;
+    this.showHoursError = false;
+    this.showCostError = false;
     this.isView = false;
     if (!this.addprojectForm?.value.tasktype) {
-      this.toastr.error('Please Select Task Type');
+      this.showTaskTypeError = true;
       return;
     }
-    // if (!this.addprojectForm?.value.hours) {
-    //   this.toastr.error('Please Select Task Hours');
-    //   return;
-    // }
+    if (!this.addprojectForm?.value.hours) {
+      this.showHoursError = true;
+      return;
+    }
+    if (!this.addprojectForm?.value.cost) {
+      this.showCostError = true;
+      return;
+    }
 
     const tasktypeId = this.addprojectForm?.value.tasktype;
     const datacheck = this.tasktypedata.value;
@@ -337,6 +441,9 @@ export class AddProjectComponent {
     this.addprojectForm?.get('hours')?.setValue('');
     this.addprojectForm?.get('cost')?.setValue('');
     this.addprojectForm?.get('task_description')?.setValue('');
+    this.showTaskTypeError = false;
+    this.showHoursError = false;
+    this.showCostError = false;
     setTimeout(() => {
     this.body.nativeElement.click();
     }, 100);

@@ -935,6 +935,10 @@ export class CreteNewTaskComponent implements OnInit {
               if (response.status === true) {
                 this.toastr.success('Task Added Successfully.');
                 this.spinner.hide();
+                
+                // Emit event for notification auto-update
+                window.dispatchEvent(new CustomEvent('task-created', { detail: { taskId: response.task_id } }));
+                
                 this.uploadtaskkimage(response.task_id);
                 setTimeout(() => {
                   this.route.navigate(['/tasks']);

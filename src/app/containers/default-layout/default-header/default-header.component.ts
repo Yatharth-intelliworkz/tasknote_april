@@ -1,4 +1,4 @@
-import { Component, Input, Renderer2 } from '@angular/core';
+import { Component, Input, OnDestroy, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import * as $ from 'jquery';
@@ -14,7 +14,7 @@ import { NotificationService } from '../../../views/service/notification.service
   templateUrl: './default-header.component.html',
   styleUrls: ['./default-header.component.scss'],
 })
-export class DefaultHeaderComponent extends HeaderComponent {
+export class DefaultHeaderComponent extends HeaderComponent implements OnDestroy {
   @Input() sidebarId: string = "sidebar";
   backgroundColor: string = 'lightblue';
   color: string = 'white';
@@ -36,6 +36,28 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   public uname = localStorage.getItem('username');
   transformedNotifications: any[] = [];
+  private pushedNotificationKeys = new Set<string>();
+  private refreshNotificationTimer: any;
+  private notificationsUpdatedHandler = (event: Event) => {
+    const customEvent = event as CustomEvent<{ unreadCount?: number }>;
+    const unreadCount = customEvent?.detail?.unreadCount;
+
+    if (typeof unreadCount === 'number') {
+      this.notificationlist = {
+        ...(this.notificationlist || {}),
+        count: unreadCount,
+      };
+    }
+
+    this.getnotification();
+    // Retry once shortly after to catch notifications that are created asynchronously.
+    if (this.refreshNotificationTimer) {
+      clearTimeout(this.refreshNotificationTimer);
+    }
+    this.refreshNotificationTimer = setTimeout(() => {
+      this.getnotification();
+    }, 1200);
+  };
 
   constructor(private notificationService:NotificationService,private classToggler: ClassToggleService, private renderer: Renderer2, private route: Router,
     private http: HttpClient,
@@ -58,10 +80,18 @@ export class DefaultHeaderComponent extends HeaderComponent {
     this.shortusername = this.getusernmae(this.username);
     this.getnotification();
     this.getmemberlist();
+    window.addEventListener('notifications-updated', this.notificationsUpdatedHandler);
     setTimeout(() => {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 3000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.refreshNotificationTimer) {
+      clearTimeout(this.refreshNotificationTimer);
+    }
+    window.removeEventListener('notifications-updated', this.notificationsUpdatedHandler);
   }
 
   usersPermission() {
@@ -240,23 +270,37 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   getnotification() {
     const token = localStorage.getItem('tasklogintoken');
+    const companyID = localStorage.getItem('usercompanyId');
+    this.sessioncompany = companyID;
 
-    if (token) {
+    if (token && companyID) {
       const headers = new HttpHeaders()
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'application/json');
 
       this.http
-        .get(`${this.apiUrl}notificationList?companyID=` + this.sessioncompany, { headers })
+        .get(`${this.apiUrl}notificationList?companyID=${companyID}`, { headers })
         .subscribe(
           (companylistData: any) => {
             this.notificationlistData = companylistData;
-            this.notificationlist = this.notificationlistData;
-            const transformed = this.transformNotifications();
+            const notificationData = Array.isArray(companylistData?.data) ? companylistData.data : [];
+            const dedupedData = this.dedupeUnreadPayload(notificationData);
+            this.notificationlist = {
+              ...companylistData,
+              data: dedupedData,
+              count: dedupedData.length,
+            };
+            const transformed = this.transformNotifications(this.notificationlist?.data);
 
-            this.notificationService.pushNotify(transformed);
+            if (transformed.length > 0) {
+              this.notificationService.pushNotify(transformed);
+            }
           },
           (error) => {
+            if (error?.status === 401) {
+              this.commonService.logout();
+              return;
+            }
             console.error('Error loading Notification list:', error);
           }
         );
@@ -265,12 +309,58 @@ export class DefaultHeaderComponent extends HeaderComponent {
     }
   }
 
-  transformNotifications() {
-    if (!this.notificationlist?.data || !Array.isArray(this.notificationlist.data)) {
+  private buildNotificationKey(notification: any): string {
+    const id = notification?.id ?? '';
+    const message = notification?.message || notification?.massage || '';
+    const date = notification?.date || '';
+    const time = notification?.time || '';
+    const moduleName = notification?.is_setModule || '';
+    return `${id}|${moduleName}|${message}|${date}|${time}`;
+  }
+
+  private buildUnreadCountKey(notification: any): string {
+    if (notification?.id !== undefined && notification?.id !== null && notification?.id !== '') {
+      return `id:${notification.id}`;
+    }
+    const moduleName = notification?.is_setModule || '';
+    const commonId = notification?.common_id || '';
+    const message = notification?.message || notification?.massage || '';
+    const date = notification?.date || '';
+    const time = notification?.time || '';
+    return `${moduleName}|${commonId}|${message}|${date}|${time}`;
+  }
+
+  private dedupeUnreadPayload(notificationData: any[]): any[] {
+    if (!Array.isArray(notificationData)) {
       return [];
     }
 
-    this.transformedNotifications = this.notificationlist.data.map((notification: { userName: any; message: any; massage?: any; taskTitle: any; is_setModule: any; }) => {
+    const seen = new Set<string>();
+    return notificationData.filter((item: any) => {
+      const key = this.buildUnreadCountKey(item);
+      if (seen.has(key)) {
+        return false;
+      }
+      seen.add(key);
+      return true;
+    });
+  }
+
+  transformNotifications(notificationData: any[] = []) {
+    if (!Array.isArray(notificationData)) {
+      return [];
+    }
+
+    const newNotifications = notificationData.filter((notification: any) => {
+      const key = this.buildNotificationKey(notification);
+      if (this.pushedNotificationKeys.has(key)) {
+        return false;
+      }
+      this.pushedNotificationKeys.add(key);
+      return true;
+    });
+
+    this.transformedNotifications = newNotifications.map((notification: { userName: any; message: any; massage?: any; taskTitle: any; is_setModule: any; }) => {
       const message = notification.message || notification.massage || 'You have a new notification.';
       const is_setModule = notification.is_setModule || 'Notification';
 

@@ -344,10 +344,10 @@
                         <mat-select  placeholder="Task Type*" formControlName="tasktype">
                               <mat-option [value]="tasktypelist.id" *ngFor="let tasktypelist of tasktypelist">{{tasktypelist.title}}</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="addprojectForm.get('tasktype')?.hasError('required')">
+                          Task Type is required
+                        </mat-error>
                       </mat-form-field>
-                      <div *ngIf="addprojectForm.get('tasktype')?.hasError('required') && addprojectForm.get('tasktype')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
-                        Task Type is required
-                      </div>
                     </div>
                     </td>
                     <td>
@@ -386,10 +386,10 @@
                               <mat-option [value]="23">23</mat-option>
                               <mat-option [value]="24">24</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="addprojectForm.get('hours')?.hasError('required')">
+                          Hours is required
+                        </mat-error>
                       </mat-form-field>
-                      <div *ngIf="addprojectForm.get('hours')?.hasError('required') && addprojectForm.get('hours')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
-                        Hours is required
-                      </div>
                     </div>
                     </td>
                     <td>

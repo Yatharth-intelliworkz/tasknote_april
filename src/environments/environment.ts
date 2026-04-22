@@ -6,8 +6,8 @@ export const environment = {
   // pushID: `8b617b7b011ccbfa4b62`,
 
   // intelliworkz
-    ApiUrl: 'https://app.tasknote.in/backend/intelli_tasknote/api/',
-    domainName: 'https://app.tasknote.in/backend/intelli_tasknote/',
+    ApiUrl: 'http://localhost/tasknote_backend_new/api/',
+    domainName: 'http://localhost/tasknote_backend_new/',
     pushID: `02df6f24214f5beb33a1`,
 
 // msaca

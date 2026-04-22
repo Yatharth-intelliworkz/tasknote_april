@@ -1861,6 +1861,12 @@ export class TasksComponent {
                 this.toastr.success('Status Updated Successfully.');
               }, 10);
               this.notificationService.pushNotify(response.data);
+              // Ensure header count refreshes immediately after task status update.
+              window.dispatchEvent(new CustomEvent('task-updated', { detail: { taskId: todaytask } }));
+              window.dispatchEvent(new CustomEvent('notifications-updated'));
+              setTimeout(() => {
+                window.dispatchEvent(new CustomEvent('notifications-updated'));
+              }, 1200);
               this.gettaskList();
             }
           },

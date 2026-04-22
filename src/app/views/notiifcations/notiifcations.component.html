@@ -140,8 +140,8 @@
 
       </div>
       <div class="tab-content mt-4" id="myTabContent">
-        <div class="tab-pane fade show active" id="General" role="tabpanel" aria-labelledby="General-tab">
-          <div class="notification_card" *ngFor="let notification of notificationlistUnRead; let i = index">
+        <div class="tab-pane" [ngClass]="{ 'show active': activeTab === 'General', 'fade': activeTab !== 'General' }" id="General" role="tabpanel" aria-labelledby="General-tab">
+          <div class="notification_card" *ngFor="let notification of pagedUnreadNotifications; let i = index">
             <a href="projects-detail/{{notification.common_id}}" class="text-decoration-none"
               *ngIf="notification.is_setModule == 'project'">
               <div class="d-flex justify-content-between align-items-center">
@@ -177,12 +177,23 @@
                 <p class="notify_date">{{notification.date}} | {{notification.time}}</p>
               </div>
             </a>
+            <div class="text-decoration-none" *ngIf="notification.is_setModule != 'project' && notification.is_setModule != 'task' && notification.is_setModule != 'note'">
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="notification_content">{{notification.massage}}</p>
+                <p class="notify_date">{{notification.date}} | {{notification.time}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="pagination_bar" *ngIf="(notificationlistUnRead?.length || 0) > itemsPerPage">
+            <button class="pagination_btn" (click)="prevUnreadPage()" [disabled]="unreadCurrentPage === 1">Previous</button>
+            <span class="pagination_text">Page {{ unreadCurrentPage }} of {{ unreadTotalPages }}</span>
+            <button class="pagination_btn" (click)="nextUnreadPage()" [disabled]="unreadCurrentPage === unreadTotalPages">Next</button>
           </div>
 
 
         </div>
-        <div class="tab-pane fade" id="Task" role="tabpanel" aria-labelledby="Task-tab">
-          <div class="notification_card" *ngFor="let notificationread of notificationlistRead; let i = index">
+        <div class="tab-pane" [ngClass]="{ 'show active': activeTab === 'Task', 'fade': activeTab !== 'Task' }" id="Task" role="tabpanel" aria-labelledby="Task-tab">
+          <div class="notification_card" *ngFor="let notificationread of pagedReadNotifications; let i = index">
             <a href="projects-detail/{{notificationread.common_id}}" class="text-decoration-none"
               *ngIf="notificationread.is_setModule == 'project'">
               <div class="d-flex justify-content-between align-items-center">
@@ -230,6 +241,17 @@
                 <p class="notify_date">{{notificationread.date}} | {{notificationread.time}}</p>
               </div>
             </a>
+            <div class="text-decoration-none" *ngIf="notificationread.is_setModule != 'project' && notificationread.is_setModule != 'team' && notificationread.is_setModule != 'task' && notificationread.is_setModule != 'note'">
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="notification_content">{{notificationread.massage}}</p>
+                <p class="notify_date">{{notificationread.date}} | {{notificationread.time}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="pagination_bar" *ngIf="(notificationlistRead?.length || 0) > itemsPerPage">
+            <button class="pagination_btn" (click)="prevReadPage()" [disabled]="readCurrentPage === 1">Previous</button>
+            <span class="pagination_text">Page {{ readCurrentPage }} of {{ readTotalPages }}</span>
+            <button class="pagination_btn" (click)="nextReadPage()" [disabled]="readCurrentPage === readTotalPages">Next</button>
           </div>
         </div>
       </div>

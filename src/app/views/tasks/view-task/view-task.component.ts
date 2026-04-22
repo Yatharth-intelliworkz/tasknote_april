@@ -1490,6 +1490,9 @@ export class ViewTaskComponent {
         .subscribe(
           (response: any) => {
             if (response) {
+              // Emit event for notification auto-update
+              window.dispatchEvent(new CustomEvent('task-updated', { detail: { taskId: this.task_id } }));
+              
               if (this.selectedImages) {
                 this.uploadtaskkimage(this.task_id);
               } else {

@@ -58,12 +58,11 @@
                         [items]="team1" 
                         bindLabel="item_text" 
                         bindValue="item_id" 
-                        [(ngModel)]="managerName" 
                         placeholder="Project Manager*"
                         formControlName="manager_id" 
                         [multiple]="true">
                       </ng-select>
-                      <div *ngIf="addprojectForm.get('manager_id')?.hasError('required') && addprojectForm.get('manager_id')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                      <div *ngIf="addprojectForm.get('manager_id')?.invalid && addprojectForm.get('manager_id')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
                         Project Manager is required
                       </div>
 
@@ -104,7 +103,7 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input formControlName="end_date" matInput [matDatepicker]="picker1"
-                          placeholder="Select End Date*"  [(ngModel)]="projectlistedit.end_date" />
+                          placeholder="Select End Date*"  [(ngModel)]="projectlistedit.end_date" [min]="addprojectForm.get('start_date')?.value" />
                         <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-error *ngIf="addprojectForm.get('end_date')?.hasError('required')">
@@ -144,9 +143,7 @@
                                 <mat-option *ngFor="let task of tasktypelist" [value]="task.id">{{ task.title }}</mat-option>
                               </mat-select>
                             </mat-form-field>
-                            <div *ngIf="addprojectForm.get('tasktype')?.hasError('required') && addprojectForm.get('tasktype')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
-                              Task Type is required
-                            </div>
+                            <div *ngIf="showTaskTypeError" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Task Type is required</div>
                           </div>
                         </td>
                         <td>
@@ -165,9 +162,7 @@
                                 (keypress)="isNumberKey($event)"
                               />
                             </mat-form-field>
-                            <div *ngIf="addprojectForm.get('hours')?.hasError('required') && addprojectForm.get('hours')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
-                              Hours is required
-                            </div>
+                            <div *ngIf="showHoursError" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Hours is required</div>
                           </div>
                         </td>
                         <td>
@@ -175,9 +170,7 @@
                             <mat-form-field>
                                 <input matInput #input formControlName="cost" placeholder="Cost*" />
                             </mat-form-field>
-                            <div *ngIf="addprojectForm.get('cost')?.hasError('required') && addprojectForm.get('cost')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
-                              Cost is required
-                            </div>
+                            <div *ngIf="showCostError" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Cost is required</div>
                           </div>
                         </td>
                         <td>

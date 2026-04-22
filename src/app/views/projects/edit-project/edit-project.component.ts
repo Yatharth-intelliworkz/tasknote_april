@@ -84,6 +84,9 @@ export class EditProjectComponent {
   projectlistedit: any;
   editprojectlistData: any;
   filteredChecklistArray: any[] = [];
+  showTaskTypeError = false;
+  showHoursError = false;
+  showCostError = false;
 
   constructor(private elementRef: ElementRef, private toastr: ToastrService, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private commonService: CommonService, private route: ActivatedRoute, private router: Router) {
     this.loadProjectsList();
@@ -100,13 +103,13 @@ export class EditProjectComponent {
       total_cost: [null, Validators.required],
       tasktypedata: this.fb.array([]),
       remark: [''],
-      tasktype: [null, Validators.required],
-      hours: [null, Validators.required],
-      cost: [null, Validators.required],
       tasktypechecklistarrayDisplay: [''],
       tasktypechecklistarray: [''],
       tasktypechecklistarraystore: [''],
       task_description: [''],
+      tasktype: [null],
+      hours: [null],
+      cost: [null],
     });
 
     this.projectFormchecklist = this.fb.group({
@@ -170,39 +173,67 @@ export class EditProjectComponent {
   }
   addproject(information: any) {
     this.spinner.show();
+
+    // Ensure members_id is patched from membersName before validation
+    if (!this.addprojectForm.get('members_id')?.value && this.membersName) {
+      this.addprojectForm.get('members_id')?.setValue(this.membersName);
+    }
+
     if (this.addprojectForm.invalid) {
-      // Mark all fields as touched to display error messages
       Object.keys(this.addprojectForm.controls).forEach(key => {
         this.addprojectForm.get(key)?.markAsTouched();
       });
       this.spinner.hide();
       return;
     }
+
+    if (!this.tryAddDraftTaskTypeRow()) {
+      this.spinner.hide();
+      return;
+    }
+
+    const hasDraftTaskTypeRow = !!(
+      this.addprojectForm.get('tasktype')?.value ||
+      this.addprojectForm.get('hours')?.value ||
+      this.addprojectForm.get('cost')?.value ||
+      this.addprojectForm.get('remark')?.value ||
+      this.addprojectForm.get('task_description')?.value
+    );
+
+    if (this.tasktypedata.length === 0) {
+      this.showTaskTypeError = false;
+      this.showHoursError = false;
+      this.showCostError = false;
+    }
+
     const formData = new FormData();
     const companyID = localStorage.getItem('usercompanyId');
     const selectedmanager = this.addprojectForm.get('manager_id')?.value;
+    const normalizedManagerIds = Array.isArray(selectedmanager)
+      ? selectedmanager
+      : selectedmanager
+        ? [selectedmanager]
+        : [];
     if (companyID) {
       formData.append('companyId', companyID);
     }
     const projectID = this.addprojectForm.get('projectID')?.value;
 
-    if (this.tasktypedata.value.length !== 0) {
-      const selectedcheckList = this.tasktypedata.value;
-     
-      formData.set('taskType', JSON.stringify(selectedcheckList));
-    }
-
-    if (this.tasktypechecklistarray) {
-      const tasktypechecklistarray = this.tasktypechecklistarray;
-      formData.set('checkList', JSON.stringify(tasktypechecklistarray));
-    }
-
+    // Always send taskType and checkList (even if empty arrays) to avoid backend null errors
+    formData.set('taskType', JSON.stringify(this.tasktypedata.value));
+    formData.set('checkList', JSON.stringify(this.tasktypechecklistarray || []));
 
     formData.set('total_cost', this.addprojectForm.get('total_cost')?.value);
-    formData.set('managers_id',selectedmanager);
+    const managerItems = normalizedManagerIds.map((id: any) => ({ item_id: id }));
     Object.keys(information).forEach((key) => {
+      if (key === 'manager_id' || key === 'managers_id' || key === 'tasktypedata') {
+        return;
+      }
       formData.append(key, information[key]);
     });
+    formData.set('manager_id', normalizedManagerIds.join(','));
+    formData.set('managers_id', JSON.stringify(managerItems));
+    formData.set('is_sender', '1');
 
     const token = localStorage.getItem('tasklogintoken');
     if (token) {
@@ -231,6 +262,62 @@ export class EditProjectComponent {
           }
         );
     }
+  }
+
+  private tryAddDraftTaskTypeRow(): boolean {
+    const taskTypeId = this.addprojectForm.get('tasktype')?.value;
+    const hours = this.addprojectForm.get('hours')?.value;
+    const cost = this.addprojectForm.get('cost')?.value;
+    const remark = this.addprojectForm.get('remark')?.value;
+    const taskDescription = this.addprojectForm.get('task_description')?.value;
+
+    const hasDraftTaskTypeRow = !!(taskTypeId || hours || cost || remark || taskDescription);
+    if (!hasDraftTaskTypeRow) {
+      return true;
+    }
+
+    this.showTaskTypeError = false;
+    this.showHoursError = false;
+    this.showCostError = false;
+
+    if (!taskTypeId) {
+      this.showTaskTypeError = true;
+      return false;
+    }
+    if (!hours) {
+      this.showHoursError = true;
+      return false;
+    }
+    if (!cost) {
+      this.showCostError = true;
+      return false;
+    }
+
+    const duplicate = this.tasktypedata.value.find((item: any) => item.taskTypeId === taskTypeId);
+    if (duplicate) {
+      return true;
+    }
+
+    const tasktypeName = this.tasktypelist.find((task: TaskType) => task.id === taskTypeId)?.title || '';
+    this.tasktypedata.push(this.fb.group({
+      remark: [remark],
+      hours: [hours],
+      tasktype: [tasktypeName],
+      cost: [cost],
+      taskTypeId: [taskTypeId],
+      tasktypeDescription: [taskDescription],
+    }));
+
+    this.addprojectForm.get('remark')?.setValue('');
+    this.addprojectForm.get('tasktype')?.setValue('');
+    this.addprojectForm.get('hours')?.setValue('');
+    this.addprojectForm.get('cost')?.setValue('');
+    this.addprojectForm.get('task_description')?.setValue('');
+    this.showTaskTypeError = false;
+    this.showHoursError = false;
+    this.showCostError = false;
+
+    return true;
   }
 
   serviceList() {
@@ -271,14 +358,21 @@ export class EditProjectComponent {
   }
 
   addChecklist(type: any) {
+    this.showTaskTypeError = false;
+    this.showHoursError = false;
+    this.showCostError = false;
     if (!this.addprojectForm?.value.tasktype) {
-      this.toastr.error('Please Select Task Type');
+      this.showTaskTypeError = true;
       return;
     }
-    // if (!this.addprojectForm?.value.hours) {
-    //   this.toastr.error('Please Select Task Hours');
-    //   return;
-    // }
+    if (!this.addprojectForm?.value.hours) {
+      this.showHoursError = true;
+      return;
+    }
+    if (!this.addprojectForm?.value.cost) {
+      this.showCostError = true;
+      return;
+    }
     const tasktypeId = this.addprojectForm?.value.tasktype;
     const datacheck = this.tasktypedata.value;
     const taskdescription = this.addprojectForm?.value.task_description;
@@ -319,6 +413,9 @@ export class EditProjectComponent {
     this.addprojectForm?.get('hours')?.setValue('');
     this.addprojectForm?.get('cost')?.setValue('');
     this.addprojectForm?.get('task_description')?.setValue('');
+    this.showTaskTypeError = false;
+    this.showHoursError = false;
+    this.showCostError = false;
   }
 
 
@@ -418,7 +515,17 @@ export class EditProjectComponent {
 
   removeItem(index: number, arrayName: 'tasktypedata' | 'tasktypechecklistarray' | 'tasktypechecklistarraystore') {
     if (arrayName === 'tasktypedata') {
+      const removedTaskTypeId = (this[arrayName] as FormArray).at(index)?.get('taskTypeId')?.value;
       (this[arrayName] as FormArray).removeAt(index);
+
+      if (removedTaskTypeId) {
+        this.tasktypechecklistarray = this.tasktypechecklistarray.filter(
+          (item: { taskTypeId: number }) => item.taskTypeId !== removedTaskTypeId
+        );
+        this.filteredChecklistArray = this.filteredChecklistArray.filter(
+          (item: { taskTypeId: number }) => item.taskTypeId !== removedTaskTypeId
+        );
+      }
     } else {
       (this[arrayName] as any[]).splice(index, 1);
     }
@@ -555,6 +662,19 @@ export class EditProjectComponent {
         
           this.membersName = this.projectlistedit.membersName || [];
           this.checklistarray = this.projectlistedit.checkList || [];
+
+          // Patch form controls with loaded data so validators pass on submit
+          this.addprojectForm.patchValue({
+            name: this.projectlistedit.name,
+            projectID: this.projectlistedit.id,
+            total_cost: this.projectlistedit.total_cost,
+            servic_id: this.projectlistedit.service_id,
+            manager_id: this.managerName,
+            members_id: this.membersName,
+            description: this.projectlistedit.description,
+            start_date: this.projectlistedit.start_date,
+            end_date: this.projectlistedit.end_date,
+          });
 
           // Assuming start_date and end_date are Date objects after parsing
           const formattedDob = formatDate(

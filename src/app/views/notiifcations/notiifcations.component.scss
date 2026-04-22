@@ -15,6 +15,35 @@
     margin-bottom: 8px;
 }
 
+.pagination_bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.pagination_btn {
+  border: 1px solid #1c1f66;
+  background-color: #fff;
+  color: #1c1f66;
+  font-size: 13px;
+  line-height: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.pagination_btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination_text {
+  color: #1c1f66;
+  font-size: 13px;
+  font-weight: 500;
+}
+
 .company_name {
     color: #1c1f66;
     font-size: 14px;
