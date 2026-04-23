@@ -536,7 +536,7 @@
           Add Note
         </h5>
         <img src="../../../assets/img/dashboard/popup-close-btn.svg" data-bs-dismiss="modal" aria-label="Close" alt=""
-          class="popup_close_btn_add" />
+          class="popup_close_btn_add" (click)="showNoteTitleError = false; showNoteDescriptionError = false" />
       </div>
       <div class="modal-body">
         <form role="form" #submitForm="ngForm" (ngSubmit)="insertusernotes(submitForm.value)">
@@ -565,16 +565,18 @@
             <div class="form_field">
               <mat-form-field>
                 <input matInput type="text" class="form-control" name="title" id="addNoteTitle"
-                  placeholder="Enter title" required [(ngModel)]="information.title" />
+                  placeholder="Enter Title*" required [(ngModel)]="information.title" (ngModelChange)="showNoteTitleError = false" />
               </mat-form-field>
+              <div *ngIf="showNoteTitleError" class="validation-message">Title is required</div>
             </div>
           </div>
 
           <div class="mb-3">
-            <label for="quillEditor" class="form-label">Note Content</label>
+            <label for="quillEditor" class="form-label">Note Content*</label>
             <div class="editor-container">
               <quill-editor name="description" [(ngModel)]="information.description"
                 (contentChanged)="onContentChange($event)"></quill-editor>
+              <div *ngIf="showNoteDescriptionError" class="validation-message">Note content is required</div>
             </div>
           </div>
           <div ngbDropdown class="d-inline-block remind_box">

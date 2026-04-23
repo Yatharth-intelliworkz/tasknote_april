@@ -885,7 +885,9 @@
                 placeholder="Enter Title"
                 [(ngModel)]="noteslistedit.title"
               />
-              <div
+              
+            </mat-form-field>
+            <div
                 *ngIf="
                   submitForm.get('title')?.invalid &&
                   (submitForm.get('title')?.dirty ||
@@ -894,7 +896,6 @@
               >
                 <small class="text-danger">Title is required</small>
               </div>
-            </mat-form-field>
           </div>
 
           <div class="mb-3">
@@ -1022,7 +1023,17 @@
                   formControlName="noteID"
                   [(ngModel)]="noteslistedit.id"
                 />
-                <div
+                <!-- <div
+                  *ngIf="
+                    editForm.get('title')?.invalid &&
+                    (editForm.get('title')?.dirty ||
+                      editForm.get('title')?.touched)
+                  "
+                >
+                  <small class="text-danger">Title is required</small>
+                </div> -->
+              </mat-form-field>
+              <div
                   *ngIf="
                     editForm.get('title')?.invalid &&
                     (editForm.get('title')?.dirty ||
@@ -1031,7 +1042,6 @@
                 >
                   <small class="text-danger">Title is required</small>
                 </div>
-              </mat-form-field>
             </div>
           </div>
           <div class="mb-3">
@@ -1040,6 +1050,15 @@
               formControlName="description"
               [(ngModel)]="noteslistedit.description"
             ></quill-editor>
+            <div
+                *ngIf="
+                  editForm.get('description')?.invalid &&
+                  (editForm.get('description')?.dirty ||
+                    editForm.get('description')?.touched)
+                "
+              >
+                <small class="text-danger">Description is required</small>
+              </div>
           </div>
           <div ngbDropdown class="d-inline-block remind_box">
             <!-- <img src="../../../assets/img/dashboard/recurring-task.svg" width="30" class="" alt=""
@@ -1051,7 +1070,7 @@
                 [(ngModel)]="noteslistedit.is_expiry"
                 >Is Expire</mat-slide-toggle
               >
-              <div *ngIf="submitForm.get('is_expiry')?.value">
+              <div *ngIf="editForm.get('is_expiry')?.value">
                 <mat-divider></mat-divider>
                 <div class="right_box">
                   <div class="rgt_bor my-2">
@@ -1082,7 +1101,7 @@
           <div class="row">
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
               <button
-                (click)="updateusernotes(); closeEditNoteModal()"
+                type="submit"
                 class="submit_btn"
               >
                 Submit

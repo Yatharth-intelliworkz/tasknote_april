@@ -14,7 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { QuillModule } from 'ngx-quill';
 import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   RoundProgressModule,
   ROUND_PROGRESS_DEFAULTS,
@@ -130,6 +130,7 @@ import { LeavesComponent } from './views/leaves/leaves.component';
 import { AttendanceReportComponent } from './views/attendance-report/attendance-report.component';
 import { AttendanceComponent } from './views/attendance/attendance.component';
 import { LeaveConfigurationComponent } from './views/organization-setting/leave-configuration/leave-configuration.component';
+import { NotificationRefreshInterceptor } from './interceptors/notification-refresh.interceptor';
 
 
 
@@ -267,6 +268,7 @@ const APP_CONTAINERS = [
   providers: [
     { provide: LocationStrategy, useClass: PathLocationStrategy },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: HTTP_INTERCEPTORS, useClass: NotificationRefreshInterceptor, multi: true },
     IconSetService,
     Title,
     CdkColumnDef,

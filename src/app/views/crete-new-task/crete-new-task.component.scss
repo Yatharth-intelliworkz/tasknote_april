@@ -218,6 +218,21 @@
   position: relative;
 }
 
+.validation-message {
+  color: #ef5350;
+  font-size: 12px;
+  line-height: 1.25;
+  margin-top: 6px;
+}
+
+:host ::ng-deep .user_task_wrapper .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+:host ::ng-deep .user_task_wrapper .mat-mdc-form-field-bottom-align::before {
+  display: none;
+}
+
 .checklist_date {
   position: absolute;
   top: 17px;

@@ -156,6 +156,7 @@ export class CreteNewTaskComponent implements OnInit {
   @ViewChild('checklistData', { static: true }) checklistData!: ElementRef;
   @ViewChild('listChecklistData', { static: true })
   listChecklistData!: ElementRef;
+  @ViewChild('taskChecklistModalClose') taskChecklistModalClose!: ElementRef;
   // nikunj changes 28-12 subtask & checklist
   // @HostListener('document:click', ['$event'])
 
@@ -266,6 +267,17 @@ export class CreteNewTaskComponent implements OnInit {
   checkslistsData: any;
   getaprojectId: any;
   checkboxStates: { id: number; state: number }[] = [];
+  showProjectError = false;
+  showClientError = false;
+  showTaskTypeError = false;
+  showAssignError = false;
+  showDescriptionError = false;
+  showDateRangeError = false;
+  showResponsibleError = false;
+  showPeriodicDateError = false;
+  showChecklistFieldsError = false;
+  showAttachmentSizeError = false;
+  showChecklistModalNameError = false;
 
   //Will use this flag for toggeling recording
   recording = false;
@@ -488,6 +500,28 @@ export class CreteNewTaskComponent implements OnInit {
 
   get checklistsTask(): FormArray {
     return this.taskForm.get('checklistsForm') as FormArray;
+  }
+
+  private hasEmptyValue(value: any): boolean {
+    if (Array.isArray(value)) {
+      return value.length === 0;
+    }
+
+    return value === null || value === undefined || value === '';
+  }
+
+  private resetTaskValidationFlags(): void {
+    this.showProjectError = false;
+    this.showClientError = false;
+    this.showTaskTypeError = false;
+    this.showAssignError = false;
+    this.showDescriptionError = false;
+    this.showDateRangeError = false;
+    this.showResponsibleError = false;
+    this.showPeriodicDateError = false;
+    this.showChecklistFieldsError = false;
+    this.showAttachmentSizeError = false;
+    this.showChecklistModalNameError = false;
   }
 
   statusList() {
@@ -781,7 +815,6 @@ export class CreteNewTaskComponent implements OnInit {
     const arrayofsubtask = this.taskForm.get('subtasks');
 
     if (arrayofsubtask?.value.sub_title === '') {
-      this.toastr.error('Please add subtask name');
       return;
     }
 
@@ -813,7 +846,6 @@ export class CreteNewTaskComponent implements OnInit {
   addchecklist() {
     const checklist = this.taskForm.get('check_list');
     if (checklist?.value.checkList_title === '') {
-      this.toastr.error('Please add checklist name');
       return;
     }
 
@@ -829,6 +861,7 @@ export class CreteNewTaskComponent implements OnInit {
   }
 
   onSubmit(information: any) {
+    this.resetTaskValidationFlags();
 
     // Removed all past date validation and error messages for start, due, and periodic dates.
     if (this.range.value.start) {
@@ -844,62 +877,53 @@ export class CreteNewTaskComponent implements OnInit {
 
     information.periodic_date = this.periodic_date.value;
 
-    if (information.project_id == null) {
-      setTimeout(() => {
-        this.toastr.error('Please select project');
-      }, 10);
-      return;
+    let hasValidationError = false;
+
+    if (this.hasEmptyValue(information.project_id)) {
+      this.showProjectError = true;
+      hasValidationError = true;
     }
-    if (information.client_id == null) {
-      setTimeout(() => {
-        this.toastr.error('Please select client');
-      }, 10);
-      return;
+    if (this.hasEmptyValue(information.client_id)) {
+      this.showClientError = true;
+      hasValidationError = true;
     }
-    if (information.tasktype == null) {
-      setTimeout(() => {
-        this.toastr.error('Please select task type');
-      }, 10);
-      return;
+    if (this.hasEmptyValue(information.tasktype)) {
+      this.showTaskTypeError = true;
+      hasValidationError = true;
     }
-    if (information.members_id == null) {
-      setTimeout(() => {
-        this.toastr.error('Please select assign');
-      }, 10);
-      return;
+    if (this.hasEmptyValue(information.members_id)) {
+      this.showAssignError = true;
+      hasValidationError = true;
     }
-    if (information.description == 'undefined') {
-      setTimeout(() => {
-        this.toastr.error('Please enter description');
-      }, 10);
-      return;
+    if (!information.description || information.description === 'undefined' || !String(information.description).trim()) {
+      this.showDescriptionError = true;
+      hasValidationError = true;
     }
-    if (information.start === '' || information.due_date === '') {
-      setTimeout(() => {
-        this.toastr.error('Please Fill Start & End Date Required Field');
-      }, 10);
-      return;
+    if (!information.start || !information.due_date) {
+      this.showDateRangeError = true;
+      hasValidationError = true;
     }
-    if (information.responsible_person == '') {
-      setTimeout(() => {
-        this.toastr.error('Please select responsible person');
-      }, 10);
-      return;
+    if (this.hasEmptyValue(information.responsible_person)) {
+      this.showResponsibleError = true;
+      hasValidationError = true;
     }
-    if (information.periodic_date == '') {
-      setTimeout(() => {
-        this.toastr.error('Please select periodic date');
-      }, 10);
-      return;
+    if (this.hasEmptyValue(information.periodic_date)) {
+      this.showPeriodicDateError = true;
+      hasValidationError = true;
     }
     
     for (let i = 0; i < information.checklistsForm.length; i++) {
       const checklist = information.checklistsForm[i];
       if (!checklist.checklist_time_hour || !checklist.checklist_time_minute ||
           !checklist.checklist_responsible_person || !checklist.checklist_members_id) {
-        this.toastr.error(`Checklist Please fill in all required fields.`);
-        return
+        this.showChecklistFieldsError = true;
+        hasValidationError = true;
+        break;
       }
+    }
+
+    if (hasValidationError) {
+      return;
     }
     // console.log(information);
     // return
@@ -1020,8 +1044,10 @@ export class CreteNewTaskComponent implements OnInit {
     this.progress = 0;
     this.isUploading = false;
     this.selctedfiletype = 'null';
+    this.showAttachmentSizeError = false;
   }
   onFileChange(event: any) {
+    this.resetTaskValidationFlags();
     if (!event) {
       this.selectedImages = null;
       this.previewfile = null;
@@ -1049,11 +1075,12 @@ export class CreteNewTaskComponent implements OnInit {
         reader.readAsDataURL(file);
       }
       if (file.size > 15 * 1024 * 1024) {
-        this.toastr.error('File size exceeds the limit of 15 MB.');
+        this.showAttachmentSizeError = true;
         (event.target as HTMLInputElement).value = '';
         this.selectedImages = null;
         this.previewfile = null;
         this.selctedfiletype = null;
+        return;
       }
     }
   }
@@ -1378,7 +1405,6 @@ export class CreteNewTaskComponent implements OnInit {
         };
         reader.readAsDataURL(file);
       } else {
-        this.toastr.error('File size exceeds the limit of 15 MB.');
         (event.target as HTMLInputElement).value = '';
       }
     }
@@ -1586,10 +1612,11 @@ export class CreteNewTaskComponent implements OnInit {
   addChecklistTaskType(): void {
     // Get the checklist name from the form
     const checklistName = this.taskFormchecklist?.value.tasktypechecklist;
+    this.resetTaskValidationFlags();
   
     // Validate the checklist name
     if (!checklistName) {
-      this.toastr.error('Please Enter Checklist');
+      this.showChecklistModalNameError = true;
       return;
     }
   
@@ -1623,11 +1650,15 @@ export class CreteNewTaskComponent implements OnInit {
     const checklistsFormArray = this.taskForm.get('checklistsForm') as FormArray;
     if (checklistsFormArray) {
       checklistsFormArray.push(newChecklist);
+      this.showChecklistFieldsError = false;
     } else {
       console.error('checklistsForm is not defined in taskForm.');
     }
   
     this.resetChecklistForm();
+    if (this.taskChecklistModalClose) {
+      this.taskChecklistModalClose.nativeElement.click();
+    }
   
     this.toastr.success('Checklist item added successfully.');
     console.log(this.taskCheckListsData);
@@ -1678,7 +1709,7 @@ export class CreteNewTaskComponent implements OnInit {
     );
   }
 
-  periodic_date = new FormControl(moment());
+  periodic_date = new FormControl<Moment | null>(null);
 
   setMonthAndYear(
     normalizedMonthAndYear: Moment,
@@ -1688,6 +1719,7 @@ export class CreteNewTaskComponent implements OnInit {
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
     this.periodic_date.setValue(ctrlValue);
+    this.showPeriodicDateError = false;
     datepicker.close();
   }
 

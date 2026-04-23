@@ -173,6 +173,7 @@
                               formControlName="duedate"
                               value="1"
                               id="flexCheckDefault"
+                              (change)="showDateTypeError = false"
                             />
                             <label
                               class="form-check-label"
@@ -188,6 +189,7 @@
                               type="checkbox"
                               value="1"
                               id="CreatedDate"
+                              (change)="showDateTypeError = false"
                             />
                             <label class="form-check-label" for="CreatedDate">
                               Created Date
@@ -200,11 +202,19 @@
                               type="checkbox"
                               value="1"
                               id="ClosedDate"
+                              (change)="showDateTypeError = false"
                             />
                             <label class="form-check-label" for="ClosedDate">
                               Closed Date
                             </label>
                           </div>
+                        </div>
+                        <div
+                          *ngIf="showDateTypeError"
+                          class="text-danger text-start mt-2"
+                          style="font-size: 0.75rem"
+                        >
+                          Please select at least one date type.
                         </div>
                       </div>
 
@@ -1116,6 +1126,27 @@
                   </tr>
                 </tbody>
               </table>
+              <div
+                *ngIf="showChecklistSelectionError"
+                class="text-danger text-start"
+                style="font-size: 0.75rem"
+              >
+                Please select checklist.
+              </div>
+              <div
+                *ngIf="showDocumentUploadError"
+                class="text-danger text-start"
+                style="font-size: 0.75rem"
+              >
+                Please upload document for selected checklist.
+              </div>
+              <div
+                *ngIf="showFileSizeError"
+                class="text-danger text-start"
+                style="font-size: 0.75rem"
+              >
+                File size exceeds the limit of 15 MB.
+              </div>
             </div>
             <div class="mb-3">
               <input
@@ -1123,8 +1154,16 @@
                 formControlName="completed"
                 id="completeds"
                 (click)="onclick()"
+                (change)="showCompletedMarkError = false"
               />
               <label for="completeds" class="ms-2">Mark as a complete</label>
+              <div
+                *ngIf="showCompletedMarkError"
+                class="text-danger text-center mt-1"
+                style="font-size: 0.75rem"
+              >
+                Please mark as complete.
+              </div>
             </div>
             <div class="mb-3" *ngIf="visible">
               <textarea
@@ -1255,6 +1294,7 @@
                       id="timerhour"
                       maxlength="3"
                       placeholder="Hours"
+                      (input)="showTimeInputError = false"
                     />
                   </mat-form-field>
                   <mat-form-field>
@@ -1264,8 +1304,16 @@
                       formControlName="timerminute"
                       maxlength="3"
                       placeholder="Minute"
+                      (input)="showTimeInputError = false"
                     />
                   </mat-form-field>
+                </div>
+                <div
+                  *ngIf="showTimeInputError"
+                  class="text-danger text-center mt-1"
+                  style="font-size: 0.75rem"
+                >
+                  Please start timer or enter manual time.
                 </div>
               </div>
             </div>

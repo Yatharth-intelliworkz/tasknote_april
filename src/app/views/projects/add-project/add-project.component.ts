@@ -196,23 +196,10 @@ export class AddProjectComponent {
       return;
     }
 
-    const hasDraftTaskTypeRow = !!(
-      this.addprojectForm.get('tasktype')?.value ||
-      this.addprojectForm.get('hours')?.value ||
-      this.addprojectForm.get('cost')?.value ||
-      this.addprojectForm.get('remark')?.value ||
-      this.addprojectForm.get('task_description')?.value
-    );
-
     if (this.tasktypedata.length === 0) {
       this.showTaskTypeError = true;
       this.showHoursError = false;
       this.showCostError = false;
-      this.toastr.error(
-        hasDraftTaskTypeRow
-          ? 'Please click + to add Task Type in list before submit.'
-          : 'Please add at least one Task Type in list.'
-      );
       this.spinner.hide();
       return;
     }

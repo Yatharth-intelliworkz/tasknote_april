@@ -490,9 +490,10 @@ export class NotiifcationsComponent implements OnInit, OnDestroy {
             setTimeout(() => {
               this.toastr.success('Notification Clear All Successfully.')
             },10);
-            // Reflect clear-all immediately in read tab UI.
-            this.notificationlistRead = [];
+            // Keep tab stable and re-sync lists from server after clear all.
             this.readCurrentPage = 1;
+            this.activeTab = 'Task';
+            this.getNotifications(false);
           }
           window.dispatchEvent(new CustomEvent('notifications-updated', { detail: { unreadCount: this.notificationlistUnRead?.length || 0 } }));
           this.spinner.hide();

@@ -1063,15 +1063,6 @@ export class TasksComponent {
         if (isPastDate) {
           img.style.cursor = 'not-allowed';
           img.style.opacity = '0.5';
-          img.addEventListener('click', () => {
-            this.toastr.error('Cannot add delay for past due tasks.', 'Error', {
-              timeOut: 2000,
-              extendedTimeOut: 1000,
-              closeButton: true,
-              progressBar: true,
-              tapToDismiss: true,
-            });
-          });
         } else {
           img.style.cursor = 'pointer';
           img.setAttribute('data-bs-toggle', 'modal');
@@ -1384,15 +1375,6 @@ export class TasksComponent {
         if (isPastDate) {
           img.style.cursor = 'not-allowed';
           img.style.opacity = '0.5';
-          img.addEventListener('click', () => {
-            this.toastr.error('Cannot add delay for past due tasks.', 'Error', {
-              timeOut: 2000,
-              extendedTimeOut: 1000,
-              closeButton: true,
-              progressBar: true,
-              tapToDismiss: true,
-            });
-          });
         } else {
           img.style.cursor = 'pointer';
           img.setAttribute('data-bs-toggle', 'modal');
@@ -1801,6 +1783,12 @@ export class TasksComponent {
   checkListSelectedId: any;
   datasinformation: { tskId: any; fileUpload: any; checkListId: any }[] = [];
   documentRequired = 0;
+  showChecklistSelectionError = false;
+  showDocumentUploadError = false;
+  showTimeInputError = false;
+  showCompletedMarkError = false;
+  showDateTypeError = false;
+  showFileSizeError = false;
   bootstrap: any;
   // Declare events array for FullCalendar
   eventsCalendar: any[] = [];
@@ -1815,6 +1803,17 @@ export class TasksComponent {
 
   onclick() {
     this.visible = !this.visible;
+    if (this.timeupdate.get('completed')?.value === true) {
+      this.showCompletedMarkError = false;
+    }
+  }
+
+  private resetTimerValidationFlags(): void {
+    this.showChecklistSelectionError = false;
+    this.showDocumentUploadError = false;
+    this.showTimeInputError = false;
+    this.showCompletedMarkError = false;
+    this.showFileSizeError = false;
   }
 
   img: any;
@@ -2109,6 +2108,7 @@ export class TasksComponent {
   timerform(taskId: any, checklisttask: any) {
     this.taskIds = taskId;
     this.selectedTimerTaskId = taskId;
+    this.resetTimerValidationFlags();
   
     this.checklisttask = checklisttask || []; // Default to an empty array if undefined
     
@@ -2120,20 +2120,25 @@ export class TasksComponent {
   submitForms(times: any) {
     const formData = new FormData();
     
-    const information = this.timeupdate.value;  
+    const information = this.timeupdate.value;
+    this.resetTimerValidationFlags();
      
     if (this.taskIdsForFile == undefined) {
-      this.toastr.error('Please Select CheckList');
+      this.showChecklistSelectionError = true;
       return;
     }
 
     const matcids = this.checklisttask.find(
       (itemData: { id: any }) => itemData.id === this.taskIdsForFile
     );
+    if (!matcids) {
+      this.showChecklistSelectionError = true;
+      return;
+    }
     
     if (matcids.is_document == 'Document Required') {
       if (this.selectedImages == undefined) {
-        this.toastr.error('Document Required');
+        this.showDocumentUploadError = true;
         return
       }
      
@@ -2144,7 +2149,7 @@ export class TasksComponent {
       information.timerhour == '' &&
       information.timerminute == ''
     ) {
-      this.toastr.error('Please start or enter time');
+      this.showTimeInputError = true;
       return;
     }
 
@@ -2161,7 +2166,7 @@ export class TasksComponent {
     }
 
     if (information.completed == false) {
-      this.toastr.error('Please Mark as Completed');
+      this.showCompletedMarkError = true;
       return;
     }
 
@@ -2183,7 +2188,6 @@ export class TasksComponent {
     formData.append('completedNote', information.completedNote);
 
     if (information.completed == false) {
-      this.toastr.error('Please select the checkbox');
       return;
     }
     console.log('payload', information);
@@ -2230,9 +2234,10 @@ export class TasksComponent {
   }
   submitFormsonstop(times: any) {
     const information = this.timeupdate.value;
+    this.resetTimerValidationFlags();
 
     if (!information.checkListID) {
-      this.toastr.error('Please select the checklist');
+      this.showChecklistSelectionError = true;
       return;
     }
 
@@ -2313,6 +2318,7 @@ export class TasksComponent {
 
   filterhtask() {
     this.taskListData = [];
+    this.showDateTypeError = false;
     const token = localStorage.getItem('tasklogintoken');
     if (token) {
       const headers = new HttpHeaders()
@@ -2333,7 +2339,7 @@ export class TasksComponent {
         information.createddate !== true &&
         information.closeddate !== true
       ) {
-        this.toastr.error('Select any date type');
+        this.showDateTypeError = true;
         return;
       }
 
@@ -2514,25 +2520,10 @@ export class TasksComponent {
   
 
   checkstatusclosed(message: string) {
-    this.toastr.error('Please Closed Task First.', 'Error',{
-      timeOut: 2000,            // How long the toastr stays visible
-      extendedTimeOut: 1000,    // Time toastr remains when mouse hovers over it
-      closeButton: true,
-      progressBar: true,
-      tapToDismiss: true,
-      easeTime: 100,      
-    });
     return false;
   }
   checklistchecked(message: string){
-    this.toastr.error('Please Complete All Checklist First.', 'Error',{
-      timeOut: 2000,            // How long the toastr stays visible
-      extendedTimeOut: 1000,    // Time toastr remains when mouse hovers over it
-      closeButton: true,
-      progressBar: true,
-      tapToDismiss: true,
-      easeTime: 100,      
-    });
+    return false;
   }
   initializeCalendar() {
     this.calendarOptions = {
@@ -3225,6 +3216,8 @@ export class TasksComponent {
   }
 
   chekListsGet(ids: any) {
+    this.showChecklistSelectionError = false;
+    this.showDocumentUploadError = false;
     this.taskIdsForFile = ids;
     if (this.selectedCheckbox === ids) {
       // If the same checkbox is clicked, uncheck it
@@ -3261,15 +3254,19 @@ export class TasksComponent {
 
   onFileChange(event: any, ids: any) {
     this.documentRequired = 1;
+    this.showFileSizeError = false;
     if (this.checkListSelectedId == undefined) {
-      this.toastr.error('Please Select CheckList');
+      this.showChecklistSelectionError = true;
       return;
     }
 
     if (this.checkListSelectedId !== ids) {
-      this.toastr.error('Upload Document For Selected CheckList');
+      this.showDocumentUploadError = true;
       return;
     }
+
+    this.showChecklistSelectionError = false;
+    this.showDocumentUploadError = false;
 
     this.taskIdsForFile = ids;
     if (!event) {
@@ -3299,11 +3296,12 @@ export class TasksComponent {
         reader.readAsDataURL(file);
       }
       if (file.size > 15 * 1024 * 1024) {
-        this.toastr.error('File size exceeds the limit of 15 MB.');
+        this.showFileSizeError = true;
         (event.target as HTMLInputElement).value = '';
         this.selectedImages = null;
         this.previewfile = null;
         this.selctedfiletype = null;
+        return;
       }
     }
     const img = this.selectedImages;

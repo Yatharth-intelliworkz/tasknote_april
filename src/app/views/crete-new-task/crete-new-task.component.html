@@ -132,6 +132,12 @@
                       >
                         X
                       </span>
+                      <div
+                        *ngIf="showAttachmentSizeError"
+                        class="validation-message"
+                      >
+                        File size exceeds the limit of 15 MB.
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -152,11 +158,12 @@
                             [items]="team2"
                             bindLabel="item_text"
                             bindValue="item_id"
-                            placeholder="Select Project"
-                            (change)="getusers($event)"
+                            placeholder="Select Project*"
+                            (change)="showProjectError = false; getusers($event)"
                             formControlName="project_id"
                           >
                           </ng-select>
+                          <div *ngIf="showProjectError" class="validation-message">Project is required</div>
                         </div>
                       </div>
                     </div>
@@ -167,11 +174,13 @@
                             [items]="team3"
                             bindLabel="item_text"
                             bindValue="item_id"
-                            placeholder="Select Client"
+                            placeholder="Select Client*"
                             formControlName="client_id"
                             [multiple] = "multipleclient"
+                            (change)="showClientError = false"
                           >
                           </ng-select>
+                          <div *ngIf="showClientError" class="validation-message">Client is required</div>
                         </div>
                       </div>
                     </div>
@@ -183,11 +192,12 @@
                           [items]="team5"
                           bindLabel="item_text"
                           bindValue="item_id"
-                          placeholder="Select Task Type"
-                          (change)="getchecklist($event)"
+                          placeholder="Select Task Type*"
+                          (change)="showTaskTypeError = false; getchecklist($event)"
                           formControlName="tasktype"
                         >
                         </ng-select>
+                        <div *ngIf="showTaskTypeError" class="validation-message">Task Type is required</div>
                       </div>
                     </div>
 
@@ -197,12 +207,14 @@
                           [items]="team1"
                           bindLabel="item_text"
                           bindValue="item_id"
-                          placeholder="Select Assign"
+                          placeholder="Select Assign*"
                           formControlName="members_id"
                           [multiple]="true"
-                          (ngModelChange)="checklistassignes($event)"
+                          (change)="showAssignError = false"
+                          (ngModelChange)="showAssignError = false; checklistassignes($event)"
                         >
                         </ng-select>
+                        <div *ngIf="showAssignError" class="validation-message">Assign is required</div>
                       </div>
                     </div>
 
@@ -212,12 +224,14 @@
                           <mat-form-field>
                             <textarea
                               matInput
-                              placeholder="Task Description"
+                              placeholder="Task Description*"
                               style="resize: none"
                               formControlName="description"
                               [(ngModel)]="descriptionTask"
+                              (input)="showDescriptionError = false"
                             ></textarea>
                           </mat-form-field>
+                          <div *ngIf="showDescriptionError" class="validation-message">Description is required</div>
                         </div>
                       </div>
                     </div>
@@ -234,14 +248,16 @@
                               <input
                                 matStartDate
                                 formControlName="start"
-                                placeholder="Start Date"
+                                placeholder="Start Date*"
                                 datePickerFormat="YYYY/MM/DD"
+                                (dateChange)="showDateRangeError = false"
                               />
                               <input
                                 matEndDate
                                 formControlName="due_date"
-                                placeholder="Due Date"
+                                placeholder="Due Date*"
                                 datePickerFormat="YYYY/MM/DD"
+                                (dateChange)="showDateRangeError = false"
                               />
                             </mat-date-range-input>
                             <mat-datepicker-toggle
@@ -262,6 +278,7 @@
                               >Task Due Date is required.</mat-error
                             >
                           </mat-form-field>
+                          <div *ngIf="showDateRangeError" class="validation-message">Start Date and Due Date are required</div>
                         </div>
                       </div>
                     </div>
@@ -294,24 +311,27 @@
                           [items]="team4"
                           bindLabel="item_text"
                           bindValue="item_id"
-                          placeholder="Select Responsible Person"
+                          placeholder="Select Responsible Person*"
                           formControlName="responsible_person"
                           [multiple]="true"
-                          (ngModelChange)="checklistresponsibleperson($event)"
+                          (change)="showResponsibleError = false"
+                          (ngModelChange)="showResponsibleError = false; checklistresponsibleperson($event)"
                         >
                         </ng-select>
+                        <div *ngIf="showResponsibleError" class="validation-message">Responsible Person is required</div>
                       </div>
                     </div>
 
                     <div class="col-xl-6 col-lg-6 cl-md-6 col-sm-12">
                       <mat-form-field class="w-100">
-                        <mat-label>Periodic Date</mat-label>
+                        <mat-label>Periodic Date*</mat-label>
                         <input
                           matInput
                           [matDatepicker]="dp"
                           [formControl]="periodic_date"
                           formControlName="periodic_date"
                           [matDatepickerFilter]="dateFilter"
+                          (dateChange)="showPeriodicDateError = false"
                         />
                         <mat-datepicker-toggle
                           matIconSuffix
@@ -324,6 +344,7 @@
                         >
                         </mat-datepicker>
                       </mat-form-field>
+                      <div *ngIf="showPeriodicDateError" class="validation-message">Periodic Date is required</div>
                     </div>
 
                   <div >
@@ -431,14 +452,14 @@
                               <td style="max-width: 70px">
                                 <div class="form_field" >
                                   <mat-form-field  >
-                                    <input matInput formControlName="checklist_time_hour" placeholder="Enter Time Hour" />
+                                    <input matInput formControlName="checklist_time_hour" placeholder="Enter Time Hour" (input)="showChecklistFieldsError = false" />
                                   </mat-form-field>
                                 </div>
                               </td>
                               <td style="max-width: 70px">
                                 <div class="form_field" >
                                   <mat-form-field  >
-                                    <input matInput formControlName="checklist_time_minute" placeholder="Enter Time Minute" />
+                                    <input matInput formControlName="checklist_time_minute" placeholder="Enter Time Minute" (input)="showChecklistFieldsError = false" />
                                   </mat-form-field>
                                 </div>
                               </td>
@@ -449,7 +470,8 @@
                                     bindLabel="item_text"
                                     bindValue="item_id"
                                     placeholder="Select Assign"
-                                    formControlName="checklist_members_id">
+                                    formControlName="checklist_members_id"
+                                    (change)="showChecklistFieldsError = false">
                                   </ng-select>
                                 </div>
                               </td>
@@ -460,7 +482,8 @@
                                     placeholder="Select Responsible Person"
                                     bindLabel="item_text"
                                     bindValue="item_id"
-                                    formControlName="checklist_responsible_person">
+                                    formControlName="checklist_responsible_person"
+                                    (change)="showChecklistFieldsError = false">
                                   </ng-select>
                                 </div>
                               </td>
@@ -480,6 +503,7 @@
 
                           </tbody>
                         </table>
+                        <div *ngIf="showChecklistFieldsError" class="validation-message">Please fill all required checklist fields.</div>
                       </div>
                     </div>
                   </div>
@@ -1110,6 +1134,7 @@
           aria-label="Close"
           alt=""
           class="popup_close_btn_delete_project"
+          #taskChecklistModalClose
         />
       </div>
       <div class="modal-body">
@@ -1124,8 +1149,10 @@
                         matInput
                         formControlName="tasktypechecklist"
                         placeholder="Checklist"
+                        (input)="showChecklistModalNameError = false"
                       />
                     </mat-form-field>
+                    <div *ngIf="showChecklistModalNameError" class="validation-message">Checklist is required</div>
                   </div>
                 </td>
                 <td>
@@ -1158,9 +1185,9 @@
           <div class="row">
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
               <button
+                type="button"
                 class="btn submit_btn"
                 (click)="addChecklistTaskType()"
-                data-bs-dismiss="modal"
               >
                 Save
               </button>

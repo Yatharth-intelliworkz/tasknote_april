@@ -121,6 +121,8 @@ export class DashboardComponent implements OnInit {
     is_expiry: '',
     expiry_date: ''
   };
+  showNoteTitleError = false;
+  showNoteDescriptionError = false;
   dashboardprojectData: any;
   dashboardproject: any;
   clientlistProjectData: any;
@@ -409,13 +411,21 @@ export class DashboardComponent implements OnInit {
   }
 
   insertusernotes(information: any): void {
+    this.showNoteTitleError = false;
+    this.showNoteDescriptionError = false;
+
+    let hasValidationError = false;
+    if (!information.title || information.title.trim() === '') {
+      this.showNoteTitleError = true;
+      hasValidationError = true;
+    }
+    if (!information.description || information.description.trim() === '' || information.description === '<p><br></p>') {
+      this.showNoteDescriptionError = true;
+      hasValidationError = true;
+    }
+    if (hasValidationError) return;
 
     const token = localStorage.getItem('tasklogintoken');
-
-    if (information.title === '' || information.description === '') {
-      this.toastr.error('Please fill Title & Description');
-      return;
-    }
 
 
     if (!token) {
