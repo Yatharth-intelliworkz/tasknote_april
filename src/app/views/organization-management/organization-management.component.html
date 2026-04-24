@@ -186,10 +186,8 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input matInput formControlName="name" placeholder="Company Name" class="text-capitalize" />
-                        <mat-error *ngIf="companyForm.get('name')?.invalid">
-                          {{ getErrorMessage('name') }}
-                        </mat-error>
                       </mat-form-field>
+                      <div *ngIf="isFieldInvalid('name')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Name is required.</div>
                     </div>
                   </div>
                 </div>
@@ -197,10 +195,8 @@
                   <div class="form_field">
                     <mat-form-field>
                       <input matInput formControlName="address" placeholder="Company Address" />
-                      <mat-error *ngIf="companyForm.get('address')?.invalid">
-                        {{ getErrorMessage('address') }}
-                      </mat-error>
                     </mat-form-field>
+                    <div *ngIf="isFieldInvalid('address')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Address is required.</div>
                   </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -208,10 +204,8 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input matInput formControlName="phone_no" placeholder="Mobile Number" />
-                        <mat-error *ngIf="companyForm.get('phone_no')?.invalid">
-                          {{ getErrorMessage('phone_no') }}
-                        </mat-error>
                       </mat-form-field>
+                      <div *ngIf="isFieldInvalid('phone_no')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Mobile Number is required.</div>
                     </div>
                   </div>
                 </div>
@@ -220,10 +214,8 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input matInput placeholder="Company Email" formControlName="email_id" required />
-                        <mat-error *ngIf="companyForm.get('email_id')?.invalid">
-                          {{ getErrorMessage('email_id') }}
-                        </mat-error>
                       </mat-form-field>
+                      <div *ngIf="isFieldInvalid('email_id')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Email is required.</div>
                     </div>
                   </div>
                 </div>
@@ -231,10 +223,8 @@
                   <div class="form_field">
                     <mat-form-field>
                       <input matInput placeholder="Details" formControlName="description" />
-                      <mat-error *ngIf="companyForm.get('description')?.invalid">
-                        {{ getErrorMessage('description') }}
-                      </mat-error>
                     </mat-form-field>
+                    <div *ngIf="isFieldInvalid('description')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Description is required.</div>
                   </div>
                 </div>
                 <div class="row">
@@ -284,11 +274,8 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input matInput #input placeholder="Company Name" formControlName="name" />
-                        <mat-error *ngIf="editForm.get('name')?.hasError('required')">Name is required</mat-error>
-                        <mat-error *ngIf="editForm.get('name')?.hasError('minlength')">Name must be at least 3
-                          characters</mat-error>
                       </mat-form-field>
-
+                      <div *ngIf="isEditFieldInvalid('name')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Name is required and must be at least 3 characters.</div>
                     </div>
                   </div>
                 </div>
@@ -296,8 +283,8 @@
                   <div class="form_field">
                     <mat-form-field>
                       <input matInput #input placeholder="Company Address" formControlName="address" />
-                      <mat-error *ngIf="editForm.get('address')?.hasError('required')">Address is required</mat-error>
                     </mat-form-field>
+                    <div *ngIf="isEditFieldInvalid('address')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Address is required.</div>
                   </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -305,11 +292,8 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input matInput #input placeholder="Mobile Number" formControlName="phone_no" />
-                        <mat-error *ngIf="editForm.get('phone_no')?.hasError('required')">Mobile Number is
-                          required</mat-error>
-                        <mat-error *ngIf="editForm.get('phone_no')?.hasError('pattern')">Invalid Mobile
-                          Number</mat-error>
                       </mat-form-field>
+                      <div *ngIf="isEditFieldInvalid('phone_no')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Mobile Number is required (10 digits).</div>
                     </div>
                   </div>
                 </div>
@@ -318,8 +302,8 @@
                     <div class="form_field">
                       <mat-form-field>
                         <input matInput placeholder="Company Email" formControlName="email_id" />
-                        <mat-error *ngIf="editForm.get('email_id')?.hasError('required')">Email is required</mat-error>
                       </mat-form-field>
+                      <div *ngIf="isEditFieldInvalid('email_id')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Email is required.</div>
                     </div>
                   </div>
                 </div>
@@ -327,10 +311,9 @@
                   <div class="form_field">
                     <mat-form-field>
                       <input matInput #input placeholder="Details" formControlName="description" />
-                      <mat-error *ngIf="editForm.get('description')?.hasError('required')">Description is
-                        required</mat-error>
                       <input matInput hidden="true" placeholder="companyID" formControlName="companyID" />
                     </mat-form-field>
+                    <div *ngIf="isEditFieldInvalid('description')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Description is required.</div>
                   </div>
                 </div>
                 <div class="row">

@@ -42,6 +42,8 @@ export class OrganizationManagementComponent implements OnInit {
   fileToUploadadd: any;
   imageUrladd: any;
   permissions: any;
+  submitted = false;
+  editSubmitted = false;
 
   getErrorMessage(controlName: string) {
     const control = this.companyForm.get(controlName);
@@ -65,6 +67,16 @@ export class OrganizationManagementComponent implements OnInit {
       return 'Invalid Description.';
     }
     return this.email.hasError('email') ? 'Not a valid email' : '';
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.companyForm.get(fieldName);
+    return !!(field && field.invalid && (field.dirty || field.touched || this.submitted));
+  }
+
+  isEditFieldInvalid(fieldName: string): boolean {
+    const field = this.editForm.get(fieldName);
+    return !!(field && field.invalid && (field.dirty || field.touched || this.editSubmitted));
   }
   constructor(
     // private notelistApi: NoteslistService,
@@ -183,6 +195,13 @@ export class OrganizationManagementComponent implements OnInit {
   addCompany(clearaddform: any): void {
     const token = localStorage.getItem('tasklogintoken');
 
+    // Validate form before submission
+    if (this.companyForm.invalid) {
+      this.companyForm.markAllAsTouched();
+      this.submitted = true;
+      return;
+    }
+
     const formData = new FormData();
     formData.append('logo', this.selectedImage!);
 
@@ -210,6 +229,10 @@ export class OrganizationManagementComponent implements OnInit {
                   elementToClick.click();
                 }
                 clearaddform.resetForm();
+                this.submitted = false;
+                this.companyForm.reset();
+                this.selectedImage = null;
+                this.imageUrladd = null;
                 this.loadCompanyList();
                 this.spinner.hide();
                 // this.defaultHeaderComponent.loadCompanyList();
@@ -293,6 +316,13 @@ export class OrganizationManagementComponent implements OnInit {
   UpdateCompany() {
     const token = localStorage.getItem('tasklogintoken');
 
+    // Validate form before submission
+    if (this.editForm.invalid) {
+      this.editForm.markAllAsTouched();
+      this.editSubmitted = true;
+      return;
+    }
+
     const formData = new FormData();
     formData.append('logo', this.selectedEditImage!);
 
@@ -319,6 +349,7 @@ export class OrganizationManagementComponent implements OnInit {
                 if (elementToClick) {
                   elementToClick.click();
                 }
+                this.editSubmitted = false;
                 setTimeout(() => {
                   this.toastr.success('Company Updated Successfully.');
                 }, 10);
