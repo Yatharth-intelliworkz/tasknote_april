@@ -87,6 +87,7 @@ export class EditProjectComponent {
   showTaskTypeError = false;
   showHoursError = false;
   showCostError = false;
+  submitted = false;
 
   constructor(private elementRef: ElementRef, private toastr: ToastrService, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private commonService: CommonService, private route: ActivatedRoute, private router: Router) {
     this.loadProjectsList();
@@ -172,6 +173,7 @@ export class EditProjectComponent {
 
   }
   addproject(information: any) {
+    this.submitted = true;
     this.spinner.show();
 
     // Ensure members_id is patched from membersName before validation
@@ -180,9 +182,7 @@ export class EditProjectComponent {
     }
 
     if (this.addprojectForm.invalid) {
-      Object.keys(this.addprojectForm.controls).forEach(key => {
-        this.addprojectForm.get(key)?.markAsTouched();
-      });
+      this.addprojectForm.markAllAsTouched();
       this.spinner.hide();
       return;
     }
@@ -245,6 +245,7 @@ export class EditProjectComponent {
         .subscribe(
           (response: any) => {
             if (response.status === true) {
+              this.submitted = false;
               this.toastr.success('Project Updated Successfully.');
               this.router.navigate(['/projects']);
             }
@@ -262,6 +263,31 @@ export class EditProjectComponent {
           }
         );
     }
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const control = this.addprojectForm.get(fieldName);
+    if (!control || (!this.submitted && !control.touched)) {
+      return false;
+    }
+
+    return this.isEmptyValue(control.value);
+  }
+
+  private isEmptyValue(value: any): boolean {
+    if (Array.isArray(value)) {
+      return value.length === 0;
+    }
+
+    if (value === null || value === undefined) {
+      return true;
+    }
+
+    if (typeof value === 'string') {
+      return value.trim().length === 0;
+    }
+
+    return false;
   }
 
   private tryAddDraftTaskTypeRow(): boolean {

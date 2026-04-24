@@ -137,6 +137,7 @@ export class ManageMembersComponent {
   selectedMemberId: any;
   selectedTeamId: any;
   ownerChceck: any;
+  addMemberSubmitted = false;
   // add role popup
 
   // new table
@@ -257,9 +258,10 @@ export class ManageMembersComponent {
       admin_rights_no: [''],
       companyID: [''],
       profile: [''],
-      dob: [''],
+      dob: ['', [Validators.required]],
       memberId: [''],
-      is_active: [''],
+      user_type: ['', [Validators.required]],
+      is_active: ['', [Validators.required]],
       hour_per_cost: [''],
       // attech file
     });
@@ -314,16 +316,16 @@ export class ManageMembersComponent {
       this.memberForm = this.fb.group({
         name: ['', Validators.required],
         designation: ['', Validators.required], // Use appropriate default value
-        dob: [''], // Use appropriate default value
+        dob: ['', Validators.required], // Use appropriate default value
         phone_no: ['', Validators.required], // Use appropriate default value
         email_id: ['', Validators.required], // Use appropriate default value
-        reportingTo: ['', Validators.required], // Use appropriate default value
+        reportingTo: [''], // Optional when there are no members to report to
         gender: ['', Validators.required], // Use appropriate default value
-        assignRole: ['', this.adminRightsValidator()],
+        assignRole: ['', Validators.required],
         memberId: [''],
-        user_type: [''],
+        user_type: ['', Validators.required],
         hour_per_cost: [''],
-        is_active:[''],
+        is_active:['', Validators.required],
       });
 
       this.submitForm = this.fb.group({
@@ -382,18 +384,41 @@ export class ManageMembersComponent {
   }
   // administreter permision dropdown
   addmember(information: any, clearaddform: any) {
-    const formData = new FormData();
-    // formData.append('profile', this.selectedImage!);
+    this.addMemberSubmitted = true;
+    this.updateReportingToValidator();
 
-    const currentDate = information.dob;
-    const formattedDate = currentDate.toISOString();
+    if (this.memberForm.invalid) {
+      this.memberForm.markAllAsTouched();
+      return;
+    }
+
+    const formData = new FormData();
+
+    if (this.selectedImage) {
+      formData.append('profile', this.selectedImage);
+    }
 
     // Append other form data properties to formData
     Object.keys(information).forEach((key) => {
-      formData.append(key, information[key]);
+      if (key === 'dob') {
+        return;
+      }
+
+      const value = information[key];
+      if (value === null || value === undefined) {
+        return;
+      }
+
+      formData.append(key, value);
     });
 
-    formData.append('dob', formattedDate);
+    if (information.dob) {
+      const dob = new Date(information.dob);
+      if (!Number.isNaN(dob.getTime())) {
+        formData.append('dob', dob.toISOString());
+      }
+    }
+
     formData.append('companyID', this.companyId);
 
     const token = localStorage.getItem('tasklogintoken');
@@ -408,6 +433,10 @@ export class ManageMembersComponent {
           (response: any) => {
             if (response.status === true) {
               this.clearaddform.resetForm();
+              this.memberForm.reset();
+              this.addMemberSubmitted = false;
+              this.selectedImage = null;
+              this.imageUrladd = null;
               this.getrolelist();
               this.getmemberlist();
               const elementToClick =
@@ -432,6 +461,26 @@ export class ManageMembersComponent {
           }
         );
     }
+  }
+
+  isAddMemberFieldInvalid(fieldName: string): boolean {
+    const control = this.memberForm.get(fieldName);
+    return !!control && control.invalid && (control.touched || this.addMemberSubmitted);
+  }
+
+  private updateReportingToValidator(): void {
+    const reportingToControl = this.memberForm.get('reportingTo');
+    if (!reportingToControl) {
+      return;
+    }
+
+    if ((this.memberlist?.length ?? 0) > 0) {
+      reportingToControl.setValidators([Validators.required]);
+    } else {
+      reportingToControl.clearValidators();
+    }
+
+    reportingToControl.updateValueAndValidity({ emitEvent: false });
   }
 
   deletememberopendialogue(id: any) {
@@ -612,6 +661,7 @@ export class ManageMembersComponent {
             this.memberlist = this.memberlistData?.data;
             this.editmemberlist = this.memberlistData?.data;
             this.memberRowData = this.memberlist;
+            this.updateReportingToValidator();
            
             this.spinner.hide();
           },
@@ -781,7 +831,6 @@ export class ManageMembersComponent {
         information.members_id === '' ||
         information.projectId === ''
       ) {
-        this.toastr.error('Please fill in all required fields');
         return;
       }
       this.spinner.show();
@@ -1002,7 +1051,6 @@ export class ManageMembersComponent {
       information.projectId === '' ||
       !(information.members_id && information.members_id.length > 0)
     ) {
-      this.toastr.error('Please fill in all required fields');
       return;
     }
 

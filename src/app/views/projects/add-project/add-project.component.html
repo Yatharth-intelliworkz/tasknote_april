@@ -10,10 +10,10 @@
                   <div class="form_field">
                     <mat-form-field>
                       <input matInput formControlName="name" placeholder="Project Name*" class="text-capitalize" />
-                      <mat-error *ngIf="addprojectForm.get('name')?.hasError('required')">
-                        Project Name is required
-                      </mat-error>
                     </mat-form-field>
+                    <div *ngIf="isFieldInvalid('name')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                      Project Name is required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -22,10 +22,10 @@
                   <div class="form_field">
                     <mat-form-field appearance="fill">
                       <input matInput formControlName="total_cost" placeholder="Project Cost*" />
-                      <mat-error *ngIf="addprojectForm.get('total_cost')?.hasError('required')">
-                        Project Cost is required
-                      </mat-error>
                     </mat-form-field>
+                    <div *ngIf="isFieldInvalid('total_cost')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                      Project Cost is required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -38,10 +38,10 @@
                           {{ servicelistData.title }}
                         </mat-option>
                       </mat-select>
-                      <mat-error *ngIf="addprojectForm.get('servic_id')?.hasError('required')">
-                        Service Segment is required
-                      </mat-error>
                     </mat-form-field>
+                    <div *ngIf="isFieldInvalid('servic_id')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                      Service Segment is required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -60,7 +60,7 @@
                     <ng-select [items]="team1" bindLabel="item_text" bindValue="item_id" placeholder="Project Manager*"
                     formControlName="manager_id" [multiple]="true">
                   </ng-select>
-                  <div *ngIf="addprojectForm.get('manager_id')?.hasError('required') && addprojectForm.get('manager_id')?.touched" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                  <div *ngIf="isFieldInvalid('manager_id')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
                     Project Manager is required
                   </div>
                   </div>
@@ -72,10 +72,10 @@
                   <div class="form_field">
                     <mat-form-field>
                       <input matInput formControlName="members_id" placeholder="Reference By*" class="text-capitalize" />
-                      <mat-error *ngIf="addprojectForm.get('members_id')?.hasError('required')">
-                        Reference By is required
-                      </mat-error>
                     </mat-form-field>
+                    <div *ngIf="isFieldInvalid('members_id')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                      Reference By is required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -88,10 +88,10 @@
                         placeholder="Select Start Date*" />
                       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
-                      <mat-error *ngIf="addprojectForm.get('start_date')?.hasError('required')">
-                        Start Date is required
-                      </mat-error>
                     </mat-form-field>
+                    <div *ngIf="isFieldInvalid('start_date')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                      Start Date is required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -103,10 +103,10 @@
                         placeholder="Select End Date*" [min]="addprojectForm.get('start_date')?.value" />
                       <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
-                      <mat-error *ngIf="addprojectForm.get('end_date')?.hasError('required')">
-                        End Date is required
-                      </mat-error>
                     </mat-form-field>
+                    <div *ngIf="isFieldInvalid('end_date')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                      End Date is required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -115,10 +115,10 @@
                   <div class="form_field custom_textarea">
                     <mat-form-field>
                       <textarea matInput formControlName="description" placeholder="Description*"></textarea>
-                      <mat-error *ngIf="addprojectForm.get('description')?.hasError('required')">
-                        Description is required
-                      </mat-error>
                     </mat-form-field>
+                    <div *ngIf="isFieldInvalid('description')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">
+                      Description is required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -236,7 +236,7 @@
 
               <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
-                  <button class="btn submit_btn">Submit</button>
+                  <button type="submit" class="btn submit_btn">Submit</button>
                 </div>
               </div>
             </div>

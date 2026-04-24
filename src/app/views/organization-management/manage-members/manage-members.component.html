@@ -357,14 +357,11 @@
                           matInput
                           #input
                           formControlName="name"
-                          placeholder="Member Name"
+                          placeholder="Member Name *"
                           maxLength="25"
                         />
-                        <mat-error
-                          *ngIf="memberForm.get('name')?.hasError('required')"
-                          >Name is required.</mat-error
-                        >
                       </mat-form-field>
+                      <div *ngIf="isAddMemberFieldInvalid('name')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Name is required.</div>
                     </div>
                   </div>
                 </div>
@@ -376,15 +373,10 @@
                           matInput
                           #input
                           formControlName="designation"
-                          placeholder="Designation"
+                          placeholder="Designation *"
                         />
-                        <mat-error
-                          *ngIf="
-                            memberForm.get('designation')?.hasError('required')
-                          "
-                          >Designation is required.</mat-error
-                        >
                       </mat-form-field>
+                      <div *ngIf="isAddMemberFieldInvalid('designation')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Designation is required.</div>
                     </div>
                   </div>
                 </div>
@@ -405,13 +397,8 @@
                               >{{ rolelist.name }}</mat-option
                             >
                           </mat-select>
-                          <mat-error
-                            *ngIf="
-                              memberForm.get('assignRole')?.hasError('required')
-                            "
-                            >Assign Role is required.</mat-error
-                          >
                         </mat-form-field>
+                          <div *ngIf="isAddMemberFieldInvalid('assignRole')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Assign Role is required.</div>
                       </div>
                     </div>
                   </div>
@@ -430,13 +417,8 @@
                             >{{ memberlist.name }}</mat-option
                           >
                         </mat-select>
-                        <mat-error
-                          *ngIf="
-                            memberForm.get('reportingTo')?.hasError('required')
-                          "
-                          >Reporting To is required.</mat-error
-                        >
                       </mat-form-field>
+                      <div *ngIf="(memberlist?.length > 0) && isAddMemberFieldInvalid('reportingTo')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Reporting To is required.</div>
                     </div>
                   </div>
                 </div>
@@ -447,7 +429,7 @@
                         <input
                           matInput
                           [matDatepicker]="picker1"
-                          placeholder="Select Date of Birth"
+                          placeholder="Select Date of Birth *"
                           formControlName="dob"
                         />
                         <mat-datepicker-toggle
@@ -455,11 +437,8 @@
                           [for]="picker1"
                         ></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
-                        <mat-error
-                          *ngIf="memberForm.get('dob')?.hasError('required')"
-                          >Dob is required.</mat-error
-                        >
                       </mat-form-field>
+                      <div *ngIf="isAddMemberFieldInvalid('dob')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">DOB is required.</div>
                     </div>
                   </div>
                 </div>
@@ -471,16 +450,11 @@
                           matInput
                           #input
                           formControlName="phone_no"
-                          placeholder="Mobile Number"
+                          placeholder="Mobile Number *"
                           maxLength="10"
                         />
-                        <mat-error
-                          *ngIf="
-                            memberForm.get('phone_no')?.hasError('required')
-                          "
-                          >Mobile Number is required.</mat-error
-                        >
                       </mat-form-field>
+                      <div *ngIf="isAddMemberFieldInvalid('phone_no')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Mobile Number is required.</div>
                     </div>
                   </div>
                 </div>
@@ -490,16 +464,11 @@
                       <mat-form-field>
                         <input
                           matInput
-                          placeholder="Email"
+                          placeholder="Email *"
                           formControlName="email_id"
                         />
-                        <mat-error
-                          *ngIf="
-                            memberForm.get('email_id')?.hasError('required')
-                          "
-                          >Email is required.</mat-error
-                        >
                       </mat-form-field>
+                      <div *ngIf="isAddMemberFieldInvalid('email_id')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Email is required.</div>
                     </div>
                   </div>
                 </div>
@@ -509,18 +478,15 @@
                     <div class="form_field">
                       <mat-form-field>
                         <mat-select
-                          placeholder="Select Gender"
+                          placeholder="Select Gender *"
                           formControlName="gender"
                           required
                         >
                           <mat-option value="0">Male</mat-option>
                           <mat-option value="1">Female</mat-option>
                         </mat-select>
-                        <mat-error
-                          *ngIf="memberForm.get('gender')?.hasError('required')"
-                          >Gender is required.</mat-error
-                        >
                       </mat-form-field>
+                      <div *ngIf="isAddMemberFieldInvalid('gender')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Gender is required.</div>
                     </div>
                   </div>
                 </div>
@@ -541,15 +507,8 @@
                               >{{ usertypelist.name }}</mat-option
                             >
                           </mat-select>
-                          <mat-error
-                            *ngIf="
-                              memberForm
-                                .get('usertype')
-                                ?.hasError('requser_typeuired')
-                            "
-                            >Member Type is required.</mat-error
-                          >
                         </mat-form-field>
+                        <div *ngIf="isAddMemberFieldInvalid('user_type')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">User Type is required.</div>
                       </div>
                     </div>
                   </div>
@@ -560,7 +519,7 @@
                     <div class="form_field">
                       <mat-form-field>
                         <mat-select
-                          placeholder="Select status"
+                          placeholder="Select status *"
                           formControlName="is_active"
                           required
                         >
@@ -568,6 +527,7 @@
                           <mat-option [value]="1">InActive</mat-option>
                         </mat-select>
                       </mat-form-field>
+                      <div *ngIf="isAddMemberFieldInvalid('is_active')" class="text-danger" style="font-size: 0.75rem; margin-top: 4px;">Status is required.</div>
                     </div>
                   </div>
                 </div>
@@ -664,7 +624,7 @@
                           matInput
                           #input
                           formControlName="name"
-                          placeholder="Member Name"
+                          placeholder="Member Name *"
                           [(ngModel)]="memberedit.name"
                         />
                         <input
@@ -689,7 +649,7 @@
                           matInput
                           #designation
                           formControlName="designation"
-                          placeholder="Designation"
+                          placeholder="Designation *"
                           [(ngModel)]="memberedit.designation"
                         />
                    
@@ -747,7 +707,7 @@
                         <input
                           matInput
                           [matDatepicker]="picker"
-                          placeholder="Select Date of Birth"
+                          placeholder="Select Date of Birth *"
                           formControlName="dob"
                           [(ngModel)]="memberedit.dob"
                         />

@@ -325,8 +325,13 @@ input.mat-input-element {
   border: none;
 }
 
+.table-responsive {
+  overflow-x: auto;
+}
+
 .table-responsive::-webkit-scrollbar {
-  display: none;
+  height: 8px;
+  display: block;
 }
 
 .task_table thead {
@@ -2222,6 +2227,13 @@ p.no_data_content {
 
 .modal-table .mat-mdc-form-field-subscript-wrapper {
   display: none;
+}
+
+.modal-table,
+.modal-table tr td,
+.modal-table tr th {
+  border: 1px solid #dddddd;
+  vertical-align: baseline;
 }
 
 .emply-table {

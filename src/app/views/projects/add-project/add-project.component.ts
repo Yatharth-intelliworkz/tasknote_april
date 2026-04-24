@@ -93,6 +93,7 @@ export class AddProjectComponent {
   showTaskTypeError = false;
   showHoursError = false;
   showCostError = false;
+  submitted = false;
 
   constructor(private elementRef: ElementRef, private toastr: ToastrService, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private commonService: CommonService, private renderer: Renderer2, private router: Router
   ) {
@@ -181,12 +182,11 @@ export class AddProjectComponent {
 
 
   addproject(information: any) {
+    this.submitted = true;
     this.spinner.show();
     if (this.addprojectForm.invalid) {
       // Mark all fields as touched to display error messages
-      Object.keys(this.addprojectForm.controls).forEach(key => {
-        this.addprojectForm.get(key)?.markAsTouched();
-      });
+      this.addprojectForm.markAllAsTouched();
       this.spinner.hide();
       return;
     }
@@ -253,6 +253,7 @@ export class AddProjectComponent {
           (response: any) => {
             if (response.status === true) {
               this.addprojectForm.reset();
+              this.submitted = false;
               const elementToClick = this.elementRef.nativeElement.querySelector('.popup_close_btn_project_add');
               if (elementToClick) {
                 elementToClick.click();
@@ -275,6 +276,31 @@ export class AddProjectComponent {
           }
         );
     }
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const control = this.addprojectForm.get(fieldName);
+    if (!control || (!this.submitted && !control.touched)) {
+      return false;
+    }
+
+    return this.isEmptyValue(control.value);
+  }
+
+  private isEmptyValue(value: any): boolean {
+    if (Array.isArray(value)) {
+      return value.length === 0;
+    }
+
+    if (value === null || value === undefined) {
+      return true;
+    }
+
+    if (typeof value === 'string') {
+      return value.trim().length === 0;
+    }
+
+    return false;
   }
 
   private tryAddDraftTaskTypeRow(): boolean {
