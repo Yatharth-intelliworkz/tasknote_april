@@ -52,6 +52,7 @@ import Pusher from 'pusher-js';
 import { NotificationService } from '../service/notification.service';
 declare var introJs: any;
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormatNotificationMessagePipe } from '../../pipes/format-notification-message.pipe';
 
 
 
@@ -94,7 +95,8 @@ interface Reference {
     MatListModule,
     MatMenuModule,
     MatSlideToggleModule,
-    TitleCasePipe
+    TitleCasePipe,
+    FormatNotificationMessagePipe
   ],
 })
 

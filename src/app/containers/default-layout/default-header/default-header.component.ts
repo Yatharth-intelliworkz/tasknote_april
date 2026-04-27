@@ -361,7 +361,8 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnDestroy
     });
 
     this.transformedNotifications = newNotifications.map((notification: { userName: any; message: any; massage?: any; taskTitle: any; is_setModule: any; }) => {
-      const message = notification.message || notification.massage || 'You have a new notification.';
+      let message = notification.message || notification.massage || 'You have a new notification.';
+      message = this.formatNotificationMessage(message);
       const is_setModule = notification.is_setModule || 'Notification';
 
       return {
@@ -375,5 +376,48 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnDestroy
     });
 
     return this.transformedNotifications;
+  }
+
+  /**
+   * Format notification message for UI and browser notifications.
+   */
+  formatNotificationMessage(message: any): string {
+    if (!message) {
+      return '';
+    }
+
+    let result = String(message);
+
+    const priorityMap: { [key: string]: string } = {
+      '0': 'Low',
+      '1': 'High',
+      '2': 'Medium',
+    };
+
+    const mapPriority = (value: string): string => priorityMap[value] || value;
+
+    result = result.replace(/\bchanged\s+priority\s+to\s+([0-2])\b/gi, (_m, p) => {
+      return `changed priority to ${mapPriority(p)}`;
+    });
+
+    result = result.replace(/\bpriority\s+from\s+([0-2])\s+to\s+([0-2])\b/gi, (_m, fromP, toP) => {
+      return `priority from ${mapPriority(fromP)} to ${mapPriority(toP)}`;
+    });
+
+    result = result.replace(/\bpriority\s*(?:is|to|:)?\s*([0-2])\b/gi, (_m, p) => {
+      return `priority to ${mapPriority(p)}`;
+    });
+
+    // Replace boolean string values with their meaningful representations
+    result = result.replace(/\btrue\b/gi, 'Yes');
+    result = result.replace(/\bfalse\b/gi, 'No');
+
+    // Remove any trailing boolean values that might be concatenated
+    result = result.replace(/\s+(Yes|No)\s*$/i, '');
+
+    // Clean up any double spaces
+    result = result.replace(/\s+/g, ' ').trim();
+
+    return result;
   }
 }

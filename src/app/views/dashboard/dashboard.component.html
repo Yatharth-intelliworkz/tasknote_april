@@ -450,7 +450,7 @@
                       <h2 class="note_title">{{ notification.is_setModule | titlecase }} </h2>
                       <p>{{ notification.date}} <br> {{ notification.time }}</p>
                     </div>
-                    <p class="note_content" [innerHTML]="notification.massage"></p>
+                    <p class="note_content" [innerHTML]="notification.massage | formatNotificationMessage"></p>
                   </div>
                 </div>
                 </ng-container>

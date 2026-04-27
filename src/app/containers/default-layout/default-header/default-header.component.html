@@ -93,7 +93,7 @@
                       *ngIf="notification.is_setModule == 'project'"
                     >
                       <p class="notification_content">
-                        {{ notification.massage }}
+                        {{ formatNotificationMessage(notification.massage || notification.message) }}
                       </p>
                     </a>
                     <a
@@ -102,7 +102,7 @@
                       *ngIf="notification.is_setModule == 'task'"
                     >
                       <p class="notification_content">
-                        {{ notification.massage }}
+                        {{ formatNotificationMessage(notification.massage || notification.message) }}
                       </p>
                     </a>
                     <a
@@ -111,7 +111,7 @@
                       *ngIf="notification.is_setModule == 'note'"
                     >
                       <p class="notification_content">
-                        {{ notification.massage }}
+                        {{ formatNotificationMessage(notification.massage || notification.message) }}
                       </p>
                     </a>
                     <p class="notify_date">{{ notification.time }}</p>

@@ -148,7 +148,7 @@
                 <div class="d-flex gap-2 align-items-center">
                   <!-- <div class="notify_user_short_name">MG</div> -->
                   <p class="notification_content">
-                    {{notification.massage}}
+                    {{notification.massage | formatNotificationMessage}}
                   </p>
                 </div>
                 <p class="notify_date">{{notification.date}} | {{notification.time}}</p>
@@ -160,7 +160,7 @@
                 <div class="d-flex gap-2 align-items-center">
                   <!-- <div class="notify_user_short_name">MG</div> -->
                   <p class="notification_content">
-                    {{notification.massage}}
+                    {{notification.massage | formatNotificationMessage}}
                   </p>
                 </div>
                 <p class="notify_date">{{notification.date}} | {{notification.time}}</p>
@@ -171,7 +171,7 @@
                 <div class="d-flex gap-2 align-items-center">
                   <!-- <div class="notify_user_short_name">MG</div> -->
                   <p class="notification_content">
-                    {{notification.massage}}
+                    {{notification.massage | formatNotificationMessage}}
                   </p>
                 </div>
                 <p class="notify_date">{{notification.date}} | {{notification.time}}</p>
@@ -179,7 +179,7 @@
             </a>
             <div class="text-decoration-none" *ngIf="notification.is_setModule != 'project' && notification.is_setModule != 'task' && notification.is_setModule != 'note'">
               <div class="d-flex justify-content-between align-items-center">
-                <p class="notification_content">{{notification.massage}}</p>
+                <p class="notification_content">{{notification.massage | formatNotificationMessage}}</p>
                 <p class="notify_date">{{notification.date}} | {{notification.time}}</p>
               </div>
             </div>
@@ -200,7 +200,7 @@
                 <div class="d-flex gap-2 align-items-center">
                   <!-- <div class="notify_user_short_name">MG</div> -->
                   <p class="notification_content">
-                    {{notificationread.massage}}
+                    {{notificationread.massage | formatNotificationMessage}}
                   </p>
                 </div>
                 <p class="notify_date">{{notificationread.date}} | {{notificationread.time}}</p>
@@ -212,7 +212,7 @@
                 <div class="d-flex gap-2 align-items-center">
                   <!-- <div class="notify_user_short_name">MG</div> -->
                   <p class="notification_content">
-                    {{notificationread.massage}}
+                    {{notificationread.massage | formatNotificationMessage}}
                   </p>
                 </div>
                 <p class="notify_date">{{notificationread.date}} | {{notificationread.time}}</p>
@@ -224,7 +224,7 @@
                 <div class="d-flex gap-2 align-items-center">
                   <!-- <div class="notify_user_short_name">MG</div> -->
                   <p class="notification_content">
-                    {{notificationread.massage}}
+                    {{notificationread.massage | formatNotificationMessage}}
                   </p>
                 </div>
                 <p class="notify_date">{{notificationread.date}} | {{notificationread.time}}</p>
@@ -235,7 +235,7 @@
                 <div class="d-flex gap-2 align-items-center">
                   <!-- <div class="notify_user_short_name">MG</div> -->
                   <p class="notification_content">
-                    {{notificationread.massage}}
+                    {{notificationread.massage | formatNotificationMessage}}
                   </p>
                 </div>
                 <p class="notify_date">{{notificationread.date}} | {{notificationread.time}}</p>
@@ -243,7 +243,7 @@
             </a>
             <div class="text-decoration-none" *ngIf="notificationread.is_setModule != 'project' && notificationread.is_setModule != 'team' && notificationread.is_setModule != 'task' && notificationread.is_setModule != 'note'">
               <div class="d-flex justify-content-between align-items-center">
-                <p class="notification_content">{{notificationread.massage}}</p>
+                <p class="notification_content">{{notificationread.massage | formatNotificationMessage}}</p>
                 <p class="notify_date">{{notificationread.date}} | {{notificationread.time}}</p>
               </div>
             </div>

@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, of, interval, Subscription } from 'rxjs';
 import { catchError, switchMap, startWith } from 'rxjs/operators';
+import { FormatNotificationMessagePipe } from '../../pipes/format-notification-message.pipe';
 
 interface users {
   item_id: any;
@@ -35,7 +36,7 @@ interface Module {
   templateUrl: './notiifcations.component.html',
   styleUrls: ['./notiifcations.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatIconModule, NgMultiSelectDropDownModule, ReactiveFormsModule, FormsModule,MatFormFieldModule, MatDatepickerModule, MatNativeDateModule,NgFor,NgIf],
+  imports: [CommonModule, MatIconModule, NgMultiSelectDropDownModule, ReactiveFormsModule, FormsModule,MatFormFieldModule, MatDatepickerModule, MatNativeDateModule,NgFor,NgIf, FormatNotificationMessagePipe],
 })
 export class NotiifcationsComponent implements OnInit, OnDestroy {
 
