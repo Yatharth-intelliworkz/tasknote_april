@@ -455,7 +455,7 @@ export class TasksComponent {
 
           // Add event listener to trigger modal programmatically
           img.addEventListener('click', () => {
-            this.openModalDelay(taskId);
+            this.openModalDelay(taskId, params.data.due_date);
           });
        
 
@@ -759,7 +759,7 @@ export class TasksComponent {
 
           // Add event listener to trigger modal programmatically
           img.addEventListener('click', () => {
-             this.openModalDelay(taskId);
+             this.openModalDelay(taskId, params.data.due_date);
              const reasonInput = document.getElementById('reason') as HTMLElement;
              if (reasonInput) {
               
@@ -1070,7 +1070,7 @@ export class TasksComponent {
 
           // Add event listener to trigger modal programmatically
           img.addEventListener('click', () => {
-            this.openModalDelay(taskId);
+            this.openModalDelay(taskId, params.data.due_date);
           });
         }
 
@@ -1382,7 +1382,7 @@ export class TasksComponent {
 
           // Add event listener to trigger modal programmatically
           img.addEventListener('click', () => {
-            this.openModalDelay(taskId);
+            this.openModalDelay(taskId, params.data.due_date);
           });
         }
 
@@ -1723,6 +1723,7 @@ export class TasksComponent {
   delaytasklist:any;
   clock: string = '';
   delaytaskId: any;
+  delayMinDate: Date | null = null;
   clocks: string = '';
   pausedTime: number = 0; // Store the timestamp when the timer is paused
   startTime: number = 0; // Store the timestamp when the timer starts
@@ -2016,8 +2017,8 @@ export class TasksComponent {
 
     this.delayForm = this.fb.group({
       delaytask_id: [''],
-      reason : [''],
-      reason_date: [''],
+      reason : ['', [Validators.required]],
+      reason_date: ['', [Validators.required]],
     });
 
     this.dropdownSettings2 = {
@@ -2802,11 +2803,53 @@ export class TasksComponent {
       modalInstance.show();
     }
   }
-  openModalDelay(taskId: number) {
+  private normalizeDateOnly(value: Date): Date {
+    const normalized = new Date(value);
+    normalized.setHours(0, 0, 0, 0);
+    return normalized;
+  }
+
+  private parseTaskDate(value: any): Date | null {
+    if (!value) {
+      return null;
+    }
+
+    if (value instanceof Date && !isNaN(value.getTime())) {
+      return this.normalizeDateOnly(value);
+    }
+
+    const directParsed = new Date(value);
+    if (!isNaN(directParsed.getTime())) {
+      return this.normalizeDateOnly(directParsed);
+    }
+
+    if (typeof value === 'string') {
+      const trimmed = value.trim();
+      const ddmmyyyy = /^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/.exec(trimmed);
+      if (ddmmyyyy) {
+        const day = Number(ddmmyyyy[1]);
+        const month = Number(ddmmyyyy[2]) - 1;
+        const year = Number(ddmmyyyy[3]);
+        const parsed = new Date(year, month, day);
+        if (!isNaN(parsed.getTime())) {
+          return this.normalizeDateOnly(parsed);
+        }
+      }
+    }
+
+    return null;
+  }
+
+  openModalDelay(taskId: number, dueDate?: any) {
     this.delaytaskId = taskId;
+    this.delayMinDate = this.parseTaskDate(dueDate);
     this.delayForm.patchValue({
-      delaytask_id: this.delaytaskId
+      delaytask_id: this.delaytaskId,
+      reason: '',
+      reason_date: ''
     });
+    this.delayForm.markAsPristine();
+    this.delayForm.markAsUntouched();
     this.delayTaskList(this.delaytaskId);
     // Trigger the modal programmatically if needed
     const modalElement = document.getElementById('delayTaskModal');
@@ -3350,6 +3393,11 @@ export class TasksComponent {
   }
 
   DelayFormSubmit(information: any){
+    if (this.delayForm.invalid) {
+      this.delayForm.markAllAsTouched();
+      return;
+    }
+
     this.spinner.show();
     const token = localStorage.getItem('tasklogintoken');
     if (token) {
@@ -3365,7 +3413,11 @@ export class TasksComponent {
             if (response.status == true) {
               this.toastr.success('Delay Set Successfully.');
               this.delayTaskList(this.delaytaskId);
-              this.delayForm.reset();
+              this.delayForm.reset({
+                delaytask_id: this.delaytaskId,
+                reason: '',
+                reason_date: ''
+              });
               this.spinner.hide();
             }
           },

@@ -758,6 +758,9 @@
                     id="reason"
                     #reasonInput
                   />
+                  <mat-error *ngIf="delayForm.get('reason')?.touched && delayForm.get('reason')?.hasError('required')">
+                    Reason is required.
+                  </mat-error>
                 </mat-form-field>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-12">
@@ -766,6 +769,7 @@
                   <input
                     matInput
                     [matDatepicker]="picker"
+                    [min]="delayMinDate"
                     formControlName="reason_date"
                   />
                   <mat-datepicker-toggle
@@ -773,6 +777,9 @@
                     [for]="picker"
                   ></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
+                  <mat-error *ngIf="delayForm.get('reason_date')?.touched && delayForm.get('reason_date')?.hasError('required')">
+                    Date is required.
+                  </mat-error>
                 </mat-form-field>
               </div>
               <!-- Hidden input to store delaytask_id -->
