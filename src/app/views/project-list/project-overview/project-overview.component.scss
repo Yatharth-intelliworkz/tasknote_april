@@ -138,3 +138,21 @@ p.project_info {
     max-width: 130px;
   }
 }
+.details_area ::ng-deep .mdc-line-ripple {
+  display: none !important;
+}
+
+.details_area .mat-mdc-form-field-infix {
+  height: auto;
+  min-height: 56px;
+}
+
+.details_area textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+// .details_area ::ng-deep textarea {
+//   border: none;
+//   border-bottom: 1px solid !important;
+// }

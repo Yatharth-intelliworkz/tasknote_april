@@ -248,7 +248,6 @@
                         </td>
                         <td>
                           <i class="fa fa-eye" data-bs-toggle="modal"  alt="preview" style="cursor: pointer;" (click)="openModal(checklistItem.taskTypeId)"></i>
-                          
                         </td>
                       </tr>
                     </tbody>
@@ -271,9 +270,14 @@
           <h2 class="task_table_title">
             Details
           </h2>
-          <div class="details_area">
+          <div class="details_area form_field custom_textarea">
             <mat-form-field>
-              <textarea matInput>{{memberlist.projectDtail.description}}</textarea>
+              <textarea
+                matInput
+                placeholder="Description"
+                [value]="memberlist?.projectDtail?.description || ''"
+                readonly
+              ></textarea>
             </mat-form-field>
           </div>
         </div>
